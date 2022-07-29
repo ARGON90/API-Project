@@ -40,12 +40,9 @@ app.use(
   })
 );
 
-//requests start at line 1 here
 app.use(routes);
-//this pulls info from route/index which pulls info from routes/api/index
 
-//Resource not found Error Handler
-//catch unhandled requests and forward to the error handler
+//error handling
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
@@ -55,8 +52,7 @@ app.use((_req, _res, next) => {
 });
 
 
-// Sequelize Error-Handler
-// This catches errors and formats them before sending the response
+// Process sequelize errors
 app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
   if (err instanceof ValidationError) {
@@ -65,9 +61,7 @@ app.use((err, _req, _res, next) => {
   }
   next(err);
 
-  // Error Formatter Error handler - should be LAST
-  //formats all errors before returning a json response
-  //includes stack trace if the environment is in development
+  // Error formatter
   app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
