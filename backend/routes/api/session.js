@@ -5,6 +5,7 @@ const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 
+//Login
 router.post(
     '/',
     async (req, res, next) => {
@@ -28,6 +29,7 @@ router.post(
     }
 );
 
+//Logout
 router.delete(
     '/',
     (_req, res) => {
@@ -35,6 +37,23 @@ router.delete(
         return res.json({ message: 'success' });
     }
 );
+
+// Restore Session User
+//returns user as json under key 'user'. if no current session,
+//this will be empty. 
+router.get(
+    '/',
+    restoreUser,
+    (req, res) => {
+      const { user } = req;
+      if (user) {
+        return res.json({
+          user: user.toSafeObject()
+        });
+      } else return res.json({});
+    }
+  );
+
 
 
 module.exports = router;
