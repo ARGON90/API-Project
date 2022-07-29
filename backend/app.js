@@ -40,7 +40,9 @@ app.use(
   })
 );
 
+//requests start at line 1 here
 app.use(routes);
+//this pulls info from route/index which pulls info from routes/api/index
 
 //Resource not found Error Handler
 //catch unhandled requests and forward to the error handler
