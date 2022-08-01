@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
     static associate(models) {
-      User.belongsTo(models.Spot, {foreignKey: 'ownerId'});
+      User.hasMany(models.Spot, {foreignKey: 'ownerId'});
     }
   };
 
