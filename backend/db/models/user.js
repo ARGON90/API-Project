@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
 
-      
+
       if (user && user.validatePassword(password)) {
         return await User.scope('currentUser').findByPk(user.id);
       }
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
     static associate(models) {
-      // define association here
+      User.belongsTo(models.Spot, {foreignKey: 'ownerId'});
     }
   };
 

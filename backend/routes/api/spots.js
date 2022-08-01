@@ -3,8 +3,12 @@ const router = express.Router();
 
 const { Spot } = require('../../db/models')
 
-router.get('/', (req, res) => {
-    res.json("hello!")
+router.get('/', async (req, res) => {
+    const allSpots = await Spot.findAll();
+    res.json(allSpots)
+    //ownerId from Users
+    // previewImg: images
+    // stars from reviews
 })
 
 module.exports = router;
