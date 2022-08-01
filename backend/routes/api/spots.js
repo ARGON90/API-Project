@@ -6,7 +6,6 @@ const { Spot } = require('../../db/models')
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll();
     res.json(allSpots)
-    //ownerId from Users
     // previewImg: images
     // stars from reviews
 })
