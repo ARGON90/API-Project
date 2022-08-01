@@ -1,3 +1,5 @@
+//connects to database server and API server
+
 // Import environment variables
 require('dotenv').config();
 

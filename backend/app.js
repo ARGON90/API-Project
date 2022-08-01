@@ -21,6 +21,7 @@ if (!isProduction) {
   // enable cors only in development
   app.use(cors());
 }
+//allow cors in development
 
 // helmet helps set a variety of headers to better secure your app
 app.use(
@@ -39,6 +40,9 @@ app.use(
     }
   })
 );
+//the cookies only need to be secure in production
+
+
 
 //requests start at line 1 here
 app.use(routes);
@@ -53,6 +57,9 @@ app.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
+//underscore: convention to convery intent of a specific variabele
+//need access to next, but not req/res. the underscore in this instance
+//actually serves as a placeholder
 
 
 // Sequelize Error-Handler
@@ -79,5 +86,8 @@ app.use((err, _req, _res, next) => {
     });
   });
 });
+//turnery operators: evaluates expressions
+//syntax: ? <option1> : <option2>
+//if production, the stack is null, otherwise, err.stack
 
 module.exports = app;

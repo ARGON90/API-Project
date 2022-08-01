@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api')
+//defaulting to ./api/index.js
 
 router.use('/api', apiRouter)
 

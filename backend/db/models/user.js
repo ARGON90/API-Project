@@ -17,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     static getCurrentUserById(id) {
       return User.scope("currentUser").findByPk(id);
     }
-    //uses currentUser scopr to trutn a user with that id
-
+    //uses currentUser scopr to return a user with that id
 
     static async login({ credential, password }) {
       const { Op } = require('sequelize');
@@ -30,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       });
+
+      
       if (user && user.validatePassword(password)) {
         return await User.scope('currentUser').findByPk(user.id);
       }
