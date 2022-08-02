@@ -86,8 +86,9 @@ app.use((err, _req, _res, next) => {
           statusCode: 403,
           errors: {
             username:
-              err.errors[0]
-          }
+              "User with that username already exists"
+          },
+          stack: isProduction ? null : err.stack
         })
       }
       if (err.errors[0].includes('email')) {
@@ -96,8 +97,9 @@ app.use((err, _req, _res, next) => {
           statusCode: 403,
           errors: {
             email:
-              err.errors[0]
-          }
+              "User with that email already exists"
+          },
+          stack: isProduction ? null : err.stack
         })
       }
     }
