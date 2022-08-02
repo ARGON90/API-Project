@@ -101,7 +101,7 @@ app.use((err, _req, _res, next) => {
           },
           stack: isProduction ? null : err.stack
         })
-      }
+      } 
     }
     res.json({
       title: err.title || 'Server Error',
