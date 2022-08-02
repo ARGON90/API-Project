@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Review.belongsTo(models.User, {foreignKey: 'userId' });
-      Review.belongsTo(models.Spot, { foreignKey: 'spotid'})
+      Review.belongsTo(models.Spot, { foreignKey: 'spotId'})
     }
   }
   Review.init({
