@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
-const { Spot, User, Review, sequelize } = require('../../db/models')
+const { Spot, User, Review, sequelize } = require('../../db/models');
+const app = require('../../app');
 
 router.get('/', async (req, res) => {
 
@@ -26,12 +27,11 @@ router.get('/', async (req, res) => {
                 spotsObj.avgRating = avgRatingArray[0].dataValues.avgStarRating;
             }
         }
-
-        // STILLNEEDS previewImg: images
     }
     return res.json({
         allSpots
     })
+    // STILLNEEDS previewImg: images
 });
 
 router.get('/current', requireAuth, async (req, res) => {
@@ -40,7 +40,6 @@ router.get('/current', requireAuth, async (req, res) => {
         const currentSpots = await Spot.findAll({
             where: { ownerId: user.id }
         })
-        //
         for (let i = 0; i < currentSpots.length; i++) {
             let spotsObj = currentSpots[i].dataValues;
             console.log('i count', i)
@@ -61,15 +60,20 @@ router.get('/current', requireAuth, async (req, res) => {
                 }
             }
         }
-        //
         return res.json({
             currentSpots
         });
         //STILLNEEDS add preview img
-
-    } else return res.json({});
-
+    } else
+        return res.json({});
 }
 );
+
+router.get('/:spotId', async (req, res) => {
+    res.json({
+        message: "you're in spots/:spotId"
+    })
+})
+
 
 module.exports = router;
