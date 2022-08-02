@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll();
     for (let i = 0; i < allSpots.length; i++) {
         let spotsObj = allSpots[i].dataValues;
-        console.log('i count', i)
         for (let key in spotsObj) {
             if (true) {
                 let avgRatingArray = await Review.findAll({
@@ -42,7 +41,6 @@ router.get('/current', requireAuth, async (req, res) => {
         })
         for (let i = 0; i < currentSpots.length; i++) {
             let spotsObj = currentSpots[i].dataValues;
-            console.log('i count', i)
             for (let key in spotsObj) {
                 if (true) {
                     let avgRatingArray = await Review.findAll({
