@@ -78,6 +78,29 @@ app.use((err, _req, _res, next) => {
   app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
+    if (err.message === 'Validation error') {
+      res.status(403)
+      if (err.errors[0].includes('username')) {
+        return res.json({
+          message: "User already exists",
+          statusCode: 403,
+          errors: {
+            username:
+              err.errors[0]
+          }
+        })
+      }
+      if (err.errors[0].includes('email')) {
+        return res.json({
+          message: "User already exists",
+          statusCode: 403,
+          errors: {
+            email:
+              err.errors[0]
+          }
+        })
+      }
+    }
     res.json({
       title: err.title || 'Server Error',
       message: err.message,
