@@ -54,45 +54,14 @@ router.get('/current', requireAuth, async (req, res) => {
 
     })
     res.json(allSpots)
-    //STILLNEEDS decimal fixing
-    //STILLNEEDS preview image
-
-    // if (user) {
-    //     const currentSpots = await Spot.findAll({
-    //         where: { ownerId: user.id }
-    //     })
-    //     for (let i = 0; i < currentSpots.length; i++) {
-    //         let spotsObj = currentSpots[i].dataValues;
-    //         for (let key in spotsObj) {
-    //             if (true) {
-    //                 let avgRatingArray = await Review.findAll({
-    //                     where: { spotId: spotsObj.id },
-    //                     attributes: {
-    //                         include: [
-    //                             [
-    //                                 sequelize.fn("AVG", sequelize.col("stars")),
-    //                                 "avgStarRating"
-    //                             ]
-    //                         ]
-    //                     }
-    //                 })
-    //                 spotsObj.avgRating = avgRatingArray[0].dataValues.avgStarRating;
-    //             }
-    //         }
-    //     }
-    //     return res.json({
-    //         currentSpots
-    //     });
-    //     //STILLNEEDS decimal fixing
-    // //STILLNEEDS preview image
-    // } else
-    //     return res.json({});
 });
 
 router.get('/:spotId', async (req, res) => {
     res.json({
         message: "you're in spots/:spotId"
     })
+    //STILLNEEDS decimal fixing
+    //STILLNEEDS preview image
 })
 
 
