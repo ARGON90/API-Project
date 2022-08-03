@@ -6,37 +6,55 @@ const { Spot, User, Review, sequelize } = require('../../db/models');
 const app = require('../../app');
 
 router.get('/', async (req, res) => {
-
     const allSpots = await Spot.findAll({
-        include: Review,
-        //attributes: [],
-    });
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+                //[sequelize.literal("Images.url"), "previewImage"]
+            ],
+        },
+        include: [{
+            model: Review,
+            attributes: []
+        },
+        // {
+        //     model: Image,
+        //     attributes: []
+        // }
+        ],
+        group: ['Spot.id']
 
-
-    for (let i = 0; i < allSpots.length; i++) {
-        let spotsObj = allSpots[i].dataValues;
-        for (let key in spotsObj) {
-            if (true) {
-                let avgRatingArray = await Review.findOne({
-                    where: { spotId: spotsObj.id },
-                    attributes: {
-                        include: [
-                            [
-                                sequelize.fn("AVG", sequelize.col("stars")),
-                                "avgStarRating"
-                            ]
-                        ]
-                    }
-                })
-                spotsObj.avgRating = avgRatingArray.dataValues.avgStarRating;
-            }
-        }
-    }
-    return res.json({
-        allSpots
     })
-    // STILLNEEDS previewImg: images
+    res.json(allSpots)
 });
+
+
+// const allSpots = await Spot.findAll({
+//     include: Review,
+// });
+// for (let i = 0; i < allSpots.length; i++) {
+//     let spotsObj = allSpots[i].dataValues;
+//     for (let key in spotsObj) {
+//         if (true) {
+//             let avgRatingArray = await Review.findOne({
+//                 where: { spotId: spotsObj.id },
+//                 attributes: {
+//                     include: [
+//                         [
+//                             sequelize.fn("AVG", sequelize.col("stars")),
+//                             "avgStarRating"
+//                         ]
+//                     ]
+//                 }
+//             })
+//             spotsObj.avgRating = avgRatingArray.dataValues.avgStarRating;
+//         }
+//     }
+// }
+// return res.json({
+//     allSpots
+// })
+// STILLNEEDS previewImg: images
 
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
