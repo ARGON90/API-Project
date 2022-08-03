@@ -102,7 +102,6 @@ router.get('/current', requireAuth, async (req, res) => {
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params
     const spotInfo = await Spot.findAll({
-        group: ['spotId'],
         where: { id: spotId },
         include: [
             {
