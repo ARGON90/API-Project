@@ -7,6 +7,7 @@ const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 
+//~GET ALL SPOTS
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
         group: ['Spot.id'],
@@ -31,6 +32,7 @@ router.get('/', async (req, res) => {
     //STILLNEEDS decimal fixing on heroku
 });
 
+//~GET SPOTS OF CURRENT USER
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
@@ -103,7 +105,7 @@ router.get('/:spotId', async (req, res) => {
 
 
     if (spotInfo[0].dataValues.id) {
-        res.json({ spotInfo, avgRating })
+        res.json({ spotInfo, avgStarRating })
         //STILLNEEDS imageable attribute how to get it formatted correctly
         //STILLNEEDS heroku decimal fix
     } else {
@@ -181,10 +183,12 @@ router.post('/', requireAuth, async (req, res) => {
 
 //~ADD IMAGE TO SPOT BASED ON SPOT ID
 router.post('/:spotId/images', requireAuth, async (req, res) => {
-    const { spotId } = req.params.spotId;
+    const { spotId } = req.params;
     const userId = req.user.id
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
+
+
 
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {
