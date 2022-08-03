@@ -17,78 +17,77 @@ router.get('/', async (req, res) => {
             model: Review,
             attributes: []
         },
-        // {
-        //     model: Image,
-        //     attributes: []
-        // }
+            // {
+            //     model: Image,
+            //     attributes: []
+            // }
         ],
         group: ['Spot.id']
 
     })
     res.json(allSpots)
+    //STILLNEEDS decimal fixing
+    //STILLNEEDS preview image
 });
-
-
-// const allSpots = await Spot.findAll({
-//     include: Review,
-// });
-// for (let i = 0; i < allSpots.length; i++) {
-//     let spotsObj = allSpots[i].dataValues;
-//     for (let key in spotsObj) {
-//         if (true) {
-//             let avgRatingArray = await Review.findOne({
-//                 where: { spotId: spotsObj.id },
-//                 attributes: {
-//                     include: [
-//                         [
-//                             sequelize.fn("AVG", sequelize.col("stars")),
-//                             "avgStarRating"
-//                         ]
-//                     ]
-//                 }
-//             })
-//             spotsObj.avgRating = avgRatingArray.dataValues.avgStarRating;
-//         }
-//     }
-// }
-// return res.json({
-//     allSpots
-// })
-// STILLNEEDS previewImg: images
 
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
-    if (user) {
-        const currentSpots = await Spot.findAll({
-            where: { ownerId: user.id }
-        })
-        for (let i = 0; i < currentSpots.length; i++) {
-            let spotsObj = currentSpots[i].dataValues;
-            for (let key in spotsObj) {
-                if (true) {
-                    let avgRatingArray = await Review.findAll({
-                        where: { spotId: spotsObj.id },
-                        attributes: {
-                            include: [
-                                [
-                                    sequelize.fn("AVG", sequelize.col("stars")),
-                                    "avgStarRating"
-                                ]
-                            ]
-                        }
-                    })
-                    spotsObj.avgRating = avgRatingArray[0].dataValues.avgStarRating;
-                }
-            }
-        }
-        return res.json({
-            currentSpots
-        });
-        //STILLNEEDS add preview img
-    } else
-        return res.json({});
-}
-);
+
+    const allSpots = await Spot.findAll({
+        where: { ownerId: user.id},
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+                //[sequelize.literal("Images.url"), "previewImage"]
+            ],
+        },
+        include: [{
+            model: Review,
+            attributes: []
+        },
+            // {
+            //     model: Image,
+            //     attributes: []
+            // }
+        ],
+        group: ['Spot.id']
+
+    })
+    res.json(allSpots)
+    //STILLNEEDS decimal fixing
+    //STILLNEEDS preview image
+
+    // if (user) {
+    //     const currentSpots = await Spot.findAll({
+    //         where: { ownerId: user.id }
+    //     })
+    //     for (let i = 0; i < currentSpots.length; i++) {
+    //         let spotsObj = currentSpots[i].dataValues;
+    //         for (let key in spotsObj) {
+    //             if (true) {
+    //                 let avgRatingArray = await Review.findAll({
+    //                     where: { spotId: spotsObj.id },
+    //                     attributes: {
+    //                         include: [
+    //                             [
+    //                                 sequelize.fn("AVG", sequelize.col("stars")),
+    //                                 "avgStarRating"
+    //                             ]
+    //                         ]
+    //                     }
+    //                 })
+    //                 spotsObj.avgRating = avgRatingArray[0].dataValues.avgStarRating;
+    //             }
+    //         }
+    //     }
+    //     return res.json({
+    //         currentSpots
+    //     });
+    //     //STILLNEEDS decimal fixing
+    // //STILLNEEDS preview image
+    // } else
+    //     return res.json({});
+});
 
 router.get('/:spotId', async (req, res) => {
     res.json({
