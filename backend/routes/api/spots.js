@@ -124,7 +124,7 @@ router.get('/:spotId', async (req, res) => {
         ],
         attributes: {
         include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
             ],
         },
     })
@@ -151,9 +151,9 @@ const validateCreate = [
     check('address')
         .exists({ checkFalsy: true })
         .withMessage('Street address is required'),
-    check('username')
+    check('state')
         .exists({ checkFalsy: true })
-        .withMessage('Username is required'),
+        .withMessage('State is required'),
     check('name')
         .exists({ checkFalsy: true })
         .isLength({ max: 50 })
@@ -161,7 +161,7 @@ const validateCreate = [
     handleValidationErrors
 ];
 
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', requireAuth, validateCreate, async (req, res) => {
     const userId = req.user.id
 
     const { address, city, state, country, lat,
