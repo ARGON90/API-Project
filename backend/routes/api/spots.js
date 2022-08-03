@@ -26,14 +26,13 @@ router.get('/', async (req, res) => {
 
     })
     res.json(allSpots)
-    //STILLNEEDS decimal fixing
+    //STILLNEEDS decimal fixing on heroku
 });
 
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
     const allSpots = await Spot.findAll({
-        group: ['Spot.id'],
         where: { ownerId: user.id },
         include: [{
             model: Review,
@@ -53,15 +52,48 @@ router.get('/current', requireAuth, async (req, res) => {
 
     })
     res.json(allSpots)
-    //STILLNEEDS decimal fixing
-    //STILLNEEDS preview image
+    //STILLNEEDS decimal fixing on heroku
+
 });
 
 router.get('/:spotId', async (req, res) => {
-    res.json({
-        message: "you're in spots/:spotId"
+    const { spotId } = req.params
+    const spotInfo = await Spot.findAll({
+        where: { id: spotId },
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: Image,
+                attributes: ['id', 'url']
+            },
+            {
+                model: User, as: "Owner",
+                attributes: ['id', 'firstName', 'lastName']
+            },
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+            ],
+        },
+
     })
+    if (spotInfo[0].dataValues.id) {
+        res.json(spotInfo)
+        //STILLNEEDS imageable attribute - what is that?
+    } else {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
 })
+//Question: why is the attributes for avgstar rating limiting the number of images I can display?
 
 
 module.exports = router;
