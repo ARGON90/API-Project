@@ -58,7 +58,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 });
 
-
+//~GET A SPOT BY ID
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params
     const spotInfo = await Spot.findAll({
@@ -103,7 +103,7 @@ router.get('/:spotId', async (req, res) => {
 
 
     if (spotInfo[0].dataValues.id) {
-        res.json({ spotInfo, avgStarRating })
+        res.json({ spotInfo, avgRating })
         //STILLNEEDS imageable attribute how to get it formatted correctly
         //STILLNEEDS heroku decimal fix
     } else {
@@ -132,6 +132,7 @@ router.get('/:spotId', async (req, res) => {
 //     handleValidationErrors
 // ];
 
+//~CREATE A SPOT
 router.post('/', requireAuth, async (req, res) => {
     const userId = req.user.id
     let errors = {}
@@ -178,8 +179,9 @@ router.post('/', requireAuth, async (req, res) => {
 })
 //question: are there uniqueness constraints on any of these?
 
+//~ADD IMAGE TO SPOT BASED ON SPOT ID
 router.post('/:spotId/images', requireAuth, async (req, res) => {
-    const { spotId } = req.params;
+    const { spotId } = req.params.spotId;
     const userId = req.user.id
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
@@ -200,7 +202,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     //         message: "TEMPORARY MESSAGE: USER DOESN'T EXIST",
     //         statusCode: 403
     //     })
-    //     //STILLNEEDS proper error messaging and authentication
+    //     //STILLNEEDS proper error messaging and authorization
     // }
     //question: spot must belong to the current user: make a query for that or...?
 
@@ -217,6 +219,66 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     }
     res.json(response)
 })
+
+
+//~EDIT A SPOT
+router.put('/:spotId', requireAuth, async (req, res) => {
+    const spotId = req.params.spotId;
+    let errors = {}
+    console.log('SPOTID', spotId)
+    const { address, city, state, country, lat,
+        lng, name, description, price } = req.body;
+
+    if (!address) errors.address = "Street address is required"
+    if (!city) errors.city = "City is required"
+    if (!state) errors.state = "State is required"
+    if (!country) errors.country = "Country address is required"
+    if (typeof lat != 'number') errors.lat = "Latitude is not valid"
+    if (typeof lng != 'number') errors.lng = "Longitude is not valid"
+    if (!name) errors.name = "Name is required"
+    if (name.length >= 50) errors.name = "Name must be less than 50 characters"
+    if (!description) errors.description = "Description is required"
+    if (!price) errors.price = "Price is required"
+
+    if (Object.keys(errors).length != 0) {
+        res.status(400)
+        res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors
+        })
+    }
+
+    const spotExist = await Spot.findByPk(spotId);
+    if (!spotExist) {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+    const spot = await Spot.findByPk(spotId)
+
+    spot.address = address
+    spot.city = city
+    spot.state = state
+    spot.country = country
+    spot.lat = lat
+    spot.lng = lng
+    spot.name = name
+    spot.description = description
+    spot.price = price
+
+    await spot.save();
+
+
+    res.json(spot)
+
+})
+//STILLNEEDS authorization
+//Question: possible to dry up validation fn?
+
+
 
 
 
