@@ -7,12 +7,7 @@ const app = require('../../app');
 
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-                [sequelize.literal("Images.url"), "previewImage"]
-            ],
-        },
+        group: ['Spot.id'],
         include: [{
             model: Review,
             attributes: []
@@ -22,7 +17,12 @@ router.get('/', async (req, res) => {
             attributes: []
         }
         ],
-        group: ['Spot.id']
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+                [sequelize.literal("Images.url"), "previewImage"]
+            ],
+        },
 
     })
     res.json(allSpots)
@@ -33,13 +33,8 @@ router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
     const allSpots = await Spot.findAll({
+        group: ['Spot.id'],
         where: { ownerId: user.id },
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-                [sequelize.literal("Images.url"), "previewImage"]
-            ],
-        },
         include: [{
             model: Review,
             attributes: []
@@ -49,7 +44,12 @@ router.get('/current', requireAuth, async (req, res) => {
             attributes: []
         }
         ],
-        group: ['Spot.id']
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+                [sequelize.literal("Images.url"), "previewImage"]
+            ],
+        },
 
     })
     res.json(allSpots)
