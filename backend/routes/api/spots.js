@@ -83,7 +83,7 @@ router.get('/:spotId', async (req, res) => {
     })
     if (spotInfo[0].dataValues.id) {
         res.json(spotInfo)
-        //STILLNEEDS imageable attribute - what is that?
+        //STILLNEEDS imageable attribute - what even is that?
     } else {
         res.status(404)
         res.json({
@@ -95,5 +95,31 @@ router.get('/:spotId', async (req, res) => {
 })
 //Question: why is the attributes for avgstar rating limiting the number of images I can display?
 
+router.post('/', requireAuth, async (req, res) => {
+    const userId = req.user.id
+
+    const { address, city, state, country, lat,
+        lng, name, description, price } = req.body;
+
+    const newSpot = await Spot.create({
+        ownerId: userId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+    const spotResult = await Spot.findAll({
+        where: {address: address}
+    })
+    res.status(201)
+    return res.json(spotResult)
+})
+//question: is using the address cheating for findAll...?
 
 module.exports = router;
