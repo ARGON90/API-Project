@@ -7,12 +7,17 @@ const app = require('../../app');
 
 router.get('/', async (req, res) => {
 
-    const allSpots = await Spot.findAll();
+    const allSpots = await Spot.findAll({
+        include: Review,
+        //attributes: [],
+    });
+
+
     for (let i = 0; i < allSpots.length; i++) {
         let spotsObj = allSpots[i].dataValues;
         for (let key in spotsObj) {
             if (true) {
-                let avgRatingArray = await Review.findAll({
+                let avgRatingArray = await Review.findOne({
                     where: { spotId: spotsObj.id },
                     attributes: {
                         include: [
@@ -23,7 +28,7 @@ router.get('/', async (req, res) => {
                         ]
                     }
                 })
-                spotsObj.avgRating = avgRatingArray[0].dataValues.avgStarRating;
+                spotsObj.avgRating = avgRatingArray.dataValues.avgStarRating;
             }
         }
     }
