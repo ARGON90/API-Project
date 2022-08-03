@@ -270,13 +270,34 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     spot.price = price
 
     await spot.save();
-
-
     res.json(spot)
-
 })
+
 //STILLNEEDS authorization
 //Question: possible to dry up validation fn?
+
+router.delete('/:spotId', requireAuth, async (req, res) => {
+    const spotId = req.params.spotId;
+
+    const spotExist = await Spot.findByPk(spotId);
+    if (!spotExist) {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    const spot = await Spot.findByPk(spotId);
+
+    await spot.destroy();
+
+    res.status(200)
+    res.json({
+        message: "Successfully deleted",
+        stausCode: 200
+    })
+})
 
 
 
