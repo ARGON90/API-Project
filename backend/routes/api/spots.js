@@ -138,16 +138,16 @@ router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat,
         lng, name, description, price } = req.body;
 
-    if (!address) errors.address =  "Street address is required"
-    if (!city) errors.city =  "City is required"
-    if (!state) errors.state =  "State is required"
-    if (!country) errors.country =  "Country address is required"
-    if (typeof lat != 'number') errors.lat =  "Latitude is not valid"
-    if (typeof lng != 'number') errors.lng =  "Longitude is not valid"
-    if (!name) errors.name =  "Name is required"
-    if (name.length >= 50) errors.name =  "Name must be less than 50 characters"
-    if (!description) errors.description =  "Description is required"
-    if (!price) errors.price =  "Price is required"
+    if (!address) errors.address = "Street address is required"
+    if (!city) errors.city = "City is required"
+    if (!state) errors.state = "State is required"
+    if (!country) errors.country = "Country address is required"
+    if (typeof lat != 'number') errors.lat = "Latitude is not valid"
+    if (typeof lng != 'number') errors.lng = "Longitude is not valid"
+    if (!name) errors.name = "Name is required"
+    if (name.length >= 50) errors.name = "Name must be less than 50 characters"
+    if (!description) errors.description = "Description is required"
+    if (!price) errors.price = "Price is required"
 
     if (Object.keys(errors).length != 0) {
         res.status(400)
@@ -171,15 +171,65 @@ router.post('/', requireAuth, async (req, res) => {
         price
     })
 
-    const spotResult = await Spot.findAll({
-        where: { address: address }
-    })
+
 
     res.status(201)
-    return res.json(spotResult)
+    return res.json(newSpot)
 })
-//question: is using the address cheating for findAll...?
-//are there uniqueness constraints on any of these
+//question: are there uniqueness constraints on any of these?
+
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const { spotId } = req.params;
+    const userId = req.user.id
+    const { url, previewImage } = req.body
+    const user = await User.findByPk(userId)
+
+    const spotExist = await Spot.findByPk(spotId);
+    if (!spotExist) {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    // authorization
+    // if (!user) {
+    //     res.status(403)
+    //     res.json({
+    //         message: "TEMPORARY MESSAGE: USER DOESN'T EXIST",
+    //         statusCode: 403
+    //     })
+    //     //STILLNEEDS proper error messaging and authentication
+    // }
+    //question: spot must belong to the current user: make a query for that or...?
+
+    const newImage = await Image.create({
+        url: url,
+        previewImage: previewImage,
+        spotId: spotId,
+        userId: userId
+    })
+    const response = {
+        id: newImage.id,
+        imageableId: spotId,
+        url: newImage.url
+    }
+    res.json(response)
+})
+
+
+
+
+
+
+
+
+
+
+
+//question: in postman, are we supposed to replace {{spotId}} with our own?
+
 
 
 module.exports = router;

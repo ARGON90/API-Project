@@ -51,7 +51,6 @@ router.post(
   validateLogin,
   async (req, res, next) => {
     const { credential, password } = req.body;
-
     const user = await User.login({ credential, password });
 
     if (!user) {
@@ -63,7 +62,6 @@ router.post(
     }
 
     await setTokenCookie(res, user);
-
     return res.json({
       user
     });
