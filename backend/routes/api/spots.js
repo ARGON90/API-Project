@@ -276,6 +276,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 //STILLNEEDS authorization
 //Question: possible to dry up validation fn?
 
+//~DELETE A SPOT BY ID
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const spotId = req.params.spotId;
 
@@ -298,6 +299,8 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         stausCode: 200
     })
 })
+
+
 
 
 
