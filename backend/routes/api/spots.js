@@ -117,7 +117,7 @@ router.get('/:spotId', async (req, res) => {
 
     const avgRating = await Spot.findOne({
         where: { id: spotId },
-        attributes: [],
+        attributes: ['spotId'],
         include: [{
             model: Review,
             attributes: []
