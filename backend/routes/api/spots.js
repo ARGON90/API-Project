@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     })
 
     const allImages = await Image.findAll({
-        attributes: ['id', 'url'],
+        attributes: ['id', 'url', 'previewImage'],
         include: [{
             model: Spot,
             attributes: ['id']
@@ -46,7 +46,10 @@ router.get('/', async (req, res) => {
                 let currentSpot = allSpots[i].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
-                if (!currentSpot.previewImage && currentImageSpotId === currentSpot.id) {
+                if (currentImage.previewImage === true &&
+                    !currentSpot.previewImage &&
+                    currentImageSpotId === currentSpot.id)
+                    {
                     currentSpot.previewImage = currentImage.url
                 }
             }
@@ -88,7 +91,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
-        attributes: ['id', 'url'],
+        attributes: ['id', 'url', 'previewImage'],
         include: [{
             model: Spot,
             attributes: ['id']
@@ -109,7 +112,10 @@ router.get('/current', requireAuth, async (req, res) => {
                 let currentSpot = allSpots[i].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
-                if (!currentSpot.previewImage && currentImageSpotId === currentSpot.id) {
+                if (currentImage.previewImage === true &&
+                    !currentSpot.previewImage &&
+                    currentImageSpotId === currentSpot.id)
+                    {
                     currentSpot.previewImage = currentImage.url
                 }
             }
@@ -213,22 +219,7 @@ router.get('/:spotId', async (req, res) => {
 
 })
 //STILLNEEDS heroku decimal fix
-//question: is it okay to have image and owner flipped?
 
-
-// const validateCreation = [
-//     check('address')
-//         .exists({ checkFalsy: true })
-//         .withMessage('Street address is required'),
-//     check('state')
-//         .exists({ checkFalsy: true })
-//         .withMessage('State is required'),
-//     check('name')
-//         .exists({ checkFalsy: true })
-//         .isLength({ max: 50 })
-//         .withMessage('Name must be less than 50 characters'),
-//     handleValidationErrors
-// ];
 
 //~CREATE A SPOT
 router.post('/', requireAuth, async (req, res) => {
@@ -284,6 +275,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
 
+    // SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {
         res.status(404)
@@ -293,16 +285,14 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         })
     }
 
-    // authorization
-    // if (!user) {
-    //     res.status(403)
-    //     res.json({
-    //         message: "TEMPORARY MESSAGE: USER DOESN'T EXIST",
-    //         statusCode: 403
-    //     })
-    //     //STILLNEEDS proper error messaging and authorization
-    // }
-    //question: spot must belong to the current user: make a query for that or...?
+    // AUTHORIZATION
+    if (spotExist.ownerId !== userId) {
+        res.status(403)
+        res.json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
 
     const newImage = await Image.create({
         url: url,
@@ -347,6 +337,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
         })
     }
 
+    //SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {
         res.status(404)
@@ -355,6 +346,17 @@ router.put('/:spotId', requireAuth, async (req, res) => {
             statusCode: 404
         })
     }
+
+    // AUTHORIZATION
+    const userId = req.user.id
+    if (spotExist.ownerId !== userId) {
+        res.status(403)
+        res.json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
     const spot = await Spot.findByPk(spotId)
 
     spot.address = address
@@ -371,8 +373,6 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     res.json(spot)
 })
 
-//STILLNEEDS authorization
-//Question: possible to dry up validation fn?
 
 //~DELETE A SPOT BY ID
 router.delete('/:spotId', requireAuth, async (req, res) => {
