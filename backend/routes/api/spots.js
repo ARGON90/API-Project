@@ -7,7 +7,7 @@ const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 
-//~GET ALL SPOTS
+//~GET ALL SPOTS ~~WITHOUT LITERAL~~
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
         group: ['Spot.id'],
@@ -58,33 +58,6 @@ router.get('/', async (req, res) => {
     //question: what if the spot has no images attached, do we still want a previewImageId?
 });
 
-//~GET SPOTS OF CURRENT USER WITH LITERAL
-// router.get('/current', requireAuth, async (req, res) => {
-//     const { user } = req;
-
-//     const allSpots = await Spot.findAll({
-//         where: { ownerId: user.id },
-//         include: [{
-//             model: Review,
-//             attributes: []
-//         },
-//         {
-//             model: Image,
-//             attributes: []
-//         }
-//         ],
-//         attributes: {
-//             include: [
-//                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-//                 [sequelize.literal("Images.url"), "previewImage"]
-//             ],
-//         },
-
-//     })
-
-//     res.json(allSpots)
-//     //STILLNEEDS decimal fixing on heroku
-// });
 
 //~GET SPOTS OF CURRENT USER ~~WITHOUT LITERAL~~
 router.get('/current', requireAuth, async (req, res) => {
@@ -153,59 +126,153 @@ router.get('/current', requireAuth, async (req, res) => {
     }
     allSpots[0].dataValues.Images = Images
     res.json(allSpots)
-    //STILLNEEDS decimal fixing on heroku
-    //question: I have Owner BEFORE Images, is that okay?
+    //STILLNEEDS decimal fixing on heroku?
+    //STILLNEEDS to remove owner info from this!
+    //STILLNEEDS to remove attributes firstname/lastname from query
+    //question: having trouble limiting the attributes of whatever I'm calling findAll on
 });
 
 
-//~GET A SPOT BY ID
-router.get('/:spotId', async (req, res) => {
-    const { spotId } = req.params
-    const spotInfo = await Spot.findAll({
-        where: { id: spotId },
-        include: [
-            {
-                model: Image,
-                attributes: ['id', 'url'],
-                attributes: {
-                    include: [
-                        [sequelize.literal("Spot.id"), "imageableId"],
-                    ],
-                }
-            },
-            {
-                model: User, as: "Owner",
-                attributes: ['id', 'firstName', 'lastName']
-            },
-        ],
-        attributes: {
-            include: [
-                [sequelize.literal("Spot.id"), "imageableId"],
-            ],
-        }
-    })
+//~GET A SPOT BY ID WITH LITERAL
+// router.get('/:spotId', async (req, res) => {
+//     const { spotId } = req.params
+//     const spotInfo = await Spot.findAll({
+//         where: { id: spotId },
+//         include: [
+//             {
+//                 model: Image,
+//                 attributes: ['id', 'url'],
+//                 attributes: {
+//                     include: [
+//                         [sequelize.literal("Spot.id"), "imageableId"],
+//                     ],
+//                 }
+//             },
+//             {
+//                 model: User, as: "Owner",
+//                 attributes: ['id', 'firstName', 'lastName']
+//             },
+//         ],
+//         attributes: {
+//             include: [
+//                 [sequelize.literal("Spot.id"), "imageableId"],
+//             ],
+//         }
+//     })
 
-    const avgRating = await Spot.findOne({
-        where: { id: spotId },
+//     const avgRating = await Spot.findOne({
+//         where: { id: spotId },
+//         include: [{
+//             model: Review,
+//             attributes: []
+//         },
+//         ],
+//         attributes: {
+//             include: [
+//                 [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+//             ],
+//         },
+//         group: ['Spot.id']
+//     })
+//     const avgStarRating = avgRating.dataValues.avgRating
+
+
+//     if (spotInfo[0].dataValues.id) {
+//         res.json({ spotInfo, avgStarRating })
+//         //STILLNEEDS imageable attribute how to get it formatted correctly
+//         //STILLNEEDS heroku decimal fix
+//     } else {
+//         res.status(404)
+//         res.json({
+//             message: "Spot couldn't be found",
+//             statusCode: 404
+//         })
+//     }
+
+// })
+//Question: why is the attributes for avgstar rating limiting the number of images I can display?
+
+//~GET A SPOT BY ID ~~WITHOUT LITERAL~~
+router.get('/:spotId', async (req, res) => {
+    const { spotId } = req.params;
+
+
+    const allSpots = await Spot.findAll({
+        group: ["Spot.id", "Owner.id"],
+        where: { id : spotId },
         include: [{
             model: Review,
             attributes: []
         },
+        {
+            model: User, as: "Owner",
+            attributes: ['id', 'firstName', 'lastName']
+        },
+
         ],
         attributes: {
             include: [
-                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
             ],
         },
-        group: ['Spot.id']
+
     })
-    const avgStarRating = avgRating.dataValues.avgRating
 
 
-    if (spotInfo[0].dataValues.id) {
-        res.json({ spotInfo, avgStarRating })
-        //STILLNEEDS imageable attribute how to get it formatted correctly
-        //STILLNEEDS heroku decimal fix
+    const allImages = await Image.findAll({
+        group: ["Image.id", "Spot.id"],
+        attributes: ['id', 'url'],
+        include: [{
+            model: Spot,
+            attributes: ['id']
+        }],
+        order: ['id']
+    })
+
+    console.log('HELLOOOOO')
+    if (!allSpots[0]) {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+
+
+    //build out your own images array of objects, with id, imageableid, url
+    let Images = []
+
+    //iterating through allImages && allSpots, when the spotid for both matches,
+    //add the url, imageableId, and url
+    //iterate through allImages - even though it's technically an object, treat it like an array
+    for (let i = 0; i < allImages.length; i++) {
+        let currentImage = allImages[i].dataValues
+        //check if the current Image has a spot Id
+        let currentImageId = currentImage.id
+        if (currentImage.Spot) {
+            let currentImageSpotId = currentImage.Spot.id
+            //iterate through all spots
+            for (let i = 0; i < allSpots.length; i++) {
+                let currentSpot = allSpots[i].dataValues
+                //if the image's spotId matches up with the spot's id
+                //push that mf in the array
+                if (currentImageSpotId === currentSpot.id) {
+                    Images.push({
+                        id: currentSpot.id,
+                        imageableId: currentSpot.id,
+                        url: currentImage.url
+                    })
+                }
+            }
+        }
+    }
+
+
+    if (allSpots[0].dataValues.id) {
+        allSpots[0].dataValues.Images = Images
+        res.json(allSpots)
+        console.log("HELLOOOOO")
     } else {
         res.status(404)
         res.json({
@@ -215,7 +282,8 @@ router.get('/:spotId', async (req, res) => {
     }
 
 })
-//Question: why is the attributes for avgstar rating limiting the number of images I can display?
+//STILLNEEDS heroku decimal fix
+//question: is it okay to have image and owner flipped?
 
 
 // const validateCreation = [
