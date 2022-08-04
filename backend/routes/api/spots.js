@@ -74,7 +74,7 @@ router.get('/current', requireAuth, async (req, res) => {
         },
         {
             model: User, as: "Owner",
-            attributes: ['id', 'firstName', 'lastName']
+            attributes: []
         },
 
         ],

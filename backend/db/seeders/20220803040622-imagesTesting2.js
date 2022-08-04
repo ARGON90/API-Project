@@ -4,36 +4,47 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Images', [
       {
-        url: 'url-1.com',
+        url: 'url-Spot1.com',
+        previewImage: true,
+        reviewId: null,
+        userId: 1,
+        spotId: 1,
+      },
+      {
+        url: 'url-Spot2.com',
+        previewImage: true,
+        reviewId: null,
+        userId: 2,
+        spotId: 2,
+      },
+      {
+        url: 'url-review1-Spot1.com',
         previewImage: true,
         reviewId: 1,
         userId: 1,
         spotId: 1,
       },
       {
-        url: 'url-2.com',
+        url: 'url-review2-Spot1.com',
         previewImage: true,
         reviewId: 2,
         userId: 2,
         spotId: 1,
       },
       {
-        url: 'url-3.com',
+        url: 'url-review1-Spot2.com',
         previewImage: true,
         reviewId: 3,
         userId: 1,
         spotId: 2,
       },
       {
-        url: 'url-4.com',
+        url: 'url-review2-Spot2.com',
         previewImage: true,
         reviewId: 4,
         userId: 2,
         spotId: 2,
       },
-
-
-
     ])
   },
 
