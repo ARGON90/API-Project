@@ -8,6 +8,31 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 
 //~GET ALL SPOTS
+// router.get('/', async (req, res) => {
+//     const allSpots = await Spot.findAll({
+//         group: ['Spot.id'],
+//         include: [{
+//             model: Review,
+//             attributes: []
+//         },
+//         {
+//             model: Image,
+//             attributes: []
+//         }
+//         ],
+//         attributes: {
+//             include: [
+//                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+//                 [sequelize.literal("Images.url"), "previewImage"]
+//             ],
+//         },
+
+//     })
+//     res.json(allSpots)
+//     //STILLNEEDS decimal fixing on heroku
+// });
+
+//~GET ALL SPOTS WITHOUT SQLZ LITERAL
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
         group: ['Spot.id'],
@@ -17,48 +42,54 @@ router.get('/', async (req, res) => {
         },
         {
             model: Image,
-            attributes: []
+            attributes: ['previewImage', ['url', 'url']]
         }
         ],
         attributes: {
             include: [
                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-                [sequelize.literal("Images.url"), "previewImage"]
             ],
         },
 
     })
+
+    const url = await Image.findAll({})
+
+    console.log(allSpots)
+
     res.json(allSpots)
     //STILLNEEDS decimal fixing on heroku
 });
 
-//~GET SPOTS OF CURRENT USER
-router.get('/current', requireAuth, async (req, res) => {
-    const { user } = req;
+//~GET SPOTS OF CURRENT USER WITH LITERAL
+// router.get('/current', requireAuth, async (req, res) => {
+//     const { user } = req;
 
-    const allSpots = await Spot.findAll({
-        where: { ownerId: user.id },
-        include: [{
-            model: Review,
-            attributes: []
-        },
-        {
-            model: Image,
-            attributes: []
-        }
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-                [sequelize.literal("Images.url"), "previewImage"]
-            ],
-        },
+//     const allSpots = await Spot.findAll({
+//         where: { ownerId: user.id },
+//         include: [{
+//             model: Review,
+//             attributes: []
+//         },
+//         {
+//             model: Image,
+//             attributes: []
+//         }
+//         ],
+//         attributes: {
+//             include: [
+//                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+//                 [sequelize.literal("Images.url"), "previewImage"]
+//             ],
+//         },
 
-    })
-    res.json(allSpots)
-    //STILLNEEDS decimal fixing on heroku
+//     })
 
-});
+
+//     res.json(allSpots)
+//     //STILLNEEDS decimal fixing on heroku
+
+// });
 
 //~GET A SPOT BY ID
 router.get('/:spotId', async (req, res) => {
