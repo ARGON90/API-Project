@@ -92,6 +92,7 @@ router.get('/current', requireAuth, async (req, res) => {
     const userId = user.id
 
     const allSpots = await Spot.findAll({
+        group: ["Spot.id"],
         where: { ownerId: user.id },
         attributes: ['id', 'firstName', 'lastName'],
         include: [{
@@ -112,7 +113,9 @@ router.get('/current', requireAuth, async (req, res) => {
 
     })
 
+
     const allImages = await Image.findAll({
+        group: ["Spot.id"],
         attributes: ['id', 'url'],
         include: [{
             model: Spot,
