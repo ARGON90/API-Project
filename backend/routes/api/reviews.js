@@ -89,3 +89,55 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
 
 module.exports = router;
+
+//~EDIT A REVIEW
+router.put('/:reviewId', requireAuth, async (req, res) => {
+    const { reviewId } = req.params
+    const { user } = req;
+    const { review, stars } = req.body;
+
+    console.log('REVIEW REQ BODY', review)
+
+    let errors = {}
+    if (!review) errors.review = "Review text is required"
+    if (!stars) errors.stars = "Stars must be an integer from 1 to 5"
+    if (typeof stars != 'number') errors.stars = "Stars must be an integer from 1 to 5"
+    if (stars > 5) errors.stars = "Stars must be an integer from 1 to 5"
+    if (stars < 1) errors.stars = "Stars must be an integer from 1 to 5"
+    if (Object.keys(errors).length != 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors
+        })
+    }
+
+    //REVIEW NOT FOUND
+    const reviewExist = await Review.findByPk(reviewId);
+    if (!reviewExist) {
+        res.status(404)
+        res.json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    // AUTHORIZATION
+    const userId = req.user.id
+    if (reviewExist.userId !== userId) {
+        res.status(403)
+        res.json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    const reviewCurrent = await Review.findByPk(reviewId)
+
+    reviewCurrent.review = review
+    reviewCurrent.stars = stars
+
+    await reviewCurrent.save();
+    res.json(reviewCurrent)
+})

@@ -462,7 +462,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             }],
 
     })
-
     let userIdForSpot = reviewsForSpot[0].dataValues.User.id
     for (let i = 0; i < reviewsForSpot.length; i++) {
         if (userIdForSpot === user.id) {
