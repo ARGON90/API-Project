@@ -67,7 +67,6 @@ router.get('/current', requireAuth, async (req, res) => {
     const allSpots = await Spot.findAll({
         group: ["Spot.id", "Owner.id"],
         where: { ownerId: user.id },
-        attributes: ['id', 'firstName', 'lastName'],
         include: [{
             model: Review,
             attributes: []
@@ -97,11 +96,7 @@ router.get('/current', requireAuth, async (req, res) => {
         order: ['id']
     })
 
-    //build out your own images array of objects, with id, imageableid, url
-    let Images = []
-
-    //iterating through allImages && allSpots, when the spotid for both matches,
-    //add the url, imageableId, and url
+    //iterating through allImages && allSpots, when the spotid for both matches, add the url
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
@@ -112,85 +107,21 @@ router.get('/current', requireAuth, async (req, res) => {
             //iterate through all spots
             for (let i = 0; i < allSpots.length; i++) {
                 let currentSpot = allSpots[i].dataValues
-                //if the image's spotId matches up with the spot's id
-                //push that mf in the array
-                if (currentImageSpotId === currentSpot.id) {
-                    Images.push({
-                        id: currentSpot.id,
-                        imageableId: currentSpot.id,
-                        url: currentImage.url
-                    })
+                //if the spot doesn't have the previewImage attribute
+                //AND the image's spotId matches up with the spot's id
+                if (!currentSpot.previewImage && currentImageSpotId === currentSpot.id) {
+                    currentSpot.previewImage = currentImage.url
                 }
             }
         }
     }
-    allSpots[0].dataValues.Images = Images
+
     res.json(allSpots)
     //STILLNEEDS decimal fixing on heroku?
-    //STILLNEEDS to remove owner info from this!
     //STILLNEEDS to remove attributes firstname/lastname from query
     //question: having trouble limiting the attributes of whatever I'm calling findAll on
 });
 
-
-//~GET A SPOT BY ID WITH LITERAL
-// router.get('/:spotId', async (req, res) => {
-//     const { spotId } = req.params
-//     const spotInfo = await Spot.findAll({
-//         where: { id: spotId },
-//         include: [
-//             {
-//                 model: Image,
-//                 attributes: ['id', 'url'],
-//                 attributes: {
-//                     include: [
-//                         [sequelize.literal("Spot.id"), "imageableId"],
-//                     ],
-//                 }
-//             },
-//             {
-//                 model: User, as: "Owner",
-//                 attributes: ['id', 'firstName', 'lastName']
-//             },
-//         ],
-//         attributes: {
-//             include: [
-//                 [sequelize.literal("Spot.id"), "imageableId"],
-//             ],
-//         }
-//     })
-
-//     const avgRating = await Spot.findOne({
-//         where: { id: spotId },
-//         include: [{
-//             model: Review,
-//             attributes: []
-//         },
-//         ],
-//         attributes: {
-//             include: [
-//                 [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
-//             ],
-//         },
-//         group: ['Spot.id']
-//     })
-//     const avgStarRating = avgRating.dataValues.avgRating
-
-
-//     if (spotInfo[0].dataValues.id) {
-//         res.json({ spotInfo, avgStarRating })
-//         //STILLNEEDS imageable attribute how to get it formatted correctly
-//         //STILLNEEDS heroku decimal fix
-//     } else {
-//         res.status(404)
-//         res.json({
-//             message: "Spot couldn't be found",
-//             statusCode: 404
-//         })
-//     }
-
-// })
-//Question: why is the attributes for avgstar rating limiting the number of images I can display?
 
 //~GET A SPOT BY ID ~~WITHOUT LITERAL~~
 router.get('/:spotId', async (req, res) => {
@@ -229,7 +160,6 @@ router.get('/:spotId', async (req, res) => {
         order: ['id']
     })
 
-    console.log('HELLOOOOO')
     if (!allSpots[0]) {
         res.status(404)
         res.json({
@@ -248,6 +178,7 @@ router.get('/:spotId', async (req, res) => {
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
+        console.log('ALLIMAGES', 'I', i,  currentImage  )
         //check if the current Image has a spot Id
         let currentImageId = currentImage.id
         if (currentImage.Spot) {
@@ -272,7 +203,6 @@ router.get('/:spotId', async (req, res) => {
     if (allSpots[0].dataValues.id) {
         allSpots[0].dataValues.Images = Images
         res.json(allSpots)
-        console.log("HELLOOOOO")
     } else {
         res.status(404)
         res.json({
@@ -353,8 +283,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const userId = req.user.id
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
-
-
 
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {
@@ -469,19 +397,6 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         stausCode: 200
     })
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //question: in postman, are we supposed to replace {{spotId}} with our own?
