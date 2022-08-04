@@ -40,10 +40,6 @@ router.get('/', async (req, res) => {
             model: Review,
             attributes: []
         },
-        {
-            model: Image,
-            attributes: ['url', ['url', 'url']]
-        }
         ],
         attributes: {
             include: [
@@ -53,10 +49,41 @@ router.get('/', async (req, res) => {
 
     })
 
-    console.log(allSpots)
+    const allImages = await Image.findAll({
+        attributes: ['id', 'url'],
+        include: [{
+            model: Spot,
+            attributes: ['id']
+        }],
+        order: ['id']
+    })
+
+    //iterating through allImages && allSpots, when the spotid for both matches, add the url
+    //iterate through allImages - even though it's technically an object, treat it like an array
+    for (let i = 0; i < allImages.length; i++) {
+        let currentImage = allImages[i].dataValues
+        //check if the current Image has a spot Id
+        let currentImageId = currentImage.id
+        if (currentImage.Spot) {
+            let currentImageSpotId = currentImage.Spot.id
+            //iterate through all spots
+                for (let i = 0; i < allSpots.length; i++) {
+                    let currentSpot = allSpots[i].dataValues
+                    //if the spot doesn't have the previewImage attribute
+                    //AND the image's spotId matches up with the spot's id
+                    if (!currentSpot.previewImage && currentImageSpotId === currentSpot.id) {
+                        currentSpot.previewImage = currentImage.url
+                    }
+                }
+        }
+    }
+
+
+
 
     res.json(allSpots)
     //STILLNEEDS decimal fixing on heroku
+    //question: what is the spot has no images attached?
 });
 
 //~GET SPOTS OF CURRENT USER WITH LITERAL
