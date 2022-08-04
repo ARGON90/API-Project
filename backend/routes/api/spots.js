@@ -8,31 +8,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 
 //~GET ALL SPOTS
-// router.get('/', async (req, res) => {
-//     const allSpots = await Spot.findAll({
-//         group: ['Spot.id'],
-//         include: [{
-//             model: Review,
-//             attributes: []
-//         },
-//         {
-//             model: Image,
-//             attributes: []
-//         }
-//         ],
-//         attributes: {
-//             include: [
-//                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-//                 [sequelize.literal("Images.url"), "previewImage"]
-//             ],
-//         },
-
-//     })
-//     res.json(allSpots)
-//     //STILLNEEDS decimal fixing on heroku
-// });
-
-//~GET ALL SPOTS WITHOUT SQLZ LITERAL
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll({
         group: ['Spot.id'],
@@ -67,23 +42,20 @@ router.get('/', async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-                for (let i = 0; i < allSpots.length; i++) {
-                    let currentSpot = allSpots[i].dataValues
-                    //if the spot doesn't have the previewImage attribute
-                    //AND the image's spotId matches up with the spot's id
-                    if (!currentSpot.previewImage && currentImageSpotId === currentSpot.id) {
-                        currentSpot.previewImage = currentImage.url
-                    }
+            for (let i = 0; i < allSpots.length; i++) {
+                let currentSpot = allSpots[i].dataValues
+                //if the spot doesn't have the previewImage attribute
+                //AND the image's spotId matches up with the spot's id
+                if (!currentSpot.previewImage && currentImageSpotId === currentSpot.id) {
+                    currentSpot.previewImage = currentImage.url
                 }
+            }
         }
     }
 
-
-
-
     res.json(allSpots)
     //STILLNEEDS decimal fixing on heroku
-    //question: what is the spot has no images attached?
+    //question: what if the spot has no images attached, do we still want a previewImageId?
 });
 
 //~GET SPOTS OF CURRENT USER WITH LITERAL
@@ -110,11 +82,78 @@ router.get('/', async (req, res) => {
 
 //     })
 
-
 //     res.json(allSpots)
 //     //STILLNEEDS decimal fixing on heroku
-
 // });
+
+//~GET SPOTS OF CURRENT USER ~~WITHOUT LITERAL~~
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+    const userId = user.id
+
+    const allSpots = await Spot.findAll({
+        where: { ownerId: user.id },
+        attributes: ['id', 'firstName', 'lastName'],
+        include: [{
+            model: Review,
+            attributes: []
+        },
+        {
+            model: User, as: "Owner",
+            attributes: ['id', 'firstName', 'lastName']
+        },
+
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+            ],
+        },
+
+    })
+
+    const allImages = await Image.findAll({
+        attributes: ['id', 'url'],
+        include: [{
+            model: Spot,
+            attributes: ['id']
+        }],
+        order: ['id']
+    })
+
+    //build out your own images array of objects, with id, imageableid, url
+    let Images = []
+
+    //iterating through allImages && allSpots, when the spotid for both matches,
+    //add the url, imageableId, and url
+    //iterate through allImages - even though it's technically an object, treat it like an array
+    for (let i = 0; i < allImages.length; i++) {
+        let currentImage = allImages[i].dataValues
+        //check if the current Image has a spot Id
+        let currentImageId = currentImage.id
+        if (currentImage.Spot) {
+            let currentImageSpotId = currentImage.Spot.id
+            //iterate through all spots
+            for (let i = 0; i < allSpots.length; i++) {
+                let currentSpot = allSpots[i].dataValues
+                //if the image's spotId matches up with the spot's id
+                //push that mf in the array
+                if (currentImageSpotId === currentSpot.id) {
+                    Images.push({
+                        id: currentSpot.id,
+                        imageableId: currentSpot.id,
+                        url: currentImage.url
+                    })
+                }
+            }
+        }
+    }
+    allSpots[0].dataValues.Images = Images
+    res.json(allSpots)
+    //STILLNEEDS decimal fixing on heroku
+    //question: I have Owner BEFORE Images, is that okay?
+});
+
 
 //~GET A SPOT BY ID
 router.get('/:spotId', async (req, res) => {
