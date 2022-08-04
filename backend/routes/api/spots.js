@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
         },
         {
             model: Image,
-            attributes: ['previewImage', ['url', 'url']]
+            attributes: ['url', ['url', 'url']]
         }
         ],
         attributes: {
@@ -52,8 +52,6 @@ router.get('/', async (req, res) => {
         },
 
     })
-
-    const url = await Image.findAll({})
 
     console.log(allSpots)
 
@@ -111,11 +109,11 @@ router.get('/:spotId', async (req, res) => {
                 attributes: ['id', 'firstName', 'lastName']
             },
         ],
-        // attributes: {
-        //     include: [
-        //         [sequelize.literal("Spot.id"), "imageableId"],
-        //     ],
-        // }
+        attributes: {
+            include: [
+                [sequelize.literal("Spot.id"), "imageableId"],
+            ],
+        }
     })
 
     const avgRating = await Spot.findOne({
