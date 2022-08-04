@@ -96,7 +96,6 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     const { user } = req;
     const { review, stars } = req.body;
 
-    console.log('REVIEW REQ BODY', review)
 
     let errors = {}
     if (!review) errors.review = "Review text is required"
@@ -147,7 +146,6 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
 router.delete('/:reviewId', requireAuth, async (req, res) => {
     const reviewId = req.params.reviewId;
 
-    console.log('REVIEWID', reviewId)
 
     //REVIEW NOT FOUND
     const reviewExist = await Review.findByPk(reviewId);
