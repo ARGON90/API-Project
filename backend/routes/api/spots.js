@@ -68,17 +68,12 @@ router.get('/current', requireAuth, async (req, res) => {
     const userId = user.id
 
     const allSpots = await Spot.findAll({
-        group: ["Spot.id", "Owner.id"],
+        group: ["Spot.id"],
         where: { ownerId: user.id },
         include: [{
             model: Review,
             attributes: []
         },
-        {
-            model: User, as: "Owner",
-            attributes: []
-        },
-
         ],
         attributes: {
             include: [
@@ -396,6 +391,32 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         message: "Successfully deleted",
         stausCode: 200
     })
+})
+
+//GET ALL REVIEWS BY A SPOT'S ID
+router.get('/:spotId/reviews', async (req, res) => {
+    const { spotId } = req.params;
+
+    const Reviews = await Review.findAll({
+        where: { spotId: spotId },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: Spot,
+                attributes: ['id', 'ownerId', 'address', 'city',
+                    'state', 'country', 'lat', 'lng', 'name', 'price']
+            },
+            {
+                model: Image,
+                attributes: ['id', ['id', 'imageableId'], 'url']
+            },
+        ]
+    })
+
+    res.json({ Reviews })
 })
 
 

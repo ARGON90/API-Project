@@ -11,9 +11,8 @@ const { Spot, User, Review, Image, sequelize } = require('../../db/models');
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
-
     const Reviews = await Review.findAll({
-        where: { id: user.id },
+        where: { userId : user.id },
         include: [
             {
                 model: User,
@@ -28,12 +27,12 @@ router.get('/current', requireAuth, async (req, res) => {
                 model: Image,
                 attributes: ['id', ['id', 'imageableId'], 'url']
             },
-
         ]
-
     })
 
     res.json({ Reviews })
 })
+
+
 
 module.exports = router;
