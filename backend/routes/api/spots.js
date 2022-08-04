@@ -236,7 +236,7 @@ router.post('/', requireAuth, async (req, res) => {
 
     if (Object.keys(errors).length != 0) {
         res.status(400)
-        res.json({
+        return res.json({
             message: "Validation Error",
             statusCode: 400,
             errors
@@ -373,6 +373,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const spotId = req.params.spotId;
 
+    //SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {
         res.status(404)
@@ -418,6 +419,66 @@ router.get('/:spotId/reviews', async (req, res) => {
 
     res.json({ Reviews })
 })
+
+//CREATE A REVIEW FOR SPOT ON SPOT ID
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+    const { spotId } = req.params
+    const { user } = req;
+    const { review, stars } = req.body;
+
+    //SPOT NOT FOUND
+    const spotExist = await Spot.findByPk(spotId);
+    if (!spotExist) {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //VALIDATION CHECK
+    let errors = {}
+    if (!review) errors.review = "Review text is required"
+    if (!stars) errors.stars = "Stars must be an integer from 1 to 5"
+    if (typeof stars != 'number') errors.stars = "Stars must be an integer from 1 to 5"
+    if (stars > 5) errors.stars = "Stars must be an integer from 1 to 5"
+    if (stars < 1) errors.stars = "Stars must be an integer from 1 to 5"
+    if (Object.keys(errors).length != 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors
+        })
+    }
+
+    //REVIEW FROM CURRENT USER EXISTS FOR SPOT
+    //need to go through all reviews, see if any of
+    //the reviews have a userId of the current user
+
+    // {
+    //     "message": "User already has a review for this spot",
+    //     "statusCode": 403
+    //   }
+
+
+
+    const newReview = await Review.create({
+        userId: user.id,
+        spotId: spotId,
+        review: review,
+        stars: stars
+    })
+
+
+    await newReview.save()
+    res.status(201)
+    return res.json(newReview)
+
+
+
+})
+
 
 
 //question: in postman, are we supposed to replace {{spotId}} with our own?
