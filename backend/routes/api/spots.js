@@ -48,8 +48,7 @@ router.get('/', async (req, res) => {
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
                     !currentSpot.previewImage &&
-                    currentImageSpotId === currentSpot.id)
-                    {
+                    currentImageSpotId === currentSpot.id) {
                     currentSpot.previewImage = currentImage.url
                 }
             }
@@ -109,8 +108,7 @@ router.get('/current', requireAuth, async (req, res) => {
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
                     !currentSpot.previewImage &&
-                    currentImageSpotId === currentSpot.id)
-                    {
+                    currentImageSpotId === currentSpot.id) {
                     currentSpot.previewImage = currentImage.url
                 }
             }
@@ -131,7 +129,7 @@ router.get('/:spotId', async (req, res) => {
 
     const allSpots = await Spot.findAll({
         group: ["Spot.id", "Owner.id"],
-        where: { id : spotId },
+        where: { id: spotId },
         include: [{
             model: Review,
             attributes: []
@@ -179,7 +177,7 @@ router.get('/:spotId', async (req, res) => {
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
-        console.log('ALLIMAGES', 'I', i,  currentImage  )
+        console.log('ALLIMAGES', 'I', i, currentImage)
         //check if the current Image has a spot Id
         let currentImageId = currentImage.id
         if (currentImage.Spot) {
@@ -430,7 +428,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {
         res.status(404)
-        res.json({
+        return res.json({
             message: "Spot couldn't be found",
             statusCode: 404
         })
@@ -453,13 +451,28 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     }
 
     //REVIEW FROM CURRENT USER EXISTS FOR SPOT
-    //need to go through all reviews, see if any of
-    //the reviews have a userId of the current user
+    const reviewsForSpot = await Review.findAll({
+        where: { spotId: spotId },
+        include: [
+            {
+                model: User,
+            },
+            {
+                model: Spot,
+            }],
 
-    // {
-    //     "message": "User already has a review for this spot",
-    //     "statusCode": 403
-    //   }
+    })
+
+    let userIdForSpot = reviewsForSpot[0].dataValues.User.id
+    for (let i = 0; i < reviewsForSpot.length; i++) {
+        if (userIdForSpot === user.id) {
+            res.status(403)
+            return res.json({
+                message: "User already has a review for this spot",
+                statusCode: 403
+            })
+        }
+    }
 
 
 
@@ -475,10 +488,8 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     res.status(201)
     return res.json(newReview)
 
-
-
 })
-
+//potential heroku error: i added a spot, but it didn't show up in get reviews of current user
 
 
 //question: in postman, are we supposed to replace {{spotId}} with our own?
