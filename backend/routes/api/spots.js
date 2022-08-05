@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
-const { Spot, User, Review, Image, sequelize } = require('../../db/models');
+const { Spot, User, Review, Image, Booking, sequelize } = require('../../db/models');
 const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
@@ -490,8 +490,46 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 })
 //potential heroku error: i added a spot, but it didn't show up in get reviews of current user
 
+//GET BOOKINGS FOR SPOT BASED ON SPOT ID
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const { spotId } = req.params;
+    const { user } = req;
 
-//question: in postman, are we supposed to replace {{spotId}} with our own?
+    //SPOT NOT FOUND
+    const spotExist = await Spot.findByPk(spotId);
+    if (!spotExist) {
+        res.status(404)
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    // AUTHORIZATION FOR NON-OWNER
+    const userId = req.user.id
+    if (spotExist.ownerId !== userId) {
+        const Bookings = await Booking.findAll({
+            where: { spotId : spotId },
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+        return res.json({Bookings})
+    };
+
+    // AUTHORIZATION FOR OWNER
+    if (spotExist.ownerId === userId) {
+        const Bookings = await Booking.findAll({
+            where: { spotId : spotId },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
+                }
+            ]
+        })
+        return res.json({Bookings})
+    };
+})
+
 
 
 
