@@ -106,7 +106,6 @@ router.get('/', async (req, res) => {
     }
 
     res.json({ Spots, page, size })
-    //STILLNEEDS decimal fixing on heroku
     //question: what if the spot has no images attached, do we still want a previewImageId?
 });
 
@@ -116,7 +115,7 @@ router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
     const userId = user.id
 
-    const allSpots = await Spot.findAll({
+    const Spots = await Spot.findAll({
         group: ["Spot.id"],
         where: { ownerId: user.id },
         include: [{
@@ -131,9 +130,9 @@ router.get('/current', requireAuth, async (req, res) => {
         },
 
     })
-    for (let i = 0; i < allSpots.length; i++) {
-        let avgRating = Number.parseFloat(allSpots[i].dataValues.avgRating).toFixed(2)
-        allSpots[i].dataValues.avgRating = avgRating
+    for (let i = 0; i < Spots.length; i++) {
+        let avgRating = Number.parseFloat(Spots[i].dataValues.avgRating).toFixed(2)
+        Spots[i].dataValues.avgRating = avgRating
     }
 
 
@@ -148,7 +147,7 @@ router.get('/current', requireAuth, async (req, res) => {
         order: ['id']
     })
 
-    //iterating through allImages && allSpots, when the spotid for both matches, add the url
+    //iterating through allImages && Spots, when the spotid for both matches, add the url
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
@@ -157,8 +156,8 @@ router.get('/current', requireAuth, async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-            for (let i = 0; i < allSpots.length; i++) {
-                let currentSpot = allSpots[i].dataValues
+            for (let i = 0; i < Spots.length; i++) {
+                let currentSpot = Spots[i].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
@@ -170,8 +169,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     }
 
-    res.json(allSpots)
-    //STILLNEEDS decimal fixing on heroku?
+    res.json({Spots})
     //STILLNEEDS to remove attributes firstname/lastname from query
     //question: having trouble limiting the attributes of whatever I'm calling findAll on
 });
@@ -199,8 +197,13 @@ router.get('/:spotId', async (req, res) => {
                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
             ],
         },
-
     })
+    for (let i = 0; i < allSpots.length; i++) {
+        let avgRating = Number.parseFloat(allSpots[i].dataValues.avgRating).toFixed(2)
+        allSpots[i].dataValues.avgRating = avgRating
+    }
+
+
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
         attributes: ['id', 'url'],
