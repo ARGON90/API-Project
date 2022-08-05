@@ -19,10 +19,10 @@ router.get('/', async (req, res) => {
             statusCode: 400
         })
     }
-    if(!page) page = 1;
+    if(!page) page = 0;
     parseInt(page);
 
-    if(!size) size = 1;
+    if(!size) size = 20;
     parseInt(size);
     if (size < 1 || size > 20 ) {
         res.status(400)
@@ -64,6 +64,7 @@ router.get('/', async (req, res) => {
     },
     })
     for (let i = 0; i < Spots.length ; i++) {
+        Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(1)
          Spots[i].dataValues.avgRating = allSpotsStar[i].dataValues.avgRating
     }
 
