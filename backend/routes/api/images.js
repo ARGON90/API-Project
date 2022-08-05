@@ -9,11 +9,19 @@ const { check } = require('express-validator');
 
 router.delete('/:imageId', requireAuth, async (req, res) => {
     const { imageId } = req.params
-
-
-    //AUTHORIZATION: IMG MUST BELONG TO CURRENT USER
     const userId = req.user.id
     const thisImage = await Image.findByPk(imageId)
+
+    //IMAGE DOESN'T EXIST
+    if (!thisImage) {
+        res.status(404)
+        res.json({
+            message: "Image couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //AUTHORIZATION: IMG MUST BELONG TO CURRENT USER
     if (thisImage.userId != userId) {
         res.status(403)
         res.json({
@@ -21,6 +29,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
             statusCode: 403
         })
     }
+
 
     await thisImage.destroy();
     res.status(200)
