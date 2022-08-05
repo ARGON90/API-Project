@@ -61,8 +61,8 @@ router.get('/', async (req, res) => {
     },
     })
     for (let i = 0; i < Spots.length ; i++) {
-        Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(1)
-         Spots[i].dataValues.avgRating = allSpotsStar[i].dataValues.avgRating
+        let avgRating = Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(2)
+         Spots[i].dataValues.avgRating = avgRating
     }
 
     const allImages = await Image.findAll({
