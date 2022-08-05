@@ -9,6 +9,36 @@ const { check } = require('express-validator');
 
 //~GET ALL SPOTS ~~WITHOUT LITERAL~~
 router.get('/', async (req, res) => {
+
+    let { page, size } = req.query;
+    const pagination = {};
+
+    if (page < 1 || page > 20 ) {
+        res.status(400)
+        return res.json({
+            message: "Query Error: Page must be between 0 and 20",
+            statusCode: 400
+        })
+    }
+    if(!page) page = 1;
+    parseInt(page);
+
+    if(!size) size = 1;
+    parseInt(size);
+    if (size < 1 || size > 20 ) {
+        res.status(400)
+        return res.json({
+            message: "Query Error: Size must be between 0 and 20",
+            statusCode: 400
+        })
+    }
+    if (page >= 1) pagination.limit = size;
+    if (size >= 1) pagination.offset = size * (page - 1);
+
+    // allSpots.limit = pagination.limit;
+    // allSpots.page = pagination.page;
+
+
     const allSpots = await Spot.findAll({
         group: ['Spot.id'],
         include: [{
@@ -21,6 +51,8 @@ router.get('/', async (req, res) => {
                 [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
             ],
         },
+        limit: pagination.limit,
+        offset: pagination.offset
 
     })
 
@@ -55,11 +87,12 @@ router.get('/', async (req, res) => {
         }
     }
 
-    res.json(allSpots)
+
+
+    res.json({allSpots})
     //STILLNEEDS decimal fixing on heroku
     //question: what if the spot has no images attached, do we still want a previewImageId?
 });
-
 
 //~GET SPOTS OF CURRENT USER ~~WITHOUT LITERAL~~
 router.get('/current', requireAuth, async (req, res) => {
@@ -81,8 +114,6 @@ router.get('/current', requireAuth, async (req, res) => {
         },
 
     })
-
-
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
         attributes: ['id', 'url', 'previewImage'],
@@ -126,7 +157,6 @@ router.get('/current', requireAuth, async (req, res) => {
 router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params;
 
-
     const allSpots = await Spot.findAll({
         group: ["Spot.id", "Owner.id"],
         where: { id: spotId },
@@ -147,8 +177,6 @@ router.get('/:spotId', async (req, res) => {
         },
 
     })
-
-
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
         attributes: ['id', 'url'],
@@ -166,8 +194,6 @@ router.get('/:spotId', async (req, res) => {
             statusCode: 404
         })
     }
-
-
 
     //build out your own images array of objects, with id, imageableid, url
     let Images = []
@@ -197,8 +223,6 @@ router.get('/:spotId', async (req, res) => {
             }
         }
     }
-
-
     if (allSpots[0].dataValues.id) {
         allSpots[0].dataValues.Images = Images
         res.json(allSpots)
@@ -254,8 +278,6 @@ router.post('/', requireAuth, async (req, res) => {
         price
     })
 
-
-
     res.status(201)
     return res.json(newSpot)
 })
@@ -286,7 +308,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             statusCode: 403
         })
     }
-
     const newImage = await Image.create({
         url: url,
         previewImage: previewImage,
