@@ -46,9 +46,6 @@ router.get('/', async (req, res) => {
     offset: offset
     })
 
-    Spots[0].dataValues.page = page
-    Spots[0].dataValues.size = size
-
     //FETCH STAR RATINGS FOR ALL SPOTS, ADD INTO ALLSPOTS
     const allSpotsStar = await Spot.findAll({
         group: ['Spot.id'],
