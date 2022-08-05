@@ -150,5 +150,52 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     return res.json(thisBooking)
 })
 
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+    const { bookingId } = req.params;
+    const thisBooking = await Booking.findByPk(bookingId);
+
+    // AUTHORIZATION FOR USER or SPOT OWNER
+    //need to make a query to determine who owns the spot of this booking
+    //this booking.spotId → spot.ownerId
+    const userId = req.user.id
+    if (thisBooking.userId === userId) {
+        res.status(403);
+        return res.json({
+            message: "ALLOWED: Booking must belong to the current user",
+            status: "403"
+        })
+    };
+    //AUTH: user OR spot must belong to current user"
+
+    //BOOKING NOT FOUND
+    if (!thisBooking) {
+        res.status(404)
+        return res.json({
+            message: "Booking couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    //BOOKING STARTED CAN'T BE DELETED
+    const startDate = thisBooking.startDate
+    const starterDate = new Date(startDate);
+    let today = new Date();
+    if (today >= starterDate) {
+        res.status(403);
+        return res.json({
+            message: "Past bookings can't be modified",
+            statusCode: 403
+        })
+    }
+    //STILLNEEDS testing here
+
+    res.status(403)
+    return res.json({
+        message: "Forbidden: Booking or Spot must belong to the current user",
+        status: "403"
+    })
+})
+
+
 
 module.exports = router;

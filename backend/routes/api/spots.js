@@ -391,6 +391,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         stausCode: 200
     })
 })
+//STILLNEEDS: DO I NEED AUTHORIZATION FOR THIS ONE?
 
 //GET ALL REVIEWS BY A SPOT'S ID
 router.get('/:spotId/reviews', async (req, res) => {
@@ -637,6 +638,5 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         return res.json(newBooking)
     };
 });
-
 
 module.exports = router;
