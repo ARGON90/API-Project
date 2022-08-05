@@ -7,11 +7,10 @@ const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 
-//~GET ALL SPOTS ~~WITHOUT LITERAL~~
+//~GET ALL SPOTS ~~WITHOUT LITERAL~~ ~~WITH PAGINATION~~
 router.get('/', async (req, res) => {
 
     let { page, size } = req.query;
-    const pagination = {};
 
     if (page < 1 || page > 20 ) {
         res.status(400)
@@ -32,29 +31,41 @@ router.get('/', async (req, res) => {
             statusCode: 400
         })
     }
-    if (page >= 1) pagination.limit = size;
-    if (size >= 1) pagination.offset = size * (page - 1);
+    if (page >= 1) limit = size;
+    if (size >= 1) offset = size * (page - 1);
 
-    // allSpots.limit = pagination.limit;
-    // allSpots.page = pagination.page;
-
-
+    //GET ALL SPOTS WITH PAGINATION INCLUDED
     const allSpots = await Spot.findAll({
         group: ['Spot.id'],
         include: [{
             model: Review,
             attributes: []
         },
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-            ],
-        },
-        limit: pagination.limit,
-        offset: pagination.offset
-
+    ],
+    limit: limit,
+    offset: offset
     })
+
+    allSpots[0].dataValues.page = page
+    allSpots[0].dataValues.size = size
+
+    //FETCH STAR RATINGS FOR ALL SPOTS, ADD INTO ALLSPOTS
+    const allSpotsStar = await Spot.findAll({
+        group: ['Spot.id'],
+        include: [{
+            model: Review,
+            attributes: []
+        },
+    ],
+    attributes: {
+        include: [
+            [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+        ],
+    },
+    })
+    for (let i = 0; i < allSpots.length ; i++) {
+         allSpots[i].dataValues.avgRating = allSpotsStar[i].dataValues.avgRating
+    }
 
     const allImages = await Image.findAll({
         attributes: ['id', 'url', 'previewImage'],
@@ -69,8 +80,7 @@ router.get('/', async (req, res) => {
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
-        //check if the current Image has a spot Id
-        let currentImageId = currentImage.id
+        //check if the current Image has a spot
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
@@ -86,8 +96,6 @@ router.get('/', async (req, res) => {
             }
         }
     }
-
-
 
     res.json({allSpots})
     //STILLNEEDS decimal fixing on heroku
