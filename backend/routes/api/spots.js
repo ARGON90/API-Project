@@ -110,6 +110,7 @@ router.get('/', async (req, res) => {
     //question: what if the spot has no images attached, do we still want a previewImageId?
 });
 
+
 //~GET SPOTS OF CURRENT USER ~~WITHOUT LITERAL~~
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
@@ -130,6 +131,13 @@ router.get('/current', requireAuth, async (req, res) => {
         },
 
     })
+    for (let i = 0; i < allSpots.length; i++) {
+        let avgRating = Number.parseFloat(allSpots[i].dataValues.avgRating).toFixed(2)
+        allSpots[i].dataValues.avgRating = avgRating
+    }
+
+
+
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
         attributes: ['id', 'url', 'previewImage'],
