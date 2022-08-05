@@ -555,12 +555,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         let currentEndDate = new Date(currentBookingTime.endDate)
         if (starterDate.getTime() >= currentStartDate.getTime() &&
             starterDate.getTime() <= currentEndDate.getTime()) {
-            errors.startDate = "End Date conflicts with booking"
+            errors.startDate = "Start Date conflicts with booking"
         }
         // WOULDN'T PASS ERROR SPECS
         if (currentStartDate.getTime() >= starterDate.getTime() &&
             currentStartDate.getTime() <= enderDate.getTime()) {
-            errors.dateConflict = "Date Conflict: Booking Overlap"
+            errors.dateConflict = `Date Conflict: this property is booked between ${currentStartDate} and ${currentEndDate}. Please try different dates`
         }
         if (enderDate.getTime() >= currentStartDate.getTime() &&
             enderDate.getTime() <= currentEndDate.getTime()) {
@@ -569,7 +569,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         // WOULDN'T PASS ERROR SPECS
         if (currentEndDate.getTime() >= starterDate.getTime() &&
             currentEndDate.getTime() <= enderDate.getTime()) {
-            errors.dateConflict = "Date conflict: Booking Overlap"
+            errors.dateConflict = `Date Conflict: this property is booked between ${currentStartDate} and ${currentEndDate}. Please try different dates`
         }
         if (Object.keys(errors).length != 0) {
             res.status(403)
