@@ -540,14 +540,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const starterDate = new Date(startDate)
     const enderDate = new Date(endDate)
 
-    //plan: iterate through all bookings for this spot
+
+
+    //VALIDATION: BOOKING DATE CONFLICT
     const allBookingTimes = await Booking.findAll({
         where: { spotid: spotId },
         attributes: ['startDate', 'endDate'],
 
     })
-    //console.log(allBookingTimes[0].dataValues, allBookingTimes[1].dataValues, 'LENGTH', allBookingTimes.length)
-
     let errors = {}
     for (let i = 0; i < allBookingTimes.length; i++) {
         let currentBookingTime = allBookingTimes[i].dataValues
@@ -579,14 +579,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                 errors
             })
         }
-
     }
-
-    //if((check.getTime() <= to.getTime() && check.getTime() >= from.getTime()))
-    // if start date l
-    //return res.json({ allBookingTimes })
-
-
 
     //SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);
@@ -643,9 +636,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         res.status(200)
         return res.json(newBooking)
     };
-
-
-
 });
 
 
