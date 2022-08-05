@@ -6,7 +6,6 @@ const { Spot, User, Review, Image, Booking, sequelize } = require('../../db/mode
 const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
-const booking = require('../../db/models/booking');
 
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
@@ -154,15 +153,31 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     const { bookingId } = req.params;
     const thisBooking = await Booking.findByPk(bookingId);
 
-    // AUTHORIZATION FOR USER or SPOT OWNER
+    // AUTHORIZATION SPOT OWNER
     //need to make a query to determine who owns the spot of this booking
-    //this booking.spotId → spot.ownerId
+    const thisBookingSpot = await Booking.findAll({
+        where: { id: bookingId },
+        include: Spot
+    })
+    const ownerId = thisBookingSpot[0].dataValues.Spot.ownerId
     const userId = req.user.id
+    if (ownerId = userId) {
+        await thisBooking.destroy();
+        res.status(200);
+        res.json({
+            message: "Successfully Deleted",
+            statusCode: 200
+        })
+    }
+
+
+    // AUTHORIZATION FOR USER
     if (thisBooking.userId === userId) {
-        res.status(403);
-        return res.json({
-            message: "ALLOWED: Booking must belong to the current user",
-            status: "403"
+        await thisBooking.destroy();
+        res.status(200);
+        res.json({
+            message: "Successfully Deleted",
+            statusCode: 200
         })
     };
     //AUTH: user OR spot must belong to current user"
