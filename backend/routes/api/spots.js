@@ -31,6 +31,9 @@ router.get('/', async (req, res) => {
             statusCode: 400
         })
     }
+
+    let limit;
+    let offset;
     if (page >= 1) limit = size;
     if (size >= 1) offset = size * (page - 1);
 
