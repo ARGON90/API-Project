@@ -14,6 +14,8 @@ router.get('/current', requireAuth, async (req, res) => {
         where: { userId: user.id },
     })
 
+    console.log('BOOKINGS', Bookings)
+
     const allSpots = await Spot.findAll({
         group: ["Spot.id"],
         attributes: ['id', 'ownerId', 'address', 'city',
@@ -57,6 +59,7 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         }
     }
+    console.log('BOOKINGS', Bookings)
     Bookings[0].dataValues.Spot = allSpots
 
     res.json({ Bookings })
@@ -159,12 +162,12 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
         where: { id: bookingId },
         include: Spot
     })
-    const ownerId = thisBookingSpot[0].dataValues.Spot.ownerId
+    let ownerId = thisBookingSpot[0].dataValues.Spot.ownerId
     const userId = req.user.id
     if (ownerId = userId) {
         await thisBooking.destroy();
         res.status(200);
-        res.json({
+        return res.json({
             message: "Successfully Deleted",
             statusCode: 200
         })
@@ -173,7 +176,7 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
     // AUTHORIZATION FOR USER
     if (thisBooking.userId === userId) {
-        await thisBooking.destroy();
+       await thisBooking.destroy();
         res.status(200);
         res.json({
             message: "Successfully Deleted",
