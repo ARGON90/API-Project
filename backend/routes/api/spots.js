@@ -489,6 +489,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 
 })
 //potential heroku error: i added a spot, but it didn't show up in get reviews of current user
+//STILLNEEDS: MAKE SURE YOU HAVE THE CORRECT 201 RESPONSES FOR CREATION
 
 //GET BOOKINGS FOR SPOT BASED ON SPOT ID
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
@@ -509,16 +510,16 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     const userId = req.user.id
     if (spotExist.ownerId !== userId) {
         const Bookings = await Booking.findAll({
-            where: { spotId : spotId },
+            where: { spotId: spotId },
             attributes: ['spotId', 'startDate', 'endDate']
         })
-        return res.json({Bookings})
+        return res.json({ Bookings })
     };
 
     // AUTHORIZATION FOR OWNER
     if (spotExist.ownerId === userId) {
         const Bookings = await Booking.findAll({
-            where: { spotId : spotId },
+            where: { spotId: spotId },
             include: [
                 {
                     model: User,
@@ -526,11 +527,126 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
                 }
             ]
         })
-        return res.json({Bookings})
+        return res.json({ Bookings })
     };
 })
 
+//CREATE BOOKING FOR SPOT BASED ON SPOT ID
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
+    const { spotId } = req.params;
+    const { user } = req;
+    const { startDate, endDate } = req.body;
+    const starterDate = new Date(startDate)
+    const enderDate = new Date(endDate)
+
+    //plan: iterate through all bookings for this spot
+    const allBookingTimes = await Booking.findAll({
+        where: { spotid: spotId },
+        attributes: ['startDate', 'endDate'],
+
+    })
+    //console.log(allBookingTimes[0].dataValues, allBookingTimes[1].dataValues, 'LENGTH', allBookingTimes.length)
+
+    let errors = {}
+    for (let i = 0; i < allBookingTimes.length; i++) {
+        let currentBookingTime = allBookingTimes[i].dataValues
+        let currentStartDate = new Date(currentBookingTime.startDate)
+        let currentEndDate = new Date(currentBookingTime.endDate)
+        if (starterDate.getTime() >= currentStartDate.getTime() &&
+            starterDate.getTime() <= currentEndDate.getTime()) {
+            errors.startDate = "End Date conflicts with booking"
+        }
+        // WOULDN'T PASS ERROR SPECS
+        if (currentStartDate.getTime() >= starterDate.getTime() &&
+            currentStartDate.getTime() <= enderDate.getTime()) {
+            errors.dateConflict = "Date Conflict: Booking Overlap"
+        }
+        if (enderDate.getTime() >= currentStartDate.getTime() &&
+            enderDate.getTime() <= currentEndDate.getTime()) {
+            errors.endDate = "End Date conflicts with booking"
+        }
+        // WOULDN'T PASS ERROR SPECS
+        if (currentEndDate.getTime() >= starterDate.getTime() &&
+            currentEndDate.getTime() <= enderDate.getTime()) {
+            errors.dateConflict = "Date conflict: Booking Overlap"
+        }
+        if (Object.keys(errors).length != 0) {
+            res.status(403)
+            return res.json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                statusCode: 403,
+                errors
+            })
+        }
+
+    }
+
+    //if((check.getTime() <= to.getTime() && check.getTime() >= from.getTime()))
+    // if start date l
+    //return res.json({ allBookingTimes })
+
+
+
+    //SPOT NOT FOUND
+    const spotExist = await Spot.findByPk(spotId);
+    if (!spotExist) {
+        res.status(404)
+        return res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    //VALIDATION CHECK ENDDATE BEFORE STARTDATE
+    errors = {}
+    if (startDate >= endDate) errors.endDate = "EndDate cannot be on or before startDate"
+    if (Object.keys(errors).length != 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors
+        })
+    }
+
+    //BOOKING CONFLICT CHECK
+    if (startDate >= endDate) errors.endDate = "EndDate cannot be on or before startDate"
+    if (Object.keys(errors).length != 0) {
+        res.status(400)
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors
+        })
+    }
+
+    // AUTHORIZATION FOR OWNER (ERROR)
+    const userId = req.user.id
+    if (spotExist.ownerId === userId) {
+        res.status(403)
+        return res.json({
+            message: "Forbidden: Spot belongs to current user",
+            statusCode: 403
+        })
+    };
+
+    // AUTHORIZATION FOR NON-OWNER (SUCCESSFUL BOOKING)
+    if (spotExist.ownerId !== userId) {
+        const newBooking = await Booking.create({
+            spotId: spotId,
+            userId: userId,
+            startDate: startDate,
+            endDate: endDate,
+        })
+        await newBooking.save()
+        res.status(200)
+        return res.json(newBooking)
+    };
+
+
+
+});
 
 
 module.exports = router;
