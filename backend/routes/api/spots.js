@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
     if (size >= 1) offset = size * (page - 1);
 
     //GET ALL SPOTS WITH PAGINATION INCLUDED
-    const allSpots = await Spot.findAll({
+    const Spots = await Spot.findAll({
         group: ['Spot.id'],
         include: [{
             model: Review,
@@ -46,8 +46,8 @@ router.get('/', async (req, res) => {
     offset: offset
     })
 
-    allSpots[0].dataValues.page = page
-    allSpots[0].dataValues.size = size
+    Spots[0].dataValues.page = page
+    Spots[0].dataValues.size = size
 
     //FETCH STAR RATINGS FOR ALL SPOTS, ADD INTO ALLSPOTS
     const allSpotsStar = await Spot.findAll({
@@ -63,8 +63,8 @@ router.get('/', async (req, res) => {
         ],
     },
     })
-    for (let i = 0; i < allSpots.length ; i++) {
-         allSpots[i].dataValues.avgRating = allSpotsStar[i].dataValues.avgRating
+    for (let i = 0; i < Spots.length ; i++) {
+         Spots[i].dataValues.avgRating = allSpotsStar[i].dataValues.avgRating
     }
 
     const allImages = await Image.findAll({
@@ -84,8 +84,8 @@ router.get('/', async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-            for (let i = 0; i < allSpots.length; i++) {
-                let currentSpot = allSpots[i].dataValues
+            for (let i = 0; i < Spots.length; i++) {
+                let currentSpot = Spots[i].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
@@ -97,7 +97,7 @@ router.get('/', async (req, res) => {
         }
     }
 
-    res.json({allSpots})
+    res.json({Spots, page, size})
     //STILLNEEDS decimal fixing on heroku
     //question: what if the spot has no images attached, do we still want a previewImageId?
 });
