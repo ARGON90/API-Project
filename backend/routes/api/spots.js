@@ -12,19 +12,19 @@ router.get('/', async (req, res) => {
 
     let { page, size } = req.query;
 
-    if (page < 1 || page > 20 ) {
+    if (page < 1 || page > 20) {
         res.status(400)
         return res.json({
             message: "Query Error: Page must be between 0 and 20",
             statusCode: 400
         })
     }
-    if(!page) page = 0;
+    if (!page) page = 0;
     parseInt(page);
 
-    if(!size) size = 20;
+    if (!size) size = 20;
     parseInt(size);
-    if (size < 1 || size > 20 ) {
+    if (size < 1 || size > 20) {
         res.status(400)
         return res.json({
             message: "Query Error: Size must be between 0 and 20",
@@ -34,9 +34,16 @@ router.get('/', async (req, res) => {
 
     let limit;
     let offset;
-    if (page >= 1) limit = size;
-    if (size >= 1) offset = size * (page - 1);
+    if(page >= 1 && size >= 1){
+        limit = size;
+        offset = size * (page - 1);
+    } else {
+        limit = size,
+        offset = 0;
+    }
 
+    console.log('OFFSET', offset)
+    console.log('PAGE', page)
     //GET ALL SPOTS WITH PAGINATION INCLUDED
     const Spots = await Spot.findAll({
         group: ['Spot.id'],
@@ -44,9 +51,9 @@ router.get('/', async (req, res) => {
             model: Review,
             attributes: []
         },
-    ],
-    limit: limit,
-    offset: offset
+        ],
+        limit: limit,
+        offset: offset
     })
 
     //FETCH STAR RATINGS FOR ALL SPOTS, ADD INTO ALLSPOTS
@@ -56,16 +63,16 @@ router.get('/', async (req, res) => {
             model: Review,
             attributes: []
         },
-    ],
-    attributes: {
-        include: [
-            [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
         ],
-    },
+        attributes: {
+            include: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+            ],
+        },
     })
-    for (let i = 0; i < Spots.length ; i++) {
+    for (let i = 0; i < Spots.length; i++) {
         let avgRating = Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(2)
-         Spots[i].dataValues.avgRating = avgRating
+        Spots[i].dataValues.avgRating = avgRating
     }
 
     const allImages = await Image.findAll({
@@ -98,7 +105,7 @@ router.get('/', async (req, res) => {
         }
     }
 
-    res.json({Spots, page, size})
+    res.json({ Spots, page, size })
     //STILLNEEDS decimal fixing on heroku
     //question: what if the spot has no images attached, do we still want a previewImageId?
 });
@@ -254,7 +261,7 @@ router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat,
         lng, name, description, price } = req.body;
 
-        lat.tofixed()
+    lat.tofixed()
 
     if (!address) errors.address = "Street address is required"
     if (!city) errors.city = "City is required"
