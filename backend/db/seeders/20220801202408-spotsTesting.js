@@ -15,8 +15,8 @@ module.exports = {
         city: 'spot city',
         state: 'spot state',
         country: 'country',
-        lat: 1.1,
-        lng: 2.2,
+        lat: 13.1234567,
+        lng: -21.1234567,
         name: 'name',
         description: 'description',
         price: 500
@@ -27,8 +27,8 @@ module.exports = {
         city: 'spot city2',
         state: 'spot state2',
         country: 'country2',
-        lat: 1.2,
-        lng: 2.3,
+        lat: 33.1234567,
+        lng: -44.1234567,
         name: 'name2',
         description: 'description2',
         price: 502

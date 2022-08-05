@@ -71,7 +71,6 @@ error message.
 ```js
 // backend/app.js
 // ...
-// Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
@@ -81,6 +80,7 @@ app.use((err, _req, res, _next) => {
     errors: err.errors,
     stack: isProduction ? null : err.stack
   });
+});
 });
 ```
 

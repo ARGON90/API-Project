@@ -253,6 +253,8 @@ router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat,
         lng, name, description, price } = req.body;
 
+        lat.tofixed()
+
     if (!address) errors.address = "Street address is required"
     if (!city) errors.city = "City is required"
     if (!state) errors.state = "State is required"
