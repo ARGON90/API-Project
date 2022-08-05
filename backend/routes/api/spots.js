@@ -527,9 +527,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             })
         }
     }
-
-
-
     const newReview = await Review.create({
         userId: user.id,
         spotId: spotId,
@@ -537,14 +534,11 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
         stars: stars
     })
 
-
     await newReview.save()
     res.status(201)
     return res.json(newReview)
-
 })
 //potential heroku error: i added a spot, but it didn't show up in get reviews of current user
-//STILLNEEDS: MAKE SURE YOU HAVE THE CORRECT 201 RESPONSES FOR CREATION
 
 //GET BOOKINGS FOR SPOT BASED ON SPOT ID
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
