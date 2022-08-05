@@ -170,8 +170,6 @@ router.get('/current', requireAuth, async (req, res) => {
     }
 
     res.json({Spots})
-    //STILLNEEDS to remove attributes firstname/lastname from query
-    //question: having trouble limiting the attributes of whatever I'm calling findAll on
 });
 
 
@@ -260,9 +258,7 @@ router.get('/:spotId', async (req, res) => {
             statusCode: 404
         })
     }
-
 })
-//STILLNEEDS heroku decimal fix
 
 
 //~CREATE A SPOT
@@ -420,28 +416,36 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 //~DELETE A SPOT BY ID
 router.delete('/:spotId', requireAuth, async (req, res) => {
     const spotId = req.params.spotId;
+    const userId = req.user.id
+    const thisSpot = await Spot.findByPk(spotId);
 
     //SPOT NOT FOUND
-    const spotExist = await Spot.findByPk(spotId);
-    if (!spotExist) {
+    if (!thisSpot) {
         res.status(404)
-        res.json({
+        return res.json({
             message: "Spot couldn't be found",
             statusCode: 404
         })
     }
 
+    // AUTHORIZATION FOR NON-OWNER
+    console.log('USERID', userId)
+    if (thisSpot.ownerId !== userId) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden: Spot must belong to Current User",
+            statusCode: 403
+        })
+    };
+
     const spot = await Spot.findByPk(spotId);
-
     await spot.destroy();
-
     res.status(200)
     res.json({
         message: "Successfully deleted",
         stausCode: 200
     })
 })
-//STILLNEEDS: DO I NEED AUTHORIZATION FOR THIS ONE?
 
 //GET ALL REVIEWS BY A SPOT'S ID
 router.get('/:spotId/reviews', async (req, res) => {
