@@ -11,24 +11,22 @@ const { check } = require('express-validator');
 router.get('/', async (req, res) => {
 
     let { page, size } = req.query;
+    let errors = {}
 
-    if (page < 1 || page > 20) {
-        res.status(400)
-        return res.json({
-            message: "Query Error: Page must be between 0 and 20",
-            statusCode: 400
-        })
-    }
+    if (page < 0 || page > 10) errors.page = "Page Query Error: Page must be between 0 and 10"
     if (!page) page = 0;
     parseInt(page);
 
     if (!size) size = 20;
     parseInt(size);
-    if (size < 1 || size > 20) {
+    if (size < 0 || size > 20) errors.size = "Size Query Error: Size must be between 0 and 20"
+
+    if (Object.keys(errors).length != 0) {
         res.status(400)
         return res.json({
-            message: "Query Error: Size must be between 0 and 20",
-            statusCode: 400
+            message: "Validation Error",
+            statusCode: 400,
+            errors
         })
     }
 
@@ -266,8 +264,6 @@ router.post('/', requireAuth, async (req, res) => {
     const { address, city, state, country, lat,
         lng, name, description, price } = req.body;
 
-    lat.tofixed()
-
     if (!address) errors.address = "Street address is required"
     if (!city) errors.city = "City is required"
     if (!state) errors.state = "State is required"
@@ -277,7 +273,7 @@ router.post('/', requireAuth, async (req, res) => {
     if (!name) errors.name = "Name is required"
     if (name.length >= 50) errors.name = "Name must be less than 50 characters"
     if (!description) errors.description = "Description is required"
-    if (!price) errors.price = "Price is required"
+    if (!price) errors.price = "Price per day is required"
 
     if (Object.keys(errors).length != 0) {
         res.status(400)
@@ -327,7 +323,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     if (spotExist.ownerId !== userId) {
         res.status(403)
         res.json({
-            message: "Forbidden",
+            message: "Forbidden: Current User must own Spot",
             statusCode: 403
         })
     }
@@ -389,7 +385,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     if (spotExist.ownerId !== userId) {
         res.status(403)
         res.json({
-            message: "Forbidden",
+            message: "Forbidden: Current user must own spot",
             statusCode: 403
         })
     }
@@ -448,6 +444,16 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 //GET ALL REVIEWS BY A SPOT'S ID
 router.get('/:spotId/reviews', async (req, res) => {
     const { spotId } = req.params;
+    const thisSpot = await Spot.findByPk(spotId);
+
+    //SPOT NOT FOUND
+    if (!thisSpot) {
+        res.status(404)
+        return res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
 
     const Reviews = await Review.findAll({
         where: { spotId: spotId },
@@ -455,11 +461,6 @@ router.get('/:spotId/reviews', async (req, res) => {
             {
                 model: User,
                 attributes: ['id', 'firstName', 'lastName']
-            },
-            {
-                model: Spot,
-                attributes: ['id', 'ownerId', 'address', 'city',
-                    'state', 'country', 'lat', 'lng', 'name', 'price']
             },
             {
                 model: Image,

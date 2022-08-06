@@ -61,7 +61,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     }
 
     //EXCEEDS MAX OF 10 IMAGES PER REVIEW
-    //find all images belonging to certain review, count their length
     const imagesOfReview = await Image.findAll({
         where: {reviewId: reviewId},
     })
@@ -127,7 +126,7 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     if (reviewExist.userId !== userId) {
         res.status(403)
         res.json({
-            message: "Forbidden",
+            message: "Forbidden: Review must belong to current user",
             statusCode: 403
         })
     }
@@ -145,10 +144,20 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
 //~DELETE A REVIEW BY ID
 router.delete('/:reviewId', requireAuth, async (req, res) => {
     const reviewId = req.params.reviewId;
+    const reviewExist = await Review.findByPk(reviewId);
+
+    // AUTHORIZATION
+    const userId = req.user.id
+    if (reviewExist.userId !== userId) {
+        res.status(403)
+        res.json({
+            message: "Forbidden: Review must belong to current user",
+            statusCode: 403
+        })
+    }
 
 
     //REVIEW NOT FOUND
-    const reviewExist = await Review.findByPk(reviewId);
     if (!reviewExist) {
         res.status(404)
         res.json({

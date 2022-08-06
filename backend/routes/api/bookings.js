@@ -7,6 +7,7 @@ const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 
+//GET ALL BOOKINGS OF CURRENT USER
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
