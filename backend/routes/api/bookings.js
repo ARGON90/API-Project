@@ -159,6 +159,14 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     const { bookingId } = req.params;
     const thisBooking = await Booking.findByPk(bookingId);
 
+    //BOOKING NOT FOUND
+    if (!thisBooking) {
+        res.status(404)
+        return res.json({
+            message: "Booking couldn't be found",
+            statusCode: 404
+        })
+    };
     // AUTHORIZATION SPOT OWNER
     //need to make a query to determine who owns the spot of this booking
     const thisBookingSpot = await Booking.findAll({
@@ -188,14 +196,6 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     };
     //AUTH: user OR spot must belong to current user"
 
-    //BOOKING NOT FOUND
-    if (!thisBooking) {
-        res.status(404)
-        return res.json({
-            message: "Booking couldn't be found",
-            statusCode: 404
-        })
-    };
 
     //BOOKING STARTED CAN'T BE DELETED
     const startDate = thisBooking.startDate
