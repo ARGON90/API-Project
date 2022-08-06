@@ -12,7 +12,7 @@ router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
     const Reviews = await Review.findAll({
-        where: { userId : user.id },
+        where: { userId: user.id },
         include: [
             {
                 model: User,
@@ -62,7 +62,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
     //EXCEEDS MAX OF 10 IMAGES PER REVIEW
     const imagesOfReview = await Image.findAll({
-        where: {reviewId: reviewId},
+        where: { reviewId: reviewId },
     })
     if (imagesOfReview.length >= 10) {
         res.status(403);
@@ -146,32 +146,33 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     const reviewId = req.params.reviewId;
     const reviewExist = await Review.findByPk(reviewId);
 
+    //REVIEW NOT FOUND
+    if (!reviewExist) {
+        res.status(404)
+        return res.json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
+    }
+
     // AUTHORIZATION
     const userId = req.user.id
     if (reviewExist.userId !== userId) {
         res.status(403)
-        res.json({
+        return res.json({
             message: "Forbidden: Review must belong to current user",
             statusCode: 403
         })
     }
 
 
-    //REVIEW NOT FOUND
-    if (!reviewExist) {
-        res.status(404)
-        res.json({
-            message: "Review couldn't be found",
-            statusCode: 404
-        })
-    }
 
     const review = await Review.findByPk(reviewId);
 
     await review.destroy();
 
     res.status(200)
-    res.json({
+    return res.json({
         message: "Successfully deleted",
         stausCode: 200
     })

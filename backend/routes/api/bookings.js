@@ -20,7 +20,7 @@ router.get('/current', requireAuth, async (req, res) => {
     //FIND ALL SPOTS
     const allSpots = await Spot.findAll({
         attributes: ['id', 'ownerId', 'address', 'city',
-        'state', 'country', 'lat', 'lng', 'name', 'price'],
+            'state', 'country', 'lat', 'lng', 'name', 'price'],
     })
 
     //ALL IMAGES
@@ -58,7 +58,7 @@ router.get('/current', requireAuth, async (req, res) => {
     }
 
     //FIND SPOTS WHERE ID = BOOKING.SPOTID, ADD THOSE TO BOOKINGS OBJECT
-    for (let i = 0; i < Bookings.length; i++ ) {
+    for (let i = 0; i < Bookings.length; i++) {
         if (Bookings[i].dataValues.spotId === allSpots[i].dataValues.id) {
             Bookings[i].dataValues.Spot = allSpots[i].dataValues
         }
@@ -167,35 +167,12 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
             statusCode: 404
         })
     };
-    // AUTHORIZATION SPOT OWNER
-    //need to make a query to determine who owns the spot of this booking
+
     const thisBookingSpot = await Booking.findAll({
         where: { id: bookingId },
         include: Spot
     })
-    let ownerId = thisBookingSpot[0].dataValues.Spot.ownerId
     const userId = req.user.id
-    if (ownerId = userId) {
-        await thisBooking.destroy();
-        res.status(200);
-        return res.json({
-            message: "Successfully Deleted",
-            statusCode: 200
-        })
-    }
-
-
-    // AUTHORIZATION FOR USER
-    if (thisBooking.userId === userId) {
-        await thisBooking.destroy();
-        res.status(200);
-        res.json({
-            message: "Successfully Deleted",
-            statusCode: 200
-        })
-    };
-    //AUTH: user OR spot must belong to current user"
-
 
     //BOOKING STARTED CAN'T BE DELETED
     const startDate = thisBooking.startDate
@@ -210,11 +187,39 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     }
     //STILLNEEDS testing here
 
-    res.status(403)
-    return res.json({
-        message: "Forbidden: Booking or Spot must belong to the current user",
-        status: "403"
-    })
+    //AUTH: NON-USER OR NON-OWNDER
+    let ownerId = thisBookingSpot[0].dataValues.Spot.ownerId
+
+
+    if (thisBooking.userId !== userId && ownerId !== userId) {
+        res.status(403)
+        return res.json({
+            message: "Forbidden: Booking or Spot must belong to the current user",
+            status: "403"
+        })
+    }
+
+
+
+    // AUTHORIZATION SPOT OWNER
+    if (ownerId === userId) {
+        await thisBooking.destroy();
+        res.status(200);
+        return res.json({
+            message: "Successfully Deleted",
+            statusCode: 200
+        })
+    }
+
+    // AUTHORIZATION FOR USER
+    if (thisBooking.userId === userId) {
+        await thisBooking.destroy();
+        res.status(200);
+        res.json({
+            message: "Successfully Deleted",
+            statusCode: 200
+        })
+    };
 })
 
 
