@@ -76,45 +76,45 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-  // Error Formatter Error handler - should be LAST
-  //formats all errors before returning a json response
-  //includes stack trace if the environment is in development
-  //WHAT I MADE
-  // app.use((err, _req, res, _next) => {
-  //   res.status(err.status || 500);
-  //   console.error(err);
-  //   if (err.message === 'Validation error') {
-  //     res.status(403)
-  //     if (err.errors[0].includes('username')) {
-  //       return res.json({
-  //         message: "User already exists",
-  //         statusCode: 403,
-  //         errors: {
-  //           username:
-  //             "User with that username already exists"
-  //         },
-  //         stack: isProduction ? null : err.stack
-  //       })
-  //     }
-  //     if (err.errors[0].includes('email')) {
-  //       return res.json({
-  //         message: "User already exists",
-  //         statusCode: 403,
-  //         errors: {
-  //           email:
-  //             "User with that email already exists"
-  //         },
-  //         stack: isProduction ? null : err.stack
-  //       })
-  //     }
-  //   }
-  //   res.json({
-  //     title: err.title || 'Server Error',
-  //     message: err.message,
-  //     errors: err.errors,
-  //     stack: isProduction ? null : err.stack
-  //   });
-  // });
+// Error Formatter Error handler - should be LAST
+//formats all errors before returning a json response
+//includes stack trace if the environment is in development
+//WHAT I MADE
+// app.use((err, _req, res, _next) => {
+//   res.status(err.status || 500);
+//   console.error(err);
+//   if (err.message === 'Validation error') {
+//     res.status(403)
+//     if (err.errors[0].includes('username')) {
+//       return res.json({
+//         message: "User already exists",
+//         statusCode: 403,
+//         errors: {
+//           username:
+//             "User with that username already exists"
+//         },
+//         stack: isProduction ? null : err.stack
+//       })
+//     }
+//     if (err.errors[0].includes('email')) {
+//       return res.json({
+//         message: "User already exists",
+//         statusCode: 403,
+//         errors: {
+//           email:
+//             "User with that email already exists"
+//         },
+//         stack: isProduction ? null : err.stack
+//       })
+//     }
+//   }
+//   res.json({
+//     title: err.title || 'Server Error',
+//     message: err.message,
+//     errors: err.errors,
+//     stack: isProduction ? null : err.stack
+//   });
+// });
 //turnery operators: evaluates expressions
 //syntax: ? <option1> : <option2>
 //if production, the stack is null, otherwise, err.stack
@@ -123,6 +123,14 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
+  if (err.message === 'Validation error') {
+    res.status(403)
+    res.json({
+      message: err.message,
+      statusCode: 403,
+      errors: err.errors
+    })
+  }
   res.json({
     title: err.title || 'Server Error',
     message: err.message,

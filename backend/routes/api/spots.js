@@ -42,8 +42,6 @@ router.get('/', async (req, res) => {
         offset = 0;
     }
 
-    console.log('OFFSET', offset)
-    console.log('PAGE', page)
     //GET ALL SPOTS WITH PAGINATION INCLUDED
     const Spots = await Spot.findAll({
         group: ['Spot.id'],
