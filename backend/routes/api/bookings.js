@@ -111,7 +111,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     //VALIDATION: BOOKING DATE CONFLICT
     let spotId = thisBooking.spotId
     const allBookingTimes = await Booking.findAll({
-        where: { spotid: spotId },
+        where: { spotId: spotId },
         attributes: ['startDate', 'endDate'],
     })
     errors = {}
