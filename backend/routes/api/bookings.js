@@ -6,6 +6,7 @@ const { Spot, User, Review, Image, Booking, sequelize } = require('../../db/mode
 const app = require('../../app');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
+const { format } = require('morgan');
 
 //GET ALL BOOKINGS OF CURRENT USER
 router.get('/current', requireAuth, async (req, res) => {
@@ -13,7 +14,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
     //CURRENT USER'S BOOKINGS
     const Bookings = await Booking.findAll({
-        where: { userId: user.id },
+        where: { userId: user.id }
     })
 
 
@@ -57,19 +58,19 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     }
 
-
     //FIND SPOTS WHERE ID = BOOKING.SPOTID, ADD THOSE TO BOOKINGS OBJECT
+    //need to iterate through allcombinations of bookings and spots
     for (let i = 0; i < Bookings.length; i++) {
-        if (Bookings[i].dataValues.spotId === allSpots[i].dataValues.id) {
-            Bookings[i].dataValues.Spot = allSpots[i].dataValues
+        for (let j = 0; j < allSpots.length; j++) {
+            if (Bookings[i].dataValues.spotId === allSpots[j].dataValues.id) {
+                Bookings[i].dataValues.Spot = allSpots[j].dataValues
+            }
         }
-
     }
 
 
     res.json({ Bookings })
 })
-//END
 
 
 //EDIT BOOKINGS FOR SPOT BASED ON SPOT ID
