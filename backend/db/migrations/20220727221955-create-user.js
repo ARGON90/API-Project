@@ -26,10 +26,6 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      token: {
-        type: Sequelize.STRING(30),
-        defaultValue: ""
-      },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
         allowNull: false

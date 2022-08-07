@@ -93,10 +93,6 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true
         }
       },
-      token: {
-        type: DataTypes.STRING(30),
-        defaultValue: ""
-      },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
