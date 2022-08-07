@@ -57,6 +57,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     }
 
+
     //FIND SPOTS WHERE ID = BOOKING.SPOTID, ADD THOSE TO BOOKINGS OBJECT
     for (let i = 0; i < Bookings.length; i++) {
         if (Bookings[i].dataValues.spotId === allSpots[i].dataValues.id) {
@@ -65,10 +66,10 @@ router.get('/current', requireAuth, async (req, res) => {
 
     }
 
+
     res.json({ Bookings })
 })
-
-
+//END
 
 
 //EDIT BOOKINGS FOR SPOT BASED ON SPOT ID

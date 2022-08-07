@@ -32,12 +32,12 @@ router.get('/', async (req, res) => {
 
     let limit;
     let offset;
-    if(page >= 1 && size >= 1){
+    if (page >= 1 && size >= 1) {
         limit = size;
         offset = size * (page - 1);
     } else {
         limit = size,
-        offset = 0;
+            offset = 0;
     }
 
     //GET ALL SPOTS WITH PAGINATION INCLUDED
@@ -165,7 +165,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     }
 
-    res.json({Spots})
+    res.json({ Spots })
 });
 
 
@@ -504,21 +504,19 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
         })
     }
 
-    //REVIEW FROM CURRENT USER EXISTS FOR SPOT
-    const reviewsForSpot = await Review.findAll({
-        where: { spotId: spotId },
+    //CHECK IF CURRENT USER HAS AN EXISTING REVIEW FOR THIS SPOT
+    const spotReviews = await Spot.findAll({
+        where: { id: spotId },
         include: [
             {
-                model: User,
-            },
-            {
-                model: Spot,
+                model: Review,
+                attributes: ['userId']
             }],
-
     })
-    let userIdForSpot = reviewsForSpot[0].dataValues.User.id
-    for (let i = 0; i < reviewsForSpot.length; i++) {
-        if (userIdForSpot === user.id) {
+
+    //ITERATE THROUGH ALL USER IDs OF CURRENT SPOT, SEE IF THAT MATCH CURRENT USER
+    for (let i = 0; i < spotReviews[0].dataValues.Reviews.length; i++) {
+        if (spotReviews[0].dataValues.Reviews[i].dataValues.userId === user.id) {
             res.status(403)
             return res.json({
                 message: "User already has a review for this spot",
@@ -526,6 +524,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             })
         }
     }
+
     const newReview = await Review.create({
         userId: user.id,
         spotId: spotId,
