@@ -41,6 +41,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
 
+    console.log('REVIEW ID', reviewId)
+
     // REVIEW NOT FOUND
     const reviewExist = await Review.findByPk(reviewId);
     if (!reviewExist) {
@@ -55,7 +57,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     if (reviewExist.userId !== userId) {
         res.status(403)
         res.json({
-            message: "Forbidden",
+            message: "Forbidden: Review must belong to current user",
             statusCode: 403
         })
     }
