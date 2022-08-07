@@ -33,6 +33,8 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+
+//SIGNUP
 router.post(
   '/',
   validateSignup,
@@ -42,6 +44,8 @@ router.post(
     console.log(user);
     await setTokenCookie(res, user);
 
+    const token = await setTokenCookie(res, user)
+    user.dataValues.token = token
     return res.json({
       user,
     });

@@ -8,7 +8,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 //check is used with handlevalidation errors to validate
 //the body of the request. if credential or password are empty, error
 
-//Logout
+//LOGOUT
 router.delete(
   '/',
   (_req, res) => {
@@ -45,7 +45,7 @@ const validateLogin = [
   handleValidationErrors
 ];
 
-// Log in
+//LOGIN
 router.post(
   '/',
   validateLogin,
