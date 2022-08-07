@@ -90,7 +90,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             statusCode: 400,
             errors
         })
-    }
+    };
 
     //BOOKING NOT FOUND
     const thisBooking = await Booking.findByPk(bookingId);
@@ -108,8 +108,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             message: "Forbidden: Booking or Spot must belong to the current user",
             status: "403"
         })
-    }
-
+    };
 
     //VALIDATION: CAN'T EDIT BOOKING THAT'S PAST END DATE
     let today = new Date();
@@ -119,14 +118,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             message: "Past bookings can't be modified",
             statusCode: 403
         })
-    }
+    };
 
     //VALIDATION: BOOKING DATE CONFLICT
     let spotId = thisBooking.spotId
     const allBookingTimes = await Booking.findAll({
         where: { spotId: spotId },
         attributes: ['startDate', 'endDate'],
-    })
+    });
+
     errors = {}
     for (let i = 0; i < allBookingTimes.length; i++) {
         let currentBookingTime = allBookingTimes[i].dataValues
@@ -170,6 +170,8 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     const { bookingId } = req.params;
     const thisBooking = await Booking.findByPk(bookingId);
 
+    console.log('BOOKING ID', bookingId)
+
     //BOOKING NOT FOUND
     if (!thisBooking) {
         res.status(404)
@@ -198,10 +200,8 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     }
     //STILLNEEDS testing here
 
-    //AUTH: NON-USER OR NON-OWNDER
+    //AUTH: NON-USER OR NON-OWNER
     let ownerId = thisBookingSpot[0].dataValues.Spot.ownerId
-
-
     if (thisBooking.userId !== userId && ownerId !== userId) {
         res.status(403)
         return res.json({
@@ -209,8 +209,6 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
             status: "403"
         })
     }
-
-
 
     // AUTHORIZATION SPOT OWNER
     if (ownerId === userId) {
