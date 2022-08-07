@@ -11,24 +11,19 @@ const { check } = require('express-validator');
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
+    //CURRENT USER'S BOOKINGS
     const Bookings = await Booking.findAll({
         where: { userId: user.id },
     })
 
-    console.log('BOOKINGS', Bookings)
 
+    //FIND ALL SPOTS
     const allSpots = await Spot.findAll({
-        group: ["Spot.id"],
         attributes: ['id', 'ownerId', 'address', 'city',
             'state', 'country', 'lat', 'lng', 'name', 'price'],
-        where: { ownerId: user.id },
-        include: [{
-            model: Review,
-            attributes: []
-        },
-        ],
     })
 
+    //ALL IMAGES
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
         attributes: ['id', 'url', 'previewImage'],
@@ -39,6 +34,7 @@ router.get('/current', requireAuth, async (req, res) => {
         order: ['id']
     })
 
+    //ADD PREVIEWIMAGE TO SPOT WHERE IT IS TRUE
     //iterating through allImages && allSpots, when the spotid for both matches, add the url
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
@@ -60,13 +56,18 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         }
     }
-    console.log('BOOKINGS', Bookings)
-    Bookings[0].dataValues.Spot = allSpots
+
+    //FIND SPOTS WHERE ID = BOOKING.SPOTID, ADD THOSE TO BOOKINGS OBJECT
+    for (let i = 0; i < Bookings.length; i++) {
+        if (Bookings[i].dataValues.spotId === allSpots[i].dataValues.id) {
+            Bookings[i].dataValues.Spot = allSpots[i].dataValues
+        }
+
+    }
 
     res.json({ Bookings })
 })
-
-
+//END
 
 
 //EDIT BOOKINGS FOR SPOT BASED ON SPOT ID
