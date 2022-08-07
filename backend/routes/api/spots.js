@@ -541,6 +541,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 //GET BOOKINGS FOR SPOT BASED ON SPOT ID
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     const { spotId } = req.params;
+    console.log('CONSOLE.LOG ID', spotId)
     const { user } = req;
 
     //SPOT NOT FOUND

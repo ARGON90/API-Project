@@ -68,7 +68,6 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     }
 
-
     res.json({ Bookings })
 })
 
@@ -79,6 +78,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     const { startDate, endDate } = req.body;
     const starterDate = new Date(startDate)
     const enderDate = new Date(endDate)
+
 
     //BOOKING VALIDATION CHECK: ENDDATE BEFORE STARTDATE
     let errors = {}
@@ -101,6 +101,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             statusCode: 404
         })
     };
+
+    //AUTHORIZATION
+    if (req.user.id !== thisBooking.dataValues.userId) {
+        return res.json({
+            message: "Forbidden: Booking or Spot must belong to the current user",
+            status: "403"
+        })
+    }
+
 
     //VALIDATION: CAN'T EDIT BOOKING THAT'S PAST END DATE
     let today = new Date();
