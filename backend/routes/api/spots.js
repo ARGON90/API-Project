@@ -42,37 +42,53 @@ router.get('/', async (req, res) => {
 
     //GET ALL SPOTS WITH PAGINATION INCLUDED
     const Spots = await Spot.findAll({
-        group: ['Spot.id'],
-        include: [{
-            model: Review,
-            attributes: []
-        },
-        ],
+        // group: ['Spot.id'],
+        // include: [{
+        //     model: Review,
+        //     attributes: []
+        // },
+        // ],
         limit: limit,
         offset: offset
     })
 
+
+    for (let spot of Spots) {
+        const spotReviewData = await spot.getReviews({
+          attributes: [
+            [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
+          ],
+        });
+
+        const avgRating = spotReviewData[0].dataValues.avgStarRating;
+        spot.dataValues.avgRating = Number(avgRating).toFixed(2);
+      }
+
     //FETCH STAR RATINGS FOR ALL SPOTS, ADD INTO ALLSPOTS
-    const allSpotsStar = await Spot.findAll({
-        group: ['Spot.id'],
-        include: [{
-            model: Review,
-            attributes: []
-        },
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-            ],
-        },
-    })
+    // const allSpotsStar = await Spot.findAll({
+    //     group: ['Spot.id'],
+    //     include: [{
+    //         model: Review,
+    //         attributes: []
+    //     },
+    //     ],
+    //     attributes: {
+    //         include: [
+    //             [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
+    //         ],
+    //     },
+    // })
     // for (let i = 0; i < Spots.length; i++) {
     //     let avgRating = Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(2)
     //     Spots[i].dataValues.avgRating = avgRating
-    //     if (Spots[i].dataValues.avgRating === 'NaN') {
-    //         Spots[i].dataValues.avgRating = "This spot has not been rated yet"
-    //     }
+    //     // if (Spots[i].dataValues.avgRating === 'NaN') {
+    //     //     Spots[i].dataValues.avgRating = "This spot has not been rated yet"
+    //     // }
     // }
+
+
+
+
 
     const allImages = await Image.findAll({
         attributes: ['id', 'url', 'previewImage'],
@@ -104,8 +120,13 @@ router.get('/', async (req, res) => {
         }
     }
 
-    res.json({ Spots, page, size })
     //question: what if the spot has no images attached, do we still want a previewImageId?
+
+    res.json({ Spots, page, size })
+
+
+
+
 });
 
 
