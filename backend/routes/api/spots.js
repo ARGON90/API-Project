@@ -69,6 +69,9 @@ router.get('/', async (req, res) => {
     for (let i = 0; i < Spots.length; i++) {
         let avgRating = Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(2)
         Spots[i].dataValues.avgRating = avgRating
+        if (Spots[i].dataValues.avgRating === 'NaN') {
+            Spots[i].dataValues.avgRating = "This spot has not been rated yet"
+        }
     }
 
     const allImages = await Image.findAll({
@@ -129,6 +132,9 @@ router.get('/current', requireAuth, async (req, res) => {
     for (let i = 0; i < Spots.length; i++) {
         let avgRating = Number.parseFloat(Spots[i].dataValues.avgRating).toFixed(2)
         Spots[i].dataValues.avgRating = avgRating
+        if (Spots[i].dataValues.avgRating === 'NaN') {
+            Spots[i].dataValues.avgRating = "This spot has not been rated yet"
+        }
     }
 
 
@@ -152,8 +158,8 @@ router.get('/current', requireAuth, async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-            for (let i = 0; i < Spots.length; i++) {
-                let currentSpot = Spots[i].dataValues
+            for (let j = 0; j < Spots.length; j++) {
+                let currentSpot = Spots[j].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
@@ -167,6 +173,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
     res.json({ Spots })
 });
+
 
 
 //~GET A SPOT BY ID ~~WITHOUT LITERAL~~
@@ -195,6 +202,9 @@ router.get('/:spotId', async (req, res) => {
     for (let i = 0; i < allSpots.length; i++) {
         let avgRating = Number.parseFloat(allSpots[i].dataValues.avgRating).toFixed(2)
         allSpots[i].dataValues.avgRating = avgRating
+        if (allSpots[i].dataValues.avgRating === 'NaN') {
+            allSpots[i].dataValues.avgRating = "This spot has not been rated yet"
+        }
     }
 
 
