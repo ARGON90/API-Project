@@ -45,8 +45,8 @@ router.get('/current', requireAuth, async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-            for (let i = 0; i < allSpots.length; i++) {
-                let currentSpot = allSpots[i].dataValues
+            for (let j = 0; j < allSpots.length; j++) {
+                let currentSpot = allSpots[j].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
