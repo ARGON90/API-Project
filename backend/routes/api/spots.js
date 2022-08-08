@@ -42,53 +42,24 @@ router.get('/', async (req, res) => {
 
     //GET ALL SPOTS WITH PAGINATION INCLUDED
     const Spots = await Spot.findAll({
-        // group: ['Spot.id'],
-        // include: [{
-        //     model: Review,
-        //     attributes: []
-        // },
-        // ],
         limit: limit,
         offset: offset
     })
 
-
+    //AVOID TRADITIONAL FOR LOOPS; ITERATE THROUGH OBJECTS
     for (let spot of Spots) {
-        const spotReviewData = await spot.getReviews({
-          attributes: [
-            [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
-          ],
+        const spotStars = await spot.getReviews({
+            attributes: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
+            ],
         });
-
-        const avgRating = spotReviewData[0].dataValues.avgStarRating;
-        spot.dataValues.avgRating = Number(avgRating).toFixed(2);
-      }
-
-    //FETCH STAR RATINGS FOR ALL SPOTS, ADD INTO ALLSPOTS
-    // const allSpotsStar = await Spot.findAll({
-    //     group: ['Spot.id'],
-    //     include: [{
-    //         model: Review,
-    //         attributes: []
-    //     },
-    //     ],
-    //     attributes: {
-    //         include: [
-    //             [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-    //         ],
-    //     },
-    // })
-    // for (let i = 0; i < Spots.length; i++) {
-    //     let avgRating = Number.parseFloat(allSpotsStar[i].dataValues.avgRating).toFixed(2)
-    //     Spots[i].dataValues.avgRating = avgRating
-    //     // if (Spots[i].dataValues.avgRating === 'NaN') {
-    //     //     Spots[i].dataValues.avgRating = "This spot has not been rated yet"
-    //     // }
-    // }
-
-
-
-
+        const avgRating = spotStars[0].dataValues.avgStarRating;
+        if (!avgRating) {
+            spot.dataValues.avgRating = "This spot is not yet rated"
+        } else {
+            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
+        }
+    }
 
     const allImages = await Image.findAll({
         attributes: ['id', 'url', 'previewImage'],
@@ -107,8 +78,8 @@ router.get('/', async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-            for (let i = 0; i < Spots.length; i++) {
-                let currentSpot = Spots[i].dataValues
+            for (let j = 0; i < Spots.length; j++) {
+                let currentSpot = Spots[j].dataValues
                 //if the spot doesn't have the previewImage attribute
                 //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
@@ -137,29 +108,22 @@ router.get('/current', requireAuth, async (req, res) => {
     const userId = user.id
 
     const Spots = await Spot.findAll({
-        group: ["Spot.id"],
-        where: { ownerId: user.id },
-        include: [{
-            model: Review,
-            attributes: []
-        },
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-            ],
-        },
-
+        where: { ownerId: user.id }
     })
-    for (let i = 0; i < Spots.length; i++) {
-        let avgRating = Number.parseFloat(Spots[i].dataValues.avgRating).toFixed(2)
-        Spots[i].dataValues.avgRating = avgRating
-        if (Spots[i].dataValues.avgRating === 'NaN') {
-            Spots[i].dataValues.avgRating = "This spot has not been rated yet"
+
+    for (let spot of Spots) {
+        const spotStars = await spot.getReviews({
+            attributes: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
+            ],
+        });
+        const avgRating = spotStars[0].dataValues.avgStarRating;
+        if (!avgRating) {
+            spot.dataValues.avgRating = "This spot is not yet rated"
+        } else {
+            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
         }
     }
-
-
 
     const allImages = await Image.findAll({
         group: ["Image.id", "Spot.id"],
@@ -205,27 +169,32 @@ router.get('/:spotId', async (req, res) => {
     const allSpots = await Spot.findAll({
         group: ["Spot.id", "Owner.id"],
         where: { id: spotId },
-        include: [{
-            model: Review,
-            attributes: []
-        },
-        {
-            model: User, as: "Owner",
-            attributes: ['id', 'firstName', 'lastName']
-        },
-
+        include: [
+            {
+                model: User, as: "Owner",
+                attributes: ['id', 'firstName', 'lastName']
+            },
         ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"],
-            ],
-        },
     })
     for (let i = 0; i < allSpots.length; i++) {
         let avgRating = Number.parseFloat(allSpots[i].dataValues.avgRating).toFixed(2)
         allSpots[i].dataValues.avgRating = avgRating
         if (allSpots[i].dataValues.avgRating === 'NaN') {
             allSpots[i].dataValues.avgRating = "This spot has not been rated yet"
+        }
+    }
+
+    for (let spot of allSpots) {
+        const spotStars = await spot.getReviews({
+            attributes: [
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
+            ],
+        });
+        const avgRating = spotStars[0].dataValues.avgStarRating;
+        if (!avgRating) {
+            spot.dataValues.avgRating = "This spot is not yet rated"
+        } else {
+            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
         }
     }
 
@@ -262,8 +231,8 @@ router.get('/:spotId', async (req, res) => {
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
             //iterate through all spots
-            for (let i = 0; i < allSpots.length; i++) {
-                let currentSpot = allSpots[i].dataValues
+            for (let j = 0; j < allSpots.length; j++) {
+                let currentSpot = allSpots[j].dataValues
                 //if the image's spotId matches up with the spot's id
                 //push that mf in the array
                 if (currentImageSpotId === currentSpot.id) {
