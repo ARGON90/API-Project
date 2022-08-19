@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api')
-//defaulting to ./api/index.js
 
 router.use('/api', apiRouter)
 
@@ -38,13 +37,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 
-router.get('/api/csrf/restore', (req, res) => {
-    const csrfToken = req.csrfToken();
-    res.cookie('XSRF-TOKEN', req.csrfToken());
-    res.status(200).json({
-        'XSRF-Token': csrfToken
-    });
-});
+//STILLNEEDS is this code necessary? leftover from backend?
+// router.get('/api/csrf/restore', (req, res) => {
+//     const csrfToken = req.csrfToken();
+//     res.cookie('XSRF-TOKEN', req.csrfToken());
+//     res.status(200).json({
+//         'XSRF-Token': csrfToken
+//     });
+// });
 
 
 

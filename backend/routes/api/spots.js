@@ -220,7 +220,6 @@ router.get('/:spotId', async (req, res) => {
     //iterate through allImages - even though it's technically an object, treat it like an array
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
-        console.log('ALLIMAGES', 'I', i, currentImage)
         //check if the current Image has a spot Id
         let currentImageId = currentImage.id
         if (currentImage.Spot) {
@@ -342,7 +341,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 router.put('/:spotId', requireAuth, async (req, res) => {
     const spotId = req.params.spotId;
     let errors = {}
-    console.log('SPOTID', spotId)
     const { address, city, state, country, lat,
         lng, name, description, price } = req.body;
 
@@ -419,7 +417,6 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
     }
 
     // AUTHORIZATION FOR NON-OWNER
-    console.log('USERID', userId)
     if (thisSpot.ownerId !== userId) {
         res.status(403);
         return res.json({
@@ -537,7 +534,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 //GET BOOKINGS FOR SPOT BASED ON SPOT ID
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     const { spotId } = req.params;
-    console.log('CONSOLE.LOG ID', spotId)
     const { user } = req;
 
     //SPOT NOT FOUND

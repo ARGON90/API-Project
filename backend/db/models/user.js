@@ -47,7 +47,6 @@ module.exports = (sequelize, DataTypes) => {
         email,
         hashedPassword
       });
-      console.log(user)
       return await User.scope('currentUser').findByPk(user.id);
     }
     //hashes the password using bcrypt's hashSync. Returns created user
