@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ARGON90/API-Project#readme",
   "dependencies": {
+    "js-cookie": "^3.0.1",
     "pg": "^8.7.3"
   }
 }

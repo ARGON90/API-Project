@@ -70,18 +70,13 @@ router.get('/', async (req, res) => {
         order: ['id']
     })
 
-    //iterating through allImages && allSpots, when the spotid for both matches, add the url
-    //iterate through allImages - even though it's technically an object, treat it like an array
+
     for (let i = 0; i < allImages.length; i++) {
         let currentImage = allImages[i].dataValues
-        //check if the current Image has a spot
         if (currentImage.Spot) {
             let currentImageSpotId = currentImage.Spot.id
-            //iterate through all spots
             for (let j = 0; j < Spots.length; j++) {
                 let currentSpot = Spots[j].dataValues
-                //if the spot doesn't have the previewImage attribute
-                //AND the image's spotId matches up with the spot's id
                 if (currentImage.previewImage === true &&
                     !currentSpot.previewImage &&
                     currentImageSpotId === currentSpot.id) {
