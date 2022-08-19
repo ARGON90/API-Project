@@ -1,8 +1,7 @@
 # AirBnB Clone
 
 ## Database Schema Design
-
-![airbnb-database-schema](../assets/airbnb_dbdiagram.png)
+![dbdiagram](https://user-images.githubusercontent.com/54010874/185716997-20150039-e7d0-412c-ae96-bd825ff2cf23.png)
 
 ## API Documentation
 
