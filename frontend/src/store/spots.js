@@ -1,7 +1,7 @@
 
 
 //actions
-const GET_SPOTS = ''
+// const GET_SPOTS = ''
 
 //action creators
 

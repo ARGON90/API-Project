@@ -17,10 +17,10 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path ='/'>
+          <Route path ='/' exact={true}>
             <h1>homepage</h1>
           </Route>
-          <Route path="/signup">
+          <Route path="/signup" exact={true}>
             <SignupFormPage />
           </Route>
         </Switch>
