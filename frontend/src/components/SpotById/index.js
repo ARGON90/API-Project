@@ -1,19 +1,20 @@
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
 
 import { getAllSpots } from '../../store/spotsReducer';
-import SpotById from '../SpotById';
 
-const SpotsList = () => {
-    console.log('INSIDE SPOTSLIST COMPONENT')
-    const dispatch = useDispatch();
-    const spotsList = useSelector((state) => Object.values(state.spots));
+const SpotById = ({ spotsList }) => {
+    console.log('INSIDE SPOTS-BY-ID COMPONENT')
+    const { id } = useParams()
+    const singleSpot = spotsList.find(spot => spot.id === id);
+    const singleSpot2 = useSelector((state) => state.spots[id]);
 
-    useEffect(() => {
-        console.log('INSIDE SPOTSLIST USE EFFECT')
-        dispatch(getAllSpots());
-    }, [dispatch]);
+    // console.log(Object.values(singleSpot))
+    console.log('SPOTSLIST', typeof spotsList)
+    console.log('singleSpot', singleSpot2)
+    console.log('SPOTSLIST0', spotsList[0])
+    console.log('SPOT-BY-ID ID', id)
+
 
     function imageCheck(spot) {
         if (!spot.previewImage) {
@@ -23,11 +24,10 @@ const SpotsList = () => {
         }
     }
 
-    if (!spotsList) return <div>Loading...</div>
+    if (singleSpot) return <div>Loading...</div>
     return (
         <>
-
-            <h1>SpotsList</h1>
+            <h1>Spot By Id</h1>
             {spotsList.map((spot) => (
                 <div key={spot.id}>
                     {imageCheck(spot)}
@@ -39,13 +39,8 @@ const SpotsList = () => {
                 </div>
 
             ))}
-            <Switch>
-                <Route path='/spots/:id' exact={true}>
-                    <SpotById spotsList={spotsList} />
-                </Route>
-            </Switch>
         </>
     );
 };
 
-export default SpotsList;
+export default SpotById;

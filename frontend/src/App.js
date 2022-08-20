@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SignupFormPage from "./components/SignupFormPage";
 import SpotsList from "./components/AllSpots";
+import { getAllSpots } from "./store/spotsReducer";
+
+
 import notFoundRalph from "./data/ralph.gif"
 import notFoundPika from "./data/missing-pika.png"
 
@@ -17,7 +20,7 @@ function App() {
   }, [dispatch]);
 
 
-  let logo = 'https://imgur.com/gallery/7VyKn2H'
+
   return (
     <>
       <Navigation isLoaded={isLoaded} />
@@ -30,7 +33,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route>
-            <SpotsList path='/spots' />
+            <SpotsList path='/spots' exact={true}/>
           </Route>
           <>
             <div>page not found</div>
