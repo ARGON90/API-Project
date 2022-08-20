@@ -37,13 +37,7 @@ const SpotsList = () => {
                     <p>${spot.price}/night</p>
                     --------------------
                 </div>
-
             ))}
-            <Switch>
-                <Route path='/spots/:id' exact={true}>
-                    <SpotById spotsList={spotsList} />
-                </Route>
-            </Switch>
         </>
     );
 };

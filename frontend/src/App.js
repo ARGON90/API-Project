@@ -6,11 +6,9 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SignupFormPage from "./components/SignupFormPage";
 import SpotsList from "./components/AllSpots";
-import { getAllSpots } from "./store/spotsReducer";
-
-
+import SpotById from "./components/SpotById";
 import notFoundRalph from "./data/ralph.gif"
-import notFoundPika from "./data/missing-pika.png"
+
 
 function App() {
   const dispatch = useDispatch();
@@ -32,13 +30,15 @@ function App() {
           <Route path="/signup" exact={true}>
             <SignupFormPage />
           </Route>
-          <Route>
-            <SpotsList path='/spots' exact={true}/>
+            <Route path='/spots/:id' exact={true}>
+              <SpotById />
+            </Route>
+          <Route path='/spots' exact={true} >
+            <SpotsList />
           </Route>
           <>
             <div>page not found</div>
             <img src={notFoundRalph} alt={"page not found"}></img>
-            {/* <img src={notFoundPika} alt={"page not found"}></img> */}
           </>
         </Switch>
       )}

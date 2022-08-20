@@ -1,5 +1,3 @@
-
-
 //regular actions
 const GET_ALL_SPOTS = '/spots/getAllSpots'
 //read
@@ -32,7 +30,7 @@ const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_ALL_SPOTS: {
             const newState = {};
-            console.log('INSIDE SPOTS REDUCER')
+            console.log('INSIDE ALL SPOTS REDUCER')
             action.spots.Spots.forEach((spot) => (newState[spot.id] = spot));
             return newState
         }

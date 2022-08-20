@@ -1,43 +1,40 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
-import { getAllSpots } from '../../store/spotsReducer';
+import { getOneSpot } from '../../store/singleSpotReducer';
 
-const SpotById = ({ spotsList }) => {
+const SpotById = () => {
     console.log('INSIDE SPOTS-BY-ID COMPONENT')
-    const { id } = useParams()
-    const singleSpot = spotsList.find(spot => spot.id === id);
-    const singleSpot2 = useSelector((state) => state.spots[id]);
 
-    // console.log(Object.values(singleSpot))
-    console.log('SPOTSLIST', typeof spotsList)
-    console.log('singleSpot', singleSpot2)
-    console.log('SPOTSLIST0', spotsList[0])
+    const dispatch = useDispatch()
+
+    const { id } = useParams()
     console.log('SPOT-BY-ID ID', id)
 
+    const singleSpot = useSelector((state) =>
+        (state.singleSpot[id]));
 
-    function imageCheck(spot) {
-        if (!spot.previewImage) {
-            return <p>No Preview Image Exists for Spot</p>
-        } else {
-            return <p>spot.previewImage</p>
-        }
-    }
 
-    if (singleSpot) return <div>Loading...</div>
+    useEffect(() => {
+        console.log('INSIDE SPOT-BY-ID USE EFFECT')
+        dispatch(getOneSpot(id))
+    }, [dispatch])
+
+    console.log('SPOT-BY-ID SINGLE SPOT', singleSpot)
+    if (!singleSpot) return <div>Loading...</div>
     return (
         <>
-            <h1>Spot By Id</h1>
-            {spotsList.map((spot) => (
-                <div key={spot.id}>
-                    {imageCheck(spot)}
-                    <p>{spot.city}</p>
-                    <p>{spot.state}</p>
-                    <p>⭐{spot.avgRating}</p>
-                    <p>${spot.price}/night</p>
+            <h1>SpotbyId</h1>
+             <h1>Spot By Id: Spot {singleSpot.id}</h1>
+             <h1>Description: {singleSpot.description}</h1>
+            <h1>⭐ {singleSpot.avgRating}</h1>
+            <h1>Images</h1>
+            {singleSpot.Images.map((image) => (
+                <div key={image.id}>
+                    <div>{image.url}</div>
                     --------------------
                 </div>
-
             ))}
         </>
     );
