@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import SpotsList from '../AllSpots';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
@@ -24,7 +25,7 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <div>
+    <div className='font-family'>
       <ul className='padding-remove'>
         <li id='container'>
           <div>
@@ -32,7 +33,7 @@ function Navigation({ isLoaded }) {
           </div>
           <div className='flex-box justify-content-center'>
             <div id='search-bar'>
-              Search Bar
+            <NavLink exact to="/spots">See All Spots</NavLink>
             </div>
           </div>
           <div id='sessionLinks' className='align-items-center'>

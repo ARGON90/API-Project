@@ -28,7 +28,6 @@ const singleSpotReducer = (state = initialState, action) => {
         case GET_ONE_SPOT: {
             const newState = action.payload;
             console.log('INSIDE ONE SPOT-BY-ID REDUCER')
-            console.log('ACTION', action.singleSpot)
             // action.payload.forEach((spot) => (newState[spot.id] = spot));
             console.log('GET_ONE_SPOT newSTATE', newState)
             return newState

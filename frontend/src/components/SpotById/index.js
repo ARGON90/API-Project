@@ -13,7 +13,7 @@ const SpotById = () => {
     console.log('SPOT-BY-ID ID', id)
 
     const singleSpot = useSelector((state) =>
-        (state.singleSpot[id]));
+        (state.singleSpot[0]));
 
 
     useEffect(() => {
@@ -21,21 +21,27 @@ const SpotById = () => {
         dispatch(getOneSpot(id))
     }, [dispatch])
 
-    console.log('SPOT-BY-ID SINGLE SPOT', singleSpot)
-    if (!singleSpot) return <div>Loading...</div>
-    return (
-        <>
-            <h1>SpotbyId</h1>
-             <h1>Spot By Id: Spot {singleSpot.id}</h1>
-             <h1>Description: {singleSpot.description}</h1>
-            <h1>⭐ {singleSpot.avgRating}</h1>
-            <h1>Images</h1>
-            {singleSpot.Images.map((image) => (
+    function imageCheck(singleSpot) {
+        if (!singleSpot.previewImage) {
+            return <p>No Images Exists for Spot</p>
+        } else {
+            singleSpot.Images.map((image) => (
                 <div key={image.id}>
                     <div>{image.url}</div>
                     --------------------
                 </div>
             ))}
+    }
+
+    if (!singleSpot) return <div>Loading...</div>
+    return (
+        <>
+            <h1>SpotbyId</h1>
+            <h1>Spot By Id: Spot {singleSpot.id}</h1>
+            <h1>Description: {singleSpot.description}</h1>
+            <h1>⭐ {singleSpot.avgRating}</h1>
+            <h1>Images</h1>
+            {imageCheck(singleSpot)}
         </>
     );
 };
