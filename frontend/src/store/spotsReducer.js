@@ -5,10 +5,10 @@ const GET_ALL_SPOTS = '/spots/getAllSpots'
 //delete
 
 //regular action creators
-const loadSpots = (spots) => {
+const loadSpots = (payload) => {
     return {
         type: GET_ALL_SPOTS,
-        spots
+        payload
     }
 }
 
@@ -31,7 +31,7 @@ const spotsReducer = (state = initialState, action) => {
         case GET_ALL_SPOTS: {
             const newState = {};
             console.log('INSIDE ALL SPOTS REDUCER')
-            action.spots.Spots.forEach((spot) => (newState[spot.id] = spot));
+            action.payload.Spots.forEach((spot) => (newState[spot.id] = spot));
             return newState
         }
         default:

@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 
 import { getAllSpots } from '../../store/spotsReducer';
-import SpotById from '../SpotById';
+
 
 const SpotsList = () => {
     console.log('INSIDE SPOTSLIST COMPONENT')
     const dispatch = useDispatch();
     const spotsList = useSelector((state) => Object.values(state.spots));
+
+
 
     useEffect(() => {
         console.log('INSIDE SPOTSLIST USE EFFECT')
@@ -22,14 +24,13 @@ const SpotsList = () => {
             return <p>spot.previewImage</p>
         }
     }
-
     if (!spotsList) return <div>Loading...</div>
     return (
         <>
-
             <h1>SpotsList</h1>
             {spotsList.map((spot) => (
-                <div key={spot.id}>
+                <NavLink key={spot.id} to={`/spots/${spot.id}`}>
+                <div>
                     {imageCheck(spot)}
                     <p>{spot.city}</p>
                     <p>{spot.state}</p>
@@ -37,6 +38,7 @@ const SpotsList = () => {
                     <p>${spot.price}/night</p>
                     --------------------
                 </div>
+                </NavLink>
             ))}
         </>
     );

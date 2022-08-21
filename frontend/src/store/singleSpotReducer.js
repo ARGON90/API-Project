@@ -1,10 +1,10 @@
 //regular actions
 const GET_ONE_SPOT = '/oneSpot/getOneSpot'
 
-const loadOneSpot = (spots) => {
+const loadOneSpot = (payload) => {
     return {
         type: GET_ONE_SPOT,
-        spots
+        payload
     }
 }
 
@@ -26,9 +26,10 @@ const initialState = {}
 const singleSpotReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_ONE_SPOT: {
-            const newState = {};
+            const newState = action.payload;
             console.log('INSIDE ONE SPOT-BY-ID REDUCER')
-            action.spots.forEach((spot) => (newState[spot.id] = spot));
+            console.log('ACTION', action.singleSpot)
+            // action.payload.forEach((spot) => (newState[spot.id] = spot));
             console.log('GET_ONE_SPOT newSTATE', newState)
             return newState
         }
