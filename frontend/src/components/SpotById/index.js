@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { getOneSpot } from '../../store/singleSpotReducer';
+import './SpotById.css'
 
 const SpotById = () => {
     console.log('INSIDE SPOTS-BY-ID COMPONENT')
@@ -22,26 +23,41 @@ const SpotById = () => {
     }, [dispatch])
 
     function imageCheck(singleSpot) {
-        if (!singleSpot.previewImage) {
+        console.log('SINGLESPOT', singleSpot.Images)
+        console.log('IMAGESLENGTH', typeof singleSpot.Images)
+        if (singleSpot.Images.length < 1) {
             return <p>No Images Exists for Spot</p>
         } else {
-            singleSpot.Images.map((image) => (
+            let imgArray = Array.from(singleSpot.Images)
+            console.log('IMAGEARRAY', imgArray)
+            return imgArray.map((image) => (
                 <div key={image.id}>
                     <div>{image.url}</div>
                     --------------------
                 </div>
-            ))}
+            ))
+            // let image = singleSpot.Images[0]
+            // for (let property in image) {
+            //     <div key={image.id}>
+            //         <div>{image.url}</div>
+            //         --------------------
+            //     </div>
+            // }
+        }
     }
 
+    let imgArray = Array.from(singleSpot.Images)
     if (!singleSpot) return <div>Loading...</div>
     return (
         <>
-            <h1>SpotbyId</h1>
-            <h1>Spot By Id: Spot {singleSpot.id}</h1>
-            <h1>Description: {singleSpot.description}</h1>
-            <h1>⭐ {singleSpot.avgRating}</h1>
-            <h1>Images</h1>
-            {imageCheck(singleSpot)}
+            <div className='font-family'>
+                <h1>SpotbyId</h1>
+                <h1>Spot By Id: Spot {singleSpot.id}</h1>
+                <h1>Description: {singleSpot.description}</h1>
+                <h1>⭐ {singleSpot.avgRating}</h1>
+                <h1>Images</h1>
+                {imageCheck(singleSpot)}
+            </div>
         </>
     );
 };
