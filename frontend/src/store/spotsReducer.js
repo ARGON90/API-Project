@@ -1,5 +1,6 @@
 //regular actions
 const GET_ALL_SPOTS = '/spots/getAllSpots'
+const CREATE_SPOT = '/spots/createSpots'
 //read
 //update
 //delete
@@ -8,6 +9,12 @@ const GET_ALL_SPOTS = '/spots/getAllSpots'
 const loadSpots = (payload) => {
     return {
         type: GET_ALL_SPOTS,
+        payload
+    }
+}
+const addSpot = (payload) => {
+    return {
+        type: CREATE_SPOT,
         payload
     }
 }
@@ -23,16 +30,17 @@ export const getAllSpots = () => async (dispatch) => {
     }
 }
 
-export const createSpot = (data) => async (dispatch) => {
+export const createSpot = (payload) => async (dispatch) => {
     console.log("INSIDE CREATE SPOTS THUNK")
     const response = await fetch('/api/spots/', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: data
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
     });
+    console.log('SPOTS THUNK RESPONSE', response)
     if (response.ok) {
         const spot = await response.json();
-        dispatch(createSpot(spot));
+        dispatch(addSpot(spot));
         return spot;
     }
 }
@@ -43,11 +51,15 @@ const initialState = {}
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_SPOTS: {
+            console.log('INSIDE GET SPOTS ACTION / REDUCER')
             const newState = {};
-            console.log('INSIDE ALL SPOTS REDUCER')
             action.payload.Spots.forEach((spot) => (newState[spot.id] = spot));
             return newState
         }
+        case CREATE_SPOT:
+            console.log('INSIDE CREATE SPOT ACTION / REDUCER')
+            const newState = { ...state, spots: [...state.spots, action.payload] };
+            return newState;
         default:
             return state;
     }

@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 // import { getPokemonTypes } from '../store/pokemon';
 
+import { createSpot } from '../../store/spotsReducer';
+
 // const CreateSpotForm = ({ hideForm }) => {
-const CreateSpotForm = ({ hideForm }) => {
+const CreateSpotForm = () => {
     //   const pokeTypes = useSelector(state => state.pokemon.types);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -28,51 +30,40 @@ const CreateSpotForm = ({ hideForm }) => {
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePrice = (e) => setPrice(e.target.value);
 
-    //   useEffect(() => {
-    //     dispatch(getPokemonTypes());
-    //   }, [dispatch]);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    //   useEffect(() => {
-    //     if (pokeTypes.length && !type) {
-    //       setType(pokeTypes[0]);
-    //     }
-    //   }, [pokeTypes, type]);
+        const payload = {
+          address,
+          city,
+          state,
+          country,
+          lat,
+          lng,
+          name,
+          description,
+          price
+        };
 
-    //   const handleSubmit = async (e) => {
-    //     e.preventDefault();
+        console.log('INSIDE CREATE FORM SUBMIT')
+        console.log('PAYLOAD', payload)
 
-    // const payload = {
-    //   number,
-    //   attack,
-    //   defense,
-    //   imageUrl,
-    //   name,
-    //   type,
-    //   move1,
-    //   move2,
-    //   moves: [move1, move2]
-    // };
+        let createdSpot;
+          createdSpot = await dispatch(createSpot(payload));
+        if (createdSpot) {
+          history.push(`/spots/${createdSpot.id}`);
+        }
+      };
 
-    //     let createdSpot;
-    //     if (createdSpot) {
-    //       history.push(`/spots/${spot.id}`);
-    //       hideForm();
-    //     }
-    //   };
 
-    //   const handleCancelClick = (e) => {
-    //     e.preventDefault();
-    //     hideForm();
-    //   };
 
     return (
         <section className='font-family'>
             <div className='flex-box flex-direction-column'>
-                <form>
-                <div>
-                    <h1>Create A Spot</h1>
-                </div>
-                    {/* <form onSubmit={handleSubmit}> */}
+                    <form onSubmit={handleSubmit}>
+                    <div>
+                        <h1>Create A Spot</h1>
+                    </div>
                     <div>
                         Address
                         <input
@@ -129,7 +120,7 @@ const CreateSpotForm = ({ hideForm }) => {
                         <input
                             type="text"
                             placeholder="Name"
-                            value={description}
+                            value={name}
                             onChange={updateName} />
                     </div>
                     <div>
@@ -137,7 +128,7 @@ const CreateSpotForm = ({ hideForm }) => {
                         <input
                             type="text"
                             placeholder="Description"
-                            value={name}
+                            value={description}
                             onChange={updateDescription} />
                     </div>
                     <div>
@@ -149,8 +140,6 @@ const CreateSpotForm = ({ hideForm }) => {
                             onChange={updatePrice} />
                     </div>
                     <button type="submit">Create new Spot</button>
-                    {/* <button type="button" onClick={handleCancelClick}>Cancel</button> */}
-                    <button type="button">Cancel</button>
                 </form>
             </div>
         </section>
