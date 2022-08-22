@@ -262,10 +262,6 @@ router.post('/', requireAuth, async (req, res) => {
 
     lng = Number(lng)
     lat = Number(lat)
-    console.log('TYPEOFLAT', typeof lng)
-    console.log('TYPEOFLNG', typeof lat)
-    console.log('LAT', lng)
-    console.log('LNG', lat)
 
     if (!address) errors.address = "Street address is required"
     if (!city) errors.city = "City is required"
@@ -280,7 +276,6 @@ router.post('/', requireAuth, async (req, res) => {
 
     console.log('INSIDE SPOTS! 274', errors)
     if (Object.keys(errors).length != 0) {
-        console.log('INSIDE SPOTS INSIDE ERRORs')
         res.status(400)
         return res.json({
             message: "Validation Error",
@@ -288,7 +283,6 @@ router.post('/', requireAuth, async (req, res) => {
             errors
         })
     }
-    console.log('INSIDE SPOTS! 283')
     const newSpot = await Spot.create({
         ownerId: userId,
         address,
@@ -301,7 +295,6 @@ router.post('/', requireAuth, async (req, res) => {
         description,
         price
     })
-    console.log('INSIDE SPOTS! 296')
     res.status(201)
     return res.json(newSpot)
 })

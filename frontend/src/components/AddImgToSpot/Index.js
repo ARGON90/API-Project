@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { createSpot } from '../../store/spotsReducer';
 
 // const CreateSpotForm = ({ hideForm }) => {
-const CreateSpotForm = () => {
+const addImage = () => {
     //   const pokeTypes = useSelector(state => state.pokemon.types);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -51,7 +51,6 @@ const CreateSpotForm = () => {
         let createdSpot;
           createdSpot = await dispatch(createSpot(payload));
         if (createdSpot) {
-            console.log(createdSpot)
           history.push(`/spots/${createdSpot.id}`);
         }
       };
@@ -147,4 +146,4 @@ const CreateSpotForm = () => {
     );
 };
 
-export default CreateSpotForm;
+export default AddImage;

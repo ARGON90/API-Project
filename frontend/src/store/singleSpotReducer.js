@@ -1,9 +1,17 @@
 //regular actions
 const GET_ONE_SPOT = '/oneSpot/getOneSpot'
+const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
 const loadOneSpot = (payload) => {
     return {
         type: GET_ONE_SPOT,
+        payload
+    }
+}
+
+const addImg = (payload) => {
+    return {
+        type: ADD_IMG_TO_SPOT,
         payload
     }
 }
@@ -16,6 +24,16 @@ export const getOneSpot = (spotId) => async(dispatch) => {
         const data = await response.json()
         console.log('GETONESPOT DATA', data)
         dispatch(loadOneSpot(data));
+        return data;
+    }
+}
+export const addImgSpot = (spotId, payload) => async(dispatch) => {
+    console.log('INSIDE ADD-IMG-SPOT THUNK')
+    const response = await fetch(`/api/spots/${spotId}`);
+    if (response.ok) {
+        const data = await response.json()
+        console.log('ADD IMG DATA', data)
+        dispatch(addImg(data));
         return data;
     }
 }
