@@ -7,15 +7,10 @@ import './SpotById.css'
 
 const SpotById = () => {
     console.log('INSIDE SPOTS-BY-ID COMPONENT')
-
     const dispatch = useDispatch()
-
     const { id } = useParams()
-    console.log('SPOT-BY-ID ID', id)
-
     const singleSpot = useSelector((state) =>
         (state.singleSpot[0]));
-
 
     useEffect(() => {
         console.log('INSIDE SPOT-BY-ID USE EFFECT')
@@ -33,25 +28,16 @@ const SpotById = () => {
             return imgArray.map((image) => (
                 <div key={image.id}>
                     <div>{image.url}</div>
-                    --------------------
                 </div>
             ))
-            // let image = singleSpot.Images[0]
-            // for (let property in image) {
-            //     <div key={image.id}>
-            //         <div>{image.url}</div>
-            //         --------------------
-            //     </div>
-            // }
+
         }
     }
 
-    let imgArray = Array.from(singleSpot.Images)
-    if (!singleSpot) return <div>Loading...</div>
+    if (!singleSpot) return <div>Loading a Single Spot...</div>
     return (
         <>
             <div className='font-family'>
-                <h1>SpotbyId</h1>
                 <h1>Spot By Id: Spot {singleSpot.id}</h1>
                 <h1>Description: {singleSpot.description}</h1>
                 <h1>⭐ {singleSpot.avgRating}</h1>

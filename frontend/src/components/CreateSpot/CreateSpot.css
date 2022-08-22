@@ -1,0 +1,28 @@
+
+.flex-box {
+    display: flex;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.card {
+    margin: 1rem;
+}
+
+.padding-remove {
+    padding: 0px;
+}
+
+.font-family {
+    font-family: sans-serif;
+}

@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SignupFormPage from "./components/SignupFormPage";
 import SpotsList from "./components/AllSpots";
 import SpotById from "./components/SpotById";
+import CreateSpotForm from "./components/CreateSpot";
 import notFoundRalph from "./data/ralph.gif"
 
 
@@ -24,20 +25,23 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path='/create' exact={true} >
+            <CreateSpotForm />
+          </Route>
           <Route path='/' exact={true}>
             <h1>Home</h1>
           </Route>
           <Route path="/signup" exact={true}>
             <SignupFormPage />
           </Route>
-            <Route path='/spots/:id' exact={true}>
-              <SpotById />
-            </Route>
           <Route path='/spots' exact={true} >
             <SpotsList />
           </Route>
+          <Route path='/spots/:id' exact={true}>
+            <SpotById />
+          </Route>
           <>
-            <div>page not found</div>
+            <div>You must be lost...</div>
             <img src={notFoundRalph} alt={"page not found"}></img>
           </>
         </Switch>

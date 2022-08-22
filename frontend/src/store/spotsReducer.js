@@ -12,14 +12,28 @@ const loadSpots = (payload) => {
     }
 }
 
-//thunks action creator (for use inside component)
-export const getAllSpots = () => async(dispatch) => {
-    console.log('INSIDE SPOTS THUNK')
+//THUNKS
+export const getAllSpots = () => async (dispatch) => {
+    console.log('INSIDE GET ALL SPOTS THUNK')
     const response = await fetch('/api/spots/');
     if (response.ok) {
         const data = await response.json();
         dispatch(loadSpots(data));
-        return data;
+        return JSON.stringify(data);
+    }
+}
+
+export const createSpot = (data) => async (dispatch) => {
+    console.log("INSIDE CREATE SPOTS THUNK")
+    const response = await fetch('/api/spots/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: data
+    });
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(createSpot(spot));
+        return spot;
     }
 }
 
@@ -27,7 +41,7 @@ const initialState = {}
 
 //reducer
 const spotsReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_ALL_SPOTS: {
             const newState = {};
             console.log('INSIDE ALL SPOTS REDUCER')
