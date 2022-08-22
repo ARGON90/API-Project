@@ -1,3 +1,5 @@
+import { csrfFetch } from './csrf';
+
 //regular actions
 const GET_ALL_SPOTS = '/spots/getAllSpots'
 const CREATE_SPOT = '/spots/createSpots'
@@ -32,7 +34,7 @@ export const getAllSpots = () => async (dispatch) => {
 
 export const createSpot = (payload) => async (dispatch) => {
     console.log("INSIDE CREATE SPOTS THUNK")
-    const response = await fetch('/api/spots/', {
+    const response = await csrfFetch('/api/spots/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

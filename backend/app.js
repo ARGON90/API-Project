@@ -82,6 +82,7 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
+  console.log('ERROR MSG IN BACKEND - APP.JS', err.message)
   if (err.message === 'Validation error') {
     res.status(403)
     res.json({
