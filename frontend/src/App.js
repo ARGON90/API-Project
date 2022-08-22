@@ -29,7 +29,7 @@ function App() {
             <CreateSpotForm />
           </Route>
           <Route path='/' exact={true}>
-            <h1>Home</h1>
+            <SpotsList />
           </Route>
           <Route path="/signup" exact={true}>
             <SignupFormPage />

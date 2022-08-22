@@ -1,6 +1,6 @@
 #container {
     display: grid;
-    grid-template-columns: 200px 1fr 200px
+    grid-template-columns: 300px 1fr 300px
 }
 
 #sessionLinks {
@@ -33,4 +33,15 @@
 
 .font-family {
     font-family: sans-serif;
+}
+
+.row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+
+.home {
+    column-gap: 0.8rem;
+    display: flex;
 }
