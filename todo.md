@@ -17,3 +17,7 @@
 ### change spot Star rating to 1 decimal pt
 
 ### What kind of error handling do I need on the frontend for create all spots?
+
+global css styling
+
+make frontend error validations with a modal or an alert

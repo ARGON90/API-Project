@@ -1,1 +1,31 @@
-/* TODO Add site wide styles */
+.font-family {
+    font-family: sans-serif;
+}
+
+.flex-box {
+    display: flex;
+}
+
+.flex-end {
+    align-items: 'flex-end';
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.padding-remove {
+    padding: 0px;
+}
+
+.column-gap {
+    column-gap: 0.8rem;
+}

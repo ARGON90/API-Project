@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 // import { getPokemonTypes } from '../store/pokemon';
 
 import { createSpot } from '../../store/spotsReducer';
+import '../../index.css'
 
 // const CreateSpotForm = ({ hideForm }) => {
 const CreateSpotForm = () => {
@@ -55,8 +56,6 @@ const CreateSpotForm = () => {
           history.push(`/spots/${createdSpot.id}`);
         }
       };
-
-
 
     return (
         <section className='font-family'>

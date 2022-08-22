@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { getAllSpots } from '../../store/spotsReducer';
 import './AllSpots.css'
+import '../../index.css'
 
 
 const SpotsList = () => {

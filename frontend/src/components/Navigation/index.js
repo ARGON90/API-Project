@@ -6,6 +6,7 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import DemoIndex from '../LoginFormModal/DemoIndex'
 import './Navigation.css';
+import '../../index.css'
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -31,7 +32,7 @@ function Navigation({ isLoaded }) {
     <div className='font-family'>
       <ul className='padding-remove'>
         <li id='container'>
-          <div className='home'>
+          <div className='flex-box column-gap'>
             <NavLink exact to="/spots">Home Logo</NavLink>
             <NavLink to="/create">Create Your Spot!</NavLink>
           </div>
@@ -40,7 +41,8 @@ function Navigation({ isLoaded }) {
               Search...
             </div>
           </div>
-          <div id='sessionLinks' className='align-items-center'>
+          <div className='flex-box row-reverse column-gap
+          align-items-center'>
             {isLoaded && sessionLinks}
           </div>
         </li>

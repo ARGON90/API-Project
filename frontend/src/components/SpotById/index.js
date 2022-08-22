@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { getOneSpot } from '../../store/singleSpotReducer';
 import './SpotById.css'
+import '../../index.css'
 
 const SpotById = () => {
     console.log('INSIDE SPOTS-BY-ID COMPONENT')

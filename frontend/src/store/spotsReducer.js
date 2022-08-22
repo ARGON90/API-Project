@@ -14,10 +14,10 @@ const loadSpots = (payload) => {
         payload
     }
 }
-const addSpot = (payload) => {
+const addSpot = (newSpot) => {
     return {
         type: CREATE_SPOT,
-        payload
+        newSpot
     }
 }
 
@@ -60,7 +60,8 @@ const spotsReducer = (state = initialState, action) => {
         }
         case CREATE_SPOT:
             console.log('INSIDE CREATE SPOT ACTION / REDUCER')
-            const newState = { ...state, spots: [...state.spots, action.payload] };
+            console.log('STATE', state)
+            const newState = { ...state, [action.newSpot.id]: action.newSpot };
             return newState;
         default:
             return state;
