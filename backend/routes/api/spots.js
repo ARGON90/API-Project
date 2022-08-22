@@ -254,10 +254,18 @@ router.get('/:spotId', async (req, res) => {
 
 //~CREATE A SPOT
 router.post('/', requireAuth, async (req, res) => {
+
     const userId = req.user.id
     let errors = {}
-    const { address, city, state, country, lat,
+    let { address, city, state, country, lat,
         lng, name, description, price } = req.body;
+
+    lng = Number(lng)
+    lat = Number(lat)
+    console.log('TYPEOFLAT', typeof lng)
+    console.log('TYPEOFLNG', typeof lat)
+    console.log('LAT', lng)
+    console.log('LNG', lat)
 
     if (!address) errors.address = "Street address is required"
     if (!city) errors.city = "City is required"
@@ -270,7 +278,9 @@ router.post('/', requireAuth, async (req, res) => {
     if (!description) errors.description = "Description is required"
     if (!price) errors.price = "Price per day is required"
 
+    console.log('INSIDE SPOTS! 274', errors)
     if (Object.keys(errors).length != 0) {
+        console.log('INSIDE SPOTS INSIDE ERRORs')
         res.status(400)
         return res.json({
             message: "Validation Error",
@@ -278,7 +288,7 @@ router.post('/', requireAuth, async (req, res) => {
             errors
         })
     }
-
+    console.log('INSIDE SPOTS! 283')
     const newSpot = await Spot.create({
         ownerId: userId,
         address,
@@ -291,7 +301,7 @@ router.post('/', requireAuth, async (req, res) => {
         description,
         price
     })
-
+    console.log('INSIDE SPOTS! 296')
     res.status(201)
     return res.json(newSpot)
 })

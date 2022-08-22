@@ -102,16 +102,16 @@ const CreateSpotForm = () => {
                     <div>
                         Latitude:
                         <input
-                            type="text"
-                            placeholder="Latitude"
+                            type="number"
+                            placeholder="Latitude (numbers only!)"
                             value={lat}
                             onChange={updateLat} />
                     </div>
                     <div>
                         Longitude:
                         <input
-                            type="text"
-                            placeholder="Longitude"
+                            type="number"
+                            placeholder="Longitude (numbers only!)"
                             value={lng}
                             onChange={updateLng} />
                     </div>
@@ -134,8 +134,8 @@ const CreateSpotForm = () => {
                     <div>
                         Price:
                         <input
-                            type="text"
-                            placeholder="Price"
+                            type="number"
+                            placeholder="Price (numbers only!)"
                             value={price}
                             onChange={updatePrice} />
                     </div>
