@@ -11,27 +11,27 @@ module.exports = {
     await queryInterface.bulkInsert('Spots', [
       {
         ownerId: 1,
-        address: "spot street",
-        city: 'spot city',
-        state: 'spot state',
-        country: 'country',
+        address: "1776 Freedom Parkway",
+        city: 'Henry',
+        state: 'Virginia',
+        country: 'United States',
         lat: 13.1234567,
         lng: -21.1234567,
-        name: 'name',
-        description: 'description',
-        price: 500
+        name: 'Cozy Cabin',
+        description: 'This cabin in the woods probably is not haunted',
+        price: 275
       },
       {
         ownerId: 2,
-        address: "spot street2",
-        city: 'spot city2',
-        state: 'spot state2',
-        country: 'country2',
+        address: "191 Lake Drive",
+        city: 'Barnwell',
+        state: 'Tennessee',
+        country: 'United States',
         lat: 33.1234567,
         lng: -44.1234567,
-        name: 'name2',
-        description: 'description2',
-        price: 502
+        name: 'Lustrous Lakehouse',
+        description: 'This grand estate boasts an unbeatable lake view and various amenities for the whole family',
+        price: 699
       },
     ],
       {});

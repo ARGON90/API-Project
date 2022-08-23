@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { getOneSpot } from '../../store/singleSpotReducer';
 import './SpotById.css'
@@ -12,6 +13,8 @@ const SpotById = () => {
     const { id } = useParams()
     const singleSpot = useSelector((state) =>
         (state.singleSpot[0]));
+
+    console.log('ID OF SPOT-BY-ID', id)
 
     useEffect(() => {
         console.log('INSIDE SPOT-BY-ID USE EFFECT')
@@ -43,6 +46,10 @@ const SpotById = () => {
                 <h1>Description: {singleSpot.description}</h1>
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
+                <NavLink to={`/spots/${id}/images`}>
+                Add an Image to this Spot
+                </NavLink>
+                <h2>Add an image to this spot</h2>
                 {imageCheck(singleSpot)}
             </div>
         </>

@@ -8,6 +8,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import SpotsList from "./components/AllSpots";
 import SpotById from "./components/SpotById";
 import CreateSpotForm from "./components/CreateSpot";
+import AddImage from "./components/AddImgToSpot/Index";
 import notFoundRalph from "./data/ralph.gif"
 
 
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path='/spots/:id' exact={true}>
             <SpotById />
+          </Route>
+          <Route path='/spots/:spotId/images' exact={true}>
+            <AddImage />
           </Route>
           <>
             <div>You must be lost...</div>

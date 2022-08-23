@@ -1,23 +1,27 @@
-//regular actions
+import { csrfFetch } from './csrf';
+
 const GET_ONE_SPOT = '/oneSpot/getOneSpot'
 const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
-const loadOneSpot = (payload) => {
+const loadOneSpot = (spot) => {
     return {
         type: GET_ONE_SPOT,
-        payload
+        spot
     }
 }
 
-const addImg = (payload) => {
+const addImg = (spotId, image) => {
+    console.log('INSIDE ADD IMG image', image)
+    console.log('INSIDE ADD IMG spotId', spotId)
     return {
         type: ADD_IMG_TO_SPOT,
-        payload
+        image,
+        spotId
     }
 }
 
 //thunks action creator (for use inside component)
-export const getOneSpot = (spotId) => async(dispatch) => {
+export const getOneSpot = (spotId) => async (dispatch) => {
     console.log('INSIDE SPOT-BY-ID THUNK')
     const response = await fetch(`/api/spots/${spotId}`);
     if (response.ok) {
@@ -27,13 +31,21 @@ export const getOneSpot = (spotId) => async(dispatch) => {
         return data;
     }
 }
-export const addImgSpot = (spotId, payload) => async(dispatch) => {
+export const addImgSpot = (spotId, payload) => async (dispatch) => {
     console.log('INSIDE ADD-IMG-SPOT THUNK')
-    const response = await fetch(`/api/spots/${spotId}`);
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
     if (response.ok) {
         const data = await response.json()
         console.log('ADD IMG DATA', data)
-        dispatch(addImg(data));
+        console.log('INSIDE ADD IMG resopnse ok spotId', spotId)
+        console.log('INSIDE ADD IMG response ok data', data)
+        dispatch(addImg(spotId, data));
+        console.log('INSIDE ADD IMG  after dispatch ok spotId', spotId)
+        console.log('INSIDE ADD IMG  after dispatch ok data', data)
         return data;
     }
 }
@@ -42,13 +54,18 @@ const initialState = {}
 
 //reducer
 const singleSpotReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_ONE_SPOT: {
-            const newState = action.payload;
+            const newState = action.spot;
             console.log('INSIDE ONE SPOT-BY-ID REDUCER')
-            // action.payload.forEach((spot) => (newState[spot.id] = spot));
-            console.log('GET_ONE_SPOT newSTATE', newState)
             return newState
+        }
+        case ADD_IMG_TO_SPOT: {
+            console.log('INSIDE ADD IMG ACTION / REDUCER')
+            console.log('ADD IMG STATE', state)
+            console.log('ADD IMG ACTION IMG', action.image)
+            const newState = { ...state };
+            return newState;
         }
         default:
             return state;

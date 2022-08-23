@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
         if (!avgRating) {
             spot.dataValues.avgRating = "This spot is not yet rated"
         } else {
-            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
+            spot.dataValues.avgRating = Number(avgRating).toFixed(1)
         }
     }
 
@@ -116,7 +116,7 @@ router.get('/current', requireAuth, async (req, res) => {
         if (!avgRating) {
             spot.dataValues.avgRating = "This spot is not yet rated"
         } else {
-            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
+            spot.dataValues.avgRating = Number(avgRating).toFixed(1)
         }
     }
 
@@ -189,7 +189,7 @@ router.get('/:spotId', async (req, res) => {
         if (!avgRating) {
             spot.dataValues.avgRating = "This spot is not yet rated"
         } else {
-            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
+            spot.dataValues.avgRating = Number(avgRating).toFixed(1)
         }
     }
 
