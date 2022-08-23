@@ -6,6 +6,7 @@ const GET_ONE_SPOT = '/oneSpot/getOneSpot'
 const CREATE_SPOT = '/spots/createSpots'
 const EDIT_SPOT = '/spots/editSpot'
 const CURRENT_USER_SPOT = '/spots/currentUser'
+const DELETE_SPOT = 'spots/deleteSpot'
 
 
 
@@ -45,6 +46,13 @@ const currentUser = (spot) => {
     return {
         type: CURRENT_USER_SPOT,
         spot
+    }
+}
+
+const deleteSpotById = (id) => {
+    return {
+        type: DELETE_SPOT,
+        id
     }
 }
 
@@ -119,6 +127,22 @@ export const editSpot = (spotId, spotInfo) => async (dispatch) => {
     }
 }
 
+//THUNK - DELETE A SPOT
+export const deleteSpot = (id) => async (dispatch) => {
+    await dispatch(getAllSpots())
+    console.log("INSIDE DELETE SPOTS THUNK")
+    const response = await csrfFetch(`/api/spots/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('DELETE SPOT THUNK RESPONSE', response)
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(deleteSpotById(id));
+        return spot;
+    }
+}
+
 
 const initialState = {}
 
@@ -141,8 +165,6 @@ const spotsReducer = (state = initialState, action) => {
         case CURRENT_USER_SPOT: {
             const newState = action.spot
             console.log('INSIDE SPOT-BY-ID REDUCER');
-            console.log('CURRENT PAYLOAD', action.spot
-            )
             return newState
         }
         case CREATE_SPOT: {
@@ -153,10 +175,14 @@ const spotsReducer = (state = initialState, action) => {
             }
         case EDIT_SPOT: {
             console.log('INSIDE EDIT SPOT REDUCER');
-            console.log('STATE', state);
-            console.log('spotId', action.spotId);
-            console.log('STATE', state);
             const newState = { ...state };
+            return newState;
+        }
+        case DELETE_SPOT: {
+            console.log('INSIDE DELETE SPOT REDUCER');
+            console.log('DELETE ACTION ID', action.spotId)
+            const newState = { ...state };
+
             return newState;
         }
         default:

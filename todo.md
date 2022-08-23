@@ -13,8 +13,8 @@ frontend authorization: how to get user information on frontend?
 ### Get all spots by Id (done)
 ### Create a spot (done)
 ### Edit a spot on ID (done)
+### Get spots of current user (done)
 
-### Get spots of current user
 ### Delete a spot on ID
 
 ### Add image to spot based on spot Id (partial)

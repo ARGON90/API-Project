@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { getAllSpots } from '../../store/spotsReducer';
 import { getOneSpot } from '../../store/spotsReducer';
+import { deleteSpot } from '../../store/spotsReducer';
 import './SpotById.css'
 import '../../index.css'
 
@@ -45,6 +46,10 @@ const SpotById = () => {
         }
     }
 
+    function onClickDelete() {
+        dispatch(deleteSpot(id))
+    }
+
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
         <>
@@ -57,6 +62,9 @@ const SpotById = () => {
                 <NavLink to={`/spots/${id}/edit`}>
                 Edit This Spot
                 </NavLink>
+                <button onClick={onClickDelete}>
+                Delete This Spot
+                </button>
             </div>
         </>
     );
