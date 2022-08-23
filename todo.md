@@ -1,37 +1,48 @@
 # TODO
 
-Questions: how to do frontend authorization?
+Questions:
 frontend authentication: how to check if user is logged in?
+frontend authorization: how to get user information on frontend?
 
 
-## Frontend (functionality)
+# Frontend (functionality)
+
 ## Spots
 
 ### Get all spots (done)
 ### Get all spots by Id (done)
 ### Create a spot (done)
+### Add image to spot based on spot Id (done)
 
 ### Get spots of current user
-### Add image to spot based on spot Id
-### Edit a spot
-### Delete a spot
+### Edit a spot on ID
+### Delete a spot on ID
 
 ## Reviews
 
+### get all reviews of current user
+### get all reviews by spot Id
+### create reviews by spotId
+### add Image to review by reviewId
+### delete a review by reviewId
 
-## Backend
 
-### change spot Star rating to 1 decimal pt
-
-## MISC
+# MISC
 
 ### better understand proxy
 
 ### make frontend error validations with a modal or an alert
 
 
+# NOTES
 Notes:
-for add image to Id:
+Potential Addons
+*ADD IMG TO SPOT ON ID
 --in the spotbyId component, should I only have the link for adding an image available if the person who owns that spot is the currently logged in user?
---BUG
---the state turns all of the image id's to 1 when it is refreshed upon image creation - if it isn't refreshed, it shouldn't be a problem...
+
+
+--BUGS
+*ADD IMG TO SPOT ON ID
+--the state turns all of the image id's to the respective spot number when it is refreshed upon image creation - if it isn't refreshed, it shouldn't be a problem. If I'm not fetching all Images, I don't think it'll be a problem
+
+--the server tries to perform a fetch to spots/{color} upon loading. Is it just trying to fetch the data?

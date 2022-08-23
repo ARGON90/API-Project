@@ -40,12 +40,7 @@ export const addImgSpot = (spotId, payload) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json()
-        console.log('ADD IMG DATA', data)
-        console.log('INSIDE ADD IMG resopnse ok spotId', spotId)
-        console.log('INSIDE ADD IMG response ok data', data)
         dispatch(addImg(spotId, data));
-        console.log('INSIDE ADD IMG  after dispatch ok spotId', spotId)
-        console.log('INSIDE ADD IMG  after dispatch ok data', data)
         return data;
     }
 }
@@ -62,9 +57,6 @@ const singleSpotReducer = (state = initialState, action) => {
         }
         case ADD_IMG_TO_SPOT: {
             console.log('INSIDE ADD IMG ACTION / REDUCER')
-            console.log('ADD IMG STATE', state)
-            console.log('ADD IMG STATE IMAGES', state[0].Images)
-            console.log('ADD IMG ACTION IMG', action.image)
             action.image.imageableId = Number(action.image.imageableId)
             const newState = { ...state };
             newState[0].Images = [...state[0].Images, action.image]
