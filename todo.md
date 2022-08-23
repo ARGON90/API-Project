@@ -32,5 +32,6 @@ frontend authentication: how to check if user is logged in?
 
 Notes:
 for add image to Id:
---in the component for this, should I update the state with the appropriate ID when this page is loaded?
 --in the spotbyId component, should I only have the link for adding an image available if the person who owns that spot is the currently logged in user?
+--BUG
+--the state turns all of the image id's to 1 when it is refreshed upon image creation - if it isn't refreshed, it shouldn't be a problem...

@@ -63,8 +63,11 @@ const singleSpotReducer = (state = initialState, action) => {
         case ADD_IMG_TO_SPOT: {
             console.log('INSIDE ADD IMG ACTION / REDUCER')
             console.log('ADD IMG STATE', state)
+            console.log('ADD IMG STATE IMAGES', state[0].Images)
             console.log('ADD IMG ACTION IMG', action.image)
+            action.image.imageableId = Number(action.image.imageableId)
             const newState = { ...state };
+            newState[0].Images = [...state[0].Images, action.image]
             return newState;
         }
         default:

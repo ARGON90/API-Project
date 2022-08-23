@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addImgSpot } from '../../store/singleSpotReducer';
 
-import { createSpot } from '../../store/spotsReducer';
+import { getOneSpot } from '../../store/singleSpotReducer';
 
 const AddImage = () => {
     const dispatch = useDispatch();
@@ -16,6 +16,10 @@ const AddImage = () => {
     const updateUrl = (e) => setUrl(e.target.value);
     const updatePreviewImage = (e) => setPreviewImage(e.target.value);
 
+    useEffect(() => {
+        console.log('INSIDE SPOT-BY-ID USE EFFECT')
+        dispatch(getOneSpot(spotId))
+    }, [dispatch])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,7 +57,7 @@ const AddImage = () => {
                             onChange={updateUrl} />
                     </div>
                     <div>
-                        Preview Image: 
+                        Preview Image:
                         <input
                             type="boolean"
                             // dropdown?
