@@ -10,6 +10,7 @@ import SpotById from "./components/SpotById";
 import CreateSpotForm from "./components/CreateSpot";
 import AddImage from "./components/AddImgToSpot/Index";
 import EditSpot from "./components/EditSpot";
+import CurrentUserSpot from "./components/CurrentUserSpot";
 
 
 import notFoundRalph from "./data/ralph.gif"
@@ -41,6 +42,9 @@ function App() {
           <Route path='/spots' exact={true} >
             <SpotsList />
           </Route>
+          <Route path='/spots/current' exact={true}>
+            <CurrentUserSpot />
+          </Route>
           <Route path='/spots/:id' exact={true}>
             <SpotById />
           </Route>
@@ -50,6 +54,7 @@ function App() {
           <Route path='/spots/:spotId/edit' exact={true}>
             <EditSpot />
           </Route>
+
           <>
             <div>You must be lost...</div>
             <img src={notFoundRalph} alt={"page not found"}></img>

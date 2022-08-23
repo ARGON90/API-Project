@@ -11,9 +11,7 @@ const SpotsList = () => {
     console.log('INSIDE SPOTSLIST COMPONENT')
     const dispatch = useDispatch();
     const spotsList = useSelector((state) => Object.values(state.spots));
-    const singleSpot = useSelector((state) => Object.values(state))
 
-    
 
     useEffect(() => {
         console.log('INSIDE SPOTSLIST USE EFFECT')
@@ -27,6 +25,8 @@ const SpotsList = () => {
             return <img src={spot.previewImage} alt='Main Image' />
         }
     }
+
+    console.log('SPOTSLIST ALL SPOTS', spotsList)
     if (!spotsList) return <div>Loading All Spots...</div>
     return (
         <>

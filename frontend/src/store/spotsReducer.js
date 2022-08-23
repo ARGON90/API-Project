@@ -5,6 +5,7 @@ const GET_ALL_SPOTS = '/spots/getAllSpots'
 const GET_ONE_SPOT = '/oneSpot/getOneSpot'
 const CREATE_SPOT = '/spots/createSpots'
 const EDIT_SPOT = '/spots/editSpot'
+const CURRENT_USER_SPOT = '/spots/currentUser'
 
 
 
@@ -40,6 +41,13 @@ const putSpot = (spotId, spotInfo) => {
     }
 }
 
+const currentUser = (spot) => {
+    return {
+        type: CURRENT_USER_SPOT,
+        spot
+    }
+}
+
 
 //THUNK - GET ALL SPOTS
 export const getAllSpots = () => async (dispatch) => {
@@ -62,6 +70,18 @@ export const getOneSpot = (spotId) => async (dispatch) => {
         console.log('GET ONE SPOT THUNK DATA', data)
         let images = data[0].Images
         dispatch(loadOneSpot(spotId, images));
+        return data;
+    }
+}
+//THUNK - GET CURRENT USER SPOT
+export const getCurrentUserSpot = () => async (dispatch) => {
+    await dispatch(getAllSpots())
+    console.log('INSIDE CURRENT USER THUNK')
+    const response = await fetch(`/api/spots/current`);
+    if (response.ok) {
+        const data = await response.json()
+        console.log('CURRENT USER THUNK DATA', data)
+        dispatch(currentUser(data));
         return data;
     }
 }
@@ -116,6 +136,13 @@ const spotsReducer = (state = initialState, action) => {
             console.log('INSIDE SPOT-BY-ID REDUCER');
             let id =  action.spotId
             newState[id].images = action.images
+            return newState
+        }
+        case CURRENT_USER_SPOT: {
+            const newState = action.spot
+            console.log('INSIDE SPOT-BY-ID REDUCER');
+            console.log('CURRENT PAYLOAD', action.spot
+            )
             return newState
         }
         case CREATE_SPOT: {

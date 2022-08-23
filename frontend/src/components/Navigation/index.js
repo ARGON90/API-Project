@@ -35,6 +35,8 @@ function Navigation({ isLoaded }) {
           <div className='flex-box column-gap'>
             <NavLink exact to="/spots">Home Logo</NavLink>
             <NavLink to="/create">Create Your Spot!</NavLink>
+            <NavLink to="/spots/current">Current User Spots</NavLink>
+
           </div>
           <div className='flex-box justify-content-center'>
             <div id='search-bar'>
