@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -53,8 +53,10 @@ const SpotById = () => {
                 <h1>Description: {singleSpot.description}</h1>
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
-
                 {imageCheck(singleSpot)}
+                <NavLink to={`/spots/${id}/edit`}>
+                Edit This Spot
+                </NavLink>
             </div>
         </>
     );

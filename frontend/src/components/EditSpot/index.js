@@ -1,13 +1,15 @@
+import React from 'react'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { createSpot } from '../../store/spotsReducer';
 import '../../index.css'
+import { editSpot } from '../../store/spotsReducer';
 
-// const CreateSpotForm = ({ hideForm }) => {
-const CreateSpotForm = () => {
+
+function EditSpot() {
     const dispatch = useDispatch();
+    const {spotId} = useParams();
     const history = useHistory();
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -29,10 +31,11 @@ const CreateSpotForm = () => {
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePrice = (e) => setPrice(e.target.value);
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const payload = {
+        const spotInfo = {
           address,
           city,
           state,
@@ -45,22 +48,23 @@ const CreateSpotForm = () => {
         };
 
         console.log('INSIDE CREATE FORM SUBMIT')
-        console.log('PAYLOAD', payload)
+        console.log('PAYLOAD', spotInfo)
 
-        let createdSpot;
-          createdSpot = await dispatch(createSpot(payload));
-        if (createdSpot) {
-            console.log(createdSpot)
-          history.push(`/spots/${createdSpot.id}`);
+        let editedSpot;
+          editedSpot = await dispatch(editSpot(spotId ,spotInfo));
+        if (editedSpot) {
+            console.log(editedSpot)
+          history.push(`/spots/${editedSpot.id}`);
         }
       };
 
-    return (
+
+      return (
         <section className='font-family'>
             <div className='flex-box flex-direction-column'>
                     <form onSubmit={handleSubmit}>
                     <div>
-                        <h1>Create A Spot</h1>
+                        <h1>Edit Spot {spotId}</h1>
                     </div>
                     <div>
                         Address
@@ -137,11 +141,11 @@ const CreateSpotForm = () => {
                             value={price}
                             onChange={updatePrice} />
                     </div>
-                    <button type="submit">Create new Spot</button>
+                    <button type="submit">Edit this Spot</button>
                 </form>
             </div>
         </section>
     );
 };
 
-export default CreateSpotForm;
+export default EditSpot

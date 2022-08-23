@@ -344,8 +344,11 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 router.put('/:spotId', requireAuth, async (req, res) => {
     const spotId = req.params.spotId;
     let errors = {}
-    const { address, city, state, country, lat,
+    let { address, city, state, country, lat,
         lng, name, description, price } = req.body;
+        console.log('BACKEND EDIT SPOTS 349')
+    lng = Number(lng)
+    lat = Number(lat)
 
     if (!address) errors.address = "Street address is required"
     if (!city) errors.city = "City is required"
@@ -360,6 +363,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
     if (Object.keys(errors).length != 0) {
         res.status(400)
+        console.log('BACKEND EDIT SPOT ERRORS', errors)
         res.json({
             message: "Validation Error",
             statusCode: 400,

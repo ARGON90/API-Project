@@ -12,11 +12,12 @@ frontend authorization: how to get user information on frontend?
 ### Get all spots (done)
 ### Get all spots by Id (done)
 ### Create a spot (done)
-### Add image to spot based on spot Id (done)
+### Edit a spot on ID (done)
 
 ### Get spots of current user
-### Edit a spot on ID
 ### Delete a spot on ID
+
+### Add image to spot based on spot Id (partial)
 
 ## Reviews
 

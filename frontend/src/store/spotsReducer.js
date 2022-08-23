@@ -3,8 +3,8 @@ import { csrfFetch } from './csrf';
 //regular actions
 const GET_ALL_SPOTS = '/spots/getAllSpots'
 const GET_ONE_SPOT = '/oneSpot/getOneSpot'
-
 const CREATE_SPOT = '/spots/createSpots'
+const EDIT_SPOT = '/spots/editSpot'
 
 
 
@@ -32,6 +32,13 @@ const addSpot = (newSpot) => {
     }
 }
 
+const putSpot = (spotId, spotInfo) => {
+    return {
+        type: EDIT_SPOT,
+        spotId,
+        spotInfo
+    }
+}
 
 
 //THUNK - GET ALL SPOTS
@@ -47,11 +54,12 @@ export const getAllSpots = () => async (dispatch) => {
 
 //THUNK - GET ONE SPOT
 export const getOneSpot = (spotId) => async (dispatch) => {
+    await dispatch(getAllSpots())
     console.log('INSIDE SPOT-BY-ID THUNK')
     const response = await fetch(`/api/spots/${spotId}`);
     if (response.ok) {
         const data = await response.json()
-        console.log('GETONESPOT DATA', data)
+        console.log('GET ONE SPOT THUNK DATA', data)
         let images = data[0].Images
         dispatch(loadOneSpot(spotId, images));
         return data;
@@ -66,7 +74,7 @@ export const createSpot = (payload) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     });
-    console.log('SPOTS THUNK RESPONSE', response)
+    console.log(' CREATE SPOTS THUNK RESPONSE', response)
     if (response.ok) {
         const spot = await response.json();
         dispatch(addSpot(spot));
@@ -74,13 +82,31 @@ export const createSpot = (payload) => async (dispatch) => {
     }
 }
 
+//THUNK - EDIT A SPOT
+export const editSpot = (spotId, spotInfo) => async (dispatch) => {
+    await dispatch(getAllSpots())
+    console.log("INSIDE EDIT SPOTS THUNK")
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spotInfo)
+    });
+    console.log('EDIT SPOTS THUNK RESPONSE', response)
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(putSpot(spotId, spot));
+        return spot;
+    }
+}
+
+
 const initialState = {}
 
 //REDUCER
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALL_SPOTS: {
-            console.log('INSIDE GET SPOTS EDUCER')
+            console.log('INSIDE GET SPOTS REDUCER')
             const newState = {};
             action.payload.Spots.forEach((spot) => (newState[spot.id] = spot));
             return newState
@@ -92,11 +118,20 @@ const spotsReducer = (state = initialState, action) => {
             newState[id].images = action.images
             return newState
         }
-        case CREATE_SPOT:
+        case CREATE_SPOT: {
             console.log('INSIDE CREATE SPOT REDUCER');
             console.log('STATE', state);
             const newState = { ...state, [action.newSpot.id]: action.newSpot };
             return newState;
+            }
+        case EDIT_SPOT: {
+            console.log('INSIDE EDIT SPOT REDUCER');
+            console.log('STATE', state);
+            console.log('spotId', action.spotId);
+            console.log('STATE', state);
+            const newState = { ...state };
+            return newState;
+        }
         default:
             return state;
     }
