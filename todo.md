@@ -1,5 +1,6 @@
 # TODO
 
+## Frontend
 ## Spots
 
 ### Get all spots (done)
@@ -11,13 +12,16 @@
 ### Edit a spot
 ### Delete a spot
 
+## Reviews
 
-### better understand proxy
+
+## Backend
 
 ### change spot Star rating to 1 decimal pt
 
-### What kind of error handling do I need on the frontend for create all spots?
 
-global css styling
+## MISC
 
-make frontend error validations with a modal or an alert
+### better understand proxy
+
+### make frontend error validations with a modal or an alert

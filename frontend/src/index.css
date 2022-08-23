@@ -6,10 +6,6 @@
     display: flex;
 }
 
-.flex-end {
-    align-items: 'flex-end';
-}
-
 .row-reverse {
     flex-direction: row-reverse;
 }
@@ -20,6 +16,10 @@
 
 .align-items-center {
     align-items: center;
+}
+
+.flex-end {
+    align-items: 'flex-end';
 }
 
 .padding-remove {

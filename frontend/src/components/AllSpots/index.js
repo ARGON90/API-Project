@@ -21,7 +21,7 @@ const SpotsList = () => {
         if (!spot.previewImage) {
             return <p>No Preview Image Exists for Spot</p>
         } else {
-            return <p>{spot.previewImage}</p>
+            return <img src={spot.previewImage} alt='Main Image' />
         }
     }
     if (!spotsList) return <div>Loading All Spots...</div>

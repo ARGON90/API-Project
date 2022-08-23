@@ -27,8 +27,8 @@ const SpotById = () => {
             let imgArray = Array.from(singleSpot.Images)
             console.log('IMAGEARRAY', imgArray)
             return imgArray.map((image) => (
-                <div key={image.id}>
-                    <div>{image.url}</div>
+                    <div>
+                <img src={image.url} key={image.id} alt='Spot Image' />
                 </div>
             ))
 
