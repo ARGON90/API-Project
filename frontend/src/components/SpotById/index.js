@@ -32,7 +32,7 @@ const SpotById = () => {
     }, [dispatch])
 
     useEffect(() => {
-        console.log('inside GETSTATE USE EFFECT')
+        console.log('SPOTBYID GETSTATE USE EFFECT ')
         dispatch(getState())
     }, [dispatch])
 
