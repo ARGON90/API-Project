@@ -4,14 +4,18 @@ import sessionReducer from './session';
 import spotsReducer from "./spotsReducer";
 import singleSpotReducer from "./singleSpotReducer";
 
+
+
+
 const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotsReducer,
   singleSpot: singleSpotReducer
 });
 
-let enhancer;
 
+
+let enhancer;
 if (process.env.NODE_ENV === "production") {
   enhancer = applyMiddleware(thunk);
 } else {
@@ -24,5 +28,6 @@ if (process.env.NODE_ENV === "production") {
 const configureStore = (preloadedState) => {
   return createStore(rootReducer, preloadedState, enhancer);
 };
+
 
 export default configureStore;

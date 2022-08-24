@@ -3,6 +3,13 @@ import { csrfFetch } from './csrf';
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
+const GET_STATE = 'session/getState'
+export const getState = () => {
+    return {
+        type: GET_STATE
+    }
+}
+
 const setUser = (user) => {
     return {
         type: SET_USER,
@@ -68,6 +75,7 @@ export const logout = () => async (dispatch) => {
 
 const initialState = { user: null };
 
+let sessionUserId;
 const sessionReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
@@ -79,9 +87,15 @@ const sessionReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             newState.user = null;
             return newState;
+        case GET_STATE:{
+            sessionUserId = state
+            return state
+        }
         default:
             return state;
     }
 };
+
+export { sessionUserId }
 
 export default sessionReducer;

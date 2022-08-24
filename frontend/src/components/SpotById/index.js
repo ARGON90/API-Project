@@ -5,16 +5,11 @@ import { useEffect } from 'react';
 import { getAllSpots } from '../../store/spotsReducer';
 import { getOneSpot } from '../../store/spotsReducer';
 import { deleteSpot } from '../../store/spotsReducer';
+import { getState } from '../../store/session';
+import { sessionUserId } from '../../store/session';
+
 import './SpotById.css'
 import '../../index.css'
-
-//make sure allspots data loads properly on /spots
-//as well as spots/:id
-
-//the job of the get spot by id action will be to add
-//images array to the spot state for a given spot
-//FETCH SINGLE SPOT DATA
-//ADD THE IMG DATA INTO 'SPOTS' STATE
 
 const SpotById = () => {
     console.log('INSIDE SPOTS-BY-ID COMPONENT')
@@ -22,12 +17,24 @@ const SpotById = () => {
     const history = useHistory();
     const { id } = useParams()
     const spotsList = useSelector((state) => (state.spots));
-    let singleSpot = spotsList[id]
+    const singleSpot = spotsList[id]
+
+
+    let sessionId;
+    if (sessionUserId && sessionUserId.user) {
+        sessionId = sessionUserId.user.id
+    } 
+
     console.log('ID OF SPOT-BY-ID', id)
 
     useEffect(() => {
         console.log('INSIDE SPOT-BY-ID USE EFFECT')
         dispatch(getOneSpot(id))
+    }, [dispatch])
+
+    useEffect(() => {
+        console.log('insideGETSTATE')
+        dispatch(getState())
     }, [dispatch])
 
     function imageCheck(singleSpot) {
@@ -41,7 +48,7 @@ const SpotById = () => {
                 return imgArray.map((image) => (
                     <div>
                         <img src={image.url} key={image.id}
-                        className={'img-size'} alt='Spot Image' />
+                            className={'img-size'} alt='Spot Image' />
                     </div>
                 ))
             }
@@ -50,8 +57,10 @@ const SpotById = () => {
 
     async function onClickDelete() {
         await dispatch(deleteSpot(id))
-          history.push(`/spots/`);
+        history.push(`/spots/`);
     }
+
+
 
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
@@ -63,11 +72,12 @@ const SpotById = () => {
                 <h1>Images</h1>
                 {imageCheck(singleSpot)}
                 <NavLink to={`/spots/${id}/edit`}>
-                Edit This Spot
+                    Edit This Spot
                 </NavLink>
-                <button onClick={onClickDelete}>
-                Delete This Spot
-                </button>
+                {singleSpot.ownerId === sessionId &&
+                    (<button onClick={onClickDelete}>
+                        Delete This Spot
+                    </button>)}
             </div>
         </>
     );
