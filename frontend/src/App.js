@@ -11,6 +11,8 @@ import CreateSpotForm from "./components/CreateSpot";
 import AddImage from "./components/AddImgToSpot/Index";
 import EditSpot from "./components/EditSpot";
 import CurrentUserSpot from "./components/CurrentUserSpot";
+import { sessionUserId } from "./store/session";
+import { getState } from "./store/session";
 
 
 import notFoundRalph from "./data/ralph.gif"
@@ -24,6 +26,19 @@ function App() {
   }, [dispatch]);
 
 
+  let sessionId;
+  if (sessionUserId && sessionUserId.user) {
+    sessionId = sessionUserId.user.id
+  }
+
+  useEffect(() => {
+    console.log('App GETSTATE USE EFFECT ')
+    dispatch(getState())
+  }, [dispatch, sessionId])
+
+  function checkState() {
+    dispatch(getState())
+  }
 
   return (
     <>
@@ -61,6 +76,7 @@ function App() {
           </>
         </Switch>
       )}
+      {checkState()}
     </>
   );
 }

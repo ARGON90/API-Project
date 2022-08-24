@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import { getState } from '../../store/session';
+
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -11,6 +13,8 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
+    console.log('INSIDE HANDLE SUBTMI')
+    dispatch(getState())
     return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();

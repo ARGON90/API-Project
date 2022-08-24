@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
+let count = 0;
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -9,13 +10,18 @@ function ProfileButton({ user }) {
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
+    count++
   };
+
+  console.log('HELLO PROFILEBUTTON')
+  console.log(count)
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = () => {
       setShowMenu(false);
+      count++
     };
 
     document.addEventListener('click', closeMenu);
@@ -26,6 +32,8 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    console.log('HELLO LOGOUT')
+    count++
   };
 
   return (
@@ -45,5 +53,8 @@ function ProfileButton({ user }) {
     </>
   );
 }
+
+export {count}
+
 
 export default ProfileButton;

@@ -11,7 +11,6 @@ import { getState } from '../../store/session';
 import './Navigation.css';
 import '../../index.css'
 
-
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
@@ -29,14 +28,8 @@ function Navigation({ isLoaded }) {
   }, [dispatch, sessionId])
 
 
-  function sess() {
+  function checkState() {
     dispatch(getState())
-    console.log('HELLO!!! INSIDE SESS')
-    if (sessionUserId && sessionUserId.user) {
-      sessionId = sessionUserId.user.id
-    } return (
-      <div>hello</div>
-    )
   }
 
   console.log('SESSIONID', sessionId)
@@ -58,42 +51,36 @@ function Navigation({ isLoaded }) {
     );
   }
 
-  const hi = () => {
-    return (
-      <p>hi!!</p>
-      )
-  }
-
-
-
   return (
-      <div className='font-family'>
-        <ul className='padding-remove'>
-          <li id='container'>
-            <div className='flex-box column-gap'>
-            {hi}
-            <div>hello</div>
-              <NavLink exact to="/spots">Home Logo</NavLink>
-              <NavLink to="/create">Create Your Spot!</NavLink>
-              {sessionId && (
-                <NavLink to="/spots/current">Current User Spots</NavLink>
-              )}
-              {sess}
+    <div className='font-family'>
+      <ul className='padding-remove'>
+        <li id='container'>
+          <div className='flex-box column-gap'>
+            <NavLink exact to="/spots">Home Logo</NavLink>
+            {sessionId && (
+              <NavLink to="/create">Create A Spot</NavLink>
+            )}
+          </div>
+          <div className='flex-box justify-content-center'>
+            <div id='search-bar'>
+              Search...
             </div>
-            <div className='flex-box justify-content-center'>
-              <div id='search-bar'>
-                Search...
-              </div>
-            </div>
-            <div className='flex-box row-reverse column-gap
+          </div>
+          <div className='flex-box row-reverse column-gap
           align-items-center'>
-              {isLoaded && sessionLinks}
-            </div>
-          </li>
-        </ul>
-      </div>
+            {checkState()}
+            {isLoaded && sessionLinks}
+            {sessionId && (
+              <NavLink to="/spots/current">View Your Spots</NavLink>
+            )}
+          </div>
+        </li>
+      </ul>
+    </div>
 
   );
 }
+
+
 
 export default Navigation;

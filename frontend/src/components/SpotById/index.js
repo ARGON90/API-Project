@@ -6,6 +6,7 @@ import { getOneSpot } from '../../store/spotsReducer';
 import { deleteSpot } from '../../store/spotsReducer';
 import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
+import { count } from '../Navigation/ProfileButton';
 
 import './SpotById.css'
 import '../../index.css'
@@ -34,7 +35,11 @@ const SpotById = () => {
     useEffect(() => {
         console.log('SPOTBYID GETSTATE USE EFFECT ')
         dispatch(getState())
-    }, [dispatch])
+    }, [dispatch, sessionId])
+
+    function checkState() {
+        dispatch(getState());
+      }
 
     function imageCheck(singleSpot) {
         if (singleSpot.images) {
@@ -57,24 +62,28 @@ const SpotById = () => {
         history.push(`/spots/`);
     }
 
-
-
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
         <>
+        <div>{count}</div>
             <div className='font-family'>
                 <h1>Spot By Id: Spot {singleSpot.id}</h1>
                 <h1>Description: {singleSpot.description}</h1>
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
                 {imageCheck(singleSpot)}
-                <NavLink to={`/spots/${id}/edit`}>
-                    Edit This Spot
-                </NavLink>
+                {checkState()}
                 {singleSpot.ownerId === sessionId &&
-                    (<button onClick={onClickDelete}>
+                    (
+                    <>
+                    <NavLink to={`/spots/${id}/edit`}>
+                    Edit This Spot
+                    </NavLink>
+                    <button onClick={onClickDelete}>
                         Delete This Spot
-                    </button>)}
+                    </button>
+                    </>
+                    )}
             </div>
         </>
     );
