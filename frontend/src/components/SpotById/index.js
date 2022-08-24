@@ -71,17 +71,21 @@ const SpotById = () => {
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
                 {imageCheck(singleSpot)}
+                <NavLink to={`/spots/${id}/reviews`}>
+                    Reviews of this spot
+                </NavLink>
+
                 {checkState()}
                 {singleSpot.ownerId === sessionId &&
                     (
-                    <>
+                    <div>
                     <NavLink to={`/spots/${id}/edit`}>
                     Edit This Spot
                     </NavLink>
                     <button onClick={onClickDelete}>
                         Delete This Spot
                     </button>
-                    </>
+                    </div>
                     )}
                     {checkState()}
             </div>

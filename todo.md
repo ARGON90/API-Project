@@ -21,11 +21,13 @@ frontend authorization: how to get user information on frontend?
 ## Reviews
 
 ### get all reviews of current user (done)
+### get all reviews by spot Id (done)
 
-### get all reviews by spot Id
 ### create reviews by spotId
 ### add Image to review by reviewId
 ### delete a review by reviewId
+
+### add use history for routing on reviews?
 
 
 # MISC
@@ -55,3 +57,6 @@ Potential Addons
 --currently, the Images shown are not iterating, it just pics the first one (should be fine?)
 --breaks upon hard refresh
 
+*REVIEWSCURRENTSPOT
+--currently, the Images shown are not iterating, it just pics the first one (should be fine?)
+--breaks upon hard refresh
