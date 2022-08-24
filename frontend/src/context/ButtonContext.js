@@ -4,9 +4,10 @@ export const ButtonContext = createContext();
 
 export const ButtonProvider = (props) => {
   const [currentNum, setCurrentNum] = useState(0);
+  const [sessionUserId, setSessionUserId] = useState('')
 
   return (
-    <ButtonContext.Provider value={{ currentNum, setCurrentNum }}>
+    <ButtonContext.Provider value={{ currentNum, setCurrentNum, sessionUserId, setSessionUserId }}>
       {props.children}
     </ButtonContext.Provider>
   );

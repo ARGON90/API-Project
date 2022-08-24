@@ -1,5 +1,6 @@
 import { csrfFetch } from './csrf';
 
+
 // const GET_ONE_SPOT = '/oneSpot/getOneSpot'
 const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 

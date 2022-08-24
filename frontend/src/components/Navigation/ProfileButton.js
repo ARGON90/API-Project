@@ -36,15 +36,16 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    await dispatch(sessionActions.logout());
+    setCurrentNum((num) => num + 1)
     console.log('HELLO LOGOUT')
   };
 
   return (
     <>
-    
+
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>

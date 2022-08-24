@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { getState } from '../../store/session';
+import { ButtonContext } from "../../context/ButtonContext";
 
 
 function LoginForm() {
@@ -10,18 +11,26 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const handleSubmit = (e) => {
+  const {currentNum, setCurrentNum} = useContext(ButtonContext)
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
     console.log('INSIDE HANDLE SUBTMI')
     dispatch(getState())
-    return dispatch(sessionActions.login({ credential, password })).catch(
+    await dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       }
     );
+    setCurrentNum((num) => num + 1)
   };
+
+  const setCurrent = () => {
+    setCurrentNum((num) => num + 1)
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -48,7 +57,7 @@ function LoginForm() {
           required
         />
       </label>
-      <button type="submit">Log In</button>
+      <button onClick={setCurrent} type="submit">Log In</button>
     </form>
   );
 }

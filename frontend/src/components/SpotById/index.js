@@ -35,7 +35,7 @@ const SpotById = () => {
     useEffect(() => {
         console.log('SPOTBYID GETSTATE USE EFFECT ')
         dispatch(getState())
-    }, [dispatch, sessionId])
+    }, [dispatch, sessionId, currentNum])
 
     function checkState() {
         dispatch(getState());
@@ -76,6 +76,7 @@ const SpotById = () => {
                 {singleSpot.ownerId === sessionId &&
                     (
                     <>
+                    <div>{currentNum}</div>
                     <NavLink to={`/spots/${id}/edit`}>
                     Edit This Spot
                     </NavLink>

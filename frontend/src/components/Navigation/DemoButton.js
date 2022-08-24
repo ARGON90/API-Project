@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from 'react-redux';
+
+import { ButtonContext } from "../../context/ButtonContext";
 import * as sessionActions from '../../store/session';
 
 function DemoButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const {currentNum, setCurrentNum} = useContext(ButtonContext)
+
 
   const openMenu = () => {
     if (showMenu) return;
@@ -25,6 +29,7 @@ function DemoButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
+    setCurrentNum((num) => num + 1)
     dispatch(sessionActions.logout());
   };
 

@@ -14,8 +14,7 @@ frontend authorization: how to get user information on frontend?
 ### Create a spot (done)
 ### Edit a spot on ID (done)
 ### Get spots of current user (done)
-
-### Delete a spot on ID
+### Delete a spot on ID (done)
 
 ### Add image to spot based on spot Id (partial)
 
@@ -48,5 +47,5 @@ Potential Addons
 --the state turns all of the image id's to the respective spot number when it is refreshed upon image creation - if it isn't refreshed, it shouldn't be a problem. If I'm not fetching all Images, I don't think it'll be a problem
 --the server tries to perform a fetch to spots/{color} upon loading. Is it just trying to fetch the data?
 
-*SpotById
+*SPOTBYID
 --if you logout, the delete and edit spot buttons are still available. need to trigger a rerender everytime the profile button?
