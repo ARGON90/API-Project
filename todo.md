@@ -48,9 +48,4 @@ Potential Addons
 
 --the server tries to perform a fetch to spots/{color} upon loading. Is it just trying to fetch the data?
 
-*GET SPOT BY ID
--- if you don't load all spots first, this page will NOT work
 
-*DELETE SPOT
--- if you aren't the current user, you can still delete a Spot's Image
--- if you are the current user and you delete a spot, it deletes the image first, on a delay. it works, but it's not pretty.

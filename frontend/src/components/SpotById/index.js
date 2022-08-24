@@ -2,7 +2,6 @@ import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { getAllSpots } from '../../store/spotsReducer';
 import { getOneSpot } from '../../store/spotsReducer';
 import { deleteSpot } from '../../store/spotsReducer';
 import { getState } from '../../store/session';
@@ -23,7 +22,7 @@ const SpotById = () => {
     let sessionId;
     if (sessionUserId && sessionUserId.user) {
         sessionId = sessionUserId.user.id
-    } 
+    }
 
     console.log('ID OF SPOT-BY-ID', id)
 
@@ -33,20 +32,18 @@ const SpotById = () => {
     }, [dispatch])
 
     useEffect(() => {
-        console.log('insideGETSTATE')
+        console.log('inside GETSTATE USE EFFECT')
         dispatch(getState())
     }, [dispatch])
 
     function imageCheck(singleSpot) {
         if (singleSpot.images) {
-            console.log('SINGLESPOT IMAGES', typeof singleSpot.images)
             let imgArray = Object.values(singleSpot.images)
-            console.log('SINGLESPOT IMAGESARR', imgArray.length)
             if (singleSpot.images.length < 1) {
                 return <p>No Images Exists for Spot</p>
             } else {
                 return imgArray.map((image) => (
-                    <div>
+                    <div key={image.id}>
                         <img src={image.url} key={image.id}
                             className={'img-size'} alt='Spot Image' />
                     </div>
