@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { getAllSpots } from '../../store/spotsReducer';
+import { getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 import './AllSpots.css'
 import '../../index.css'
 
@@ -17,6 +18,11 @@ const SpotsList = () => {
         console.log('INSIDE SPOTSLIST USE EFFECT')
         dispatch(getAllSpots());
     }, [dispatch]);
+
+    useEffect(() => {
+        console.log('LOADING CURRENT USER REVIEWS ON HOMEPAGE')
+        dispatch(getReviewsCurrentUser())
+    }, [dispatch])
 
     function imageCheck(spot) {
         if (!spot.previewImage) {

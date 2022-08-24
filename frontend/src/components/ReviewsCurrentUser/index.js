@@ -4,17 +4,11 @@ import { useEffect } from 'react';
 
 
 import { getReviewsCurrentUser } from '../../store/UserReviewsReducer';
-// import { getOneSpot } from '../../store/spotsReducer';
-// import { getCurrentUserSpot } from '../../store/spotsReducer';
-// import './CurrentUserSpot.css'
-// import '../../index.css'
+import '../../index.css'
 
 const ReviewsCurrentUser = () => {
     console.log('INSIDE REVIEWS-CURRENT-USER COMPONENT')
     const dispatch = useDispatch()
-    // let reviewsList = useSelector((state) => Object.values(state.spots))
-    // let newList = Array.from(spotsList[0])
-    // spotsList = newList
 
     useEffect(() => {
         console.log('INSIDE REVIEWS CURRENT USER')
@@ -22,7 +16,6 @@ const ReviewsCurrentUser = () => {
     }, [dispatch])
 
     const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
-
     console.log('REVIEWSLIST', reviewsList)
     console.log('REVIEWSLISTIMAGES', reviewsList[0].Images[0].url)
 
