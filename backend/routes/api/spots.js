@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating = "This spot is not yet rated"
+            spot.dataValues.avgRating = "N/A"
         } else {
             spot.dataValues.avgRating = Number(avgRating).toFixed(1)
         }
@@ -114,7 +114,7 @@ router.get('/current', requireAuth, async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating = "This spot is not yet rated"
+            spot.dataValues.avgRating = "N/A"
         } else {
             spot.dataValues.avgRating = Number(avgRating).toFixed(1)
         }
@@ -187,7 +187,7 @@ router.get('/:spotId', async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating = "This spot is not yet rated"
+            spot.dataValues.avgRating =  "N/A"
         } else {
             spot.dataValues.avgRating = Number(avgRating).toFixed(1)
         }

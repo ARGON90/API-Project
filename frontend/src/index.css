@@ -14,6 +14,10 @@
     justify-content: center;
 }
 
+.justify-content-between {
+    justify-content: space-between;
+}
+
 .align-items-center {
     align-items: center;
 }
@@ -34,4 +38,17 @@
     height: 250px;
     width:250px;
     border-radius: 12px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.flex-wrap-wrap {
+    flex-wrap: wrap;
+}
+
+#root {
+    max-width: 950px;
+    margin: auto;
 }
