@@ -22,7 +22,8 @@ const SpotsList = () => {
         if (!spot.previewImage) {
             return <p>No Preview Image Exists for Spot</p>
         } else {
-            return <img src={spot.previewImage} alt='Main Image' />
+            return <img src={spot.previewImage}
+            className='img-size' alt='Main Image' />
         }
     }
 

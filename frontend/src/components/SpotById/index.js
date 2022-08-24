@@ -1,4 +1,4 @@
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -19,6 +19,7 @@ import '../../index.css'
 const SpotById = () => {
     console.log('INSIDE SPOTS-BY-ID COMPONENT')
     const dispatch = useDispatch()
+    const history = useHistory();
     const { id } = useParams()
     const spotsList = useSelector((state) => (state.spots));
     let singleSpot = spotsList[id]
@@ -39,15 +40,17 @@ const SpotById = () => {
             } else {
                 return imgArray.map((image) => (
                     <div>
-                        <img src={image.url} key={image.id} alt='Spot Image' />
+                        <img src={image.url} key={image.id}
+                        className={'img-size'} alt='Spot Image' />
                     </div>
                 ))
             }
         }
     }
 
-    function onClickDelete() {
-        dispatch(deleteSpot(id))
+    async function onClickDelete() {
+        await dispatch(deleteSpot(id))
+          history.push(`/spots/`);
     }
 
     if (!singleSpot) return <div className='font-family'>Loading...</div>
