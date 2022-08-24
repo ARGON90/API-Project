@@ -1,12 +1,12 @@
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 
 import { getOneSpot } from '../../store/spotsReducer';
 import { deleteSpot } from '../../store/spotsReducer';
 import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
-import { count } from '../Navigation/ProfileButton';
+import { ButtonContext } from "../../context/ButtonContext";
 
 import './SpotById.css'
 import '../../index.css'
@@ -19,7 +19,7 @@ const SpotById = () => {
     const spotsList = useSelector((state) => (state.spots));
     const singleSpot = spotsList[id]
 
-
+  const {currentNum, setCurrentNum} = useContext(ButtonContext)
     let sessionId;
     if (sessionUserId && sessionUserId.user) {
         sessionId = sessionUserId.user.id
@@ -65,7 +65,7 @@ const SpotById = () => {
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
         <>
-        <div>{count}</div>
+        <div>{currentNum}</div>
             <div className='font-family'>
                 <h1>Spot By Id: Spot {singleSpot.id}</h1>
                 <h1>Description: {singleSpot.description}</h1>
@@ -84,6 +84,7 @@ const SpotById = () => {
                     </button>
                     </>
                     )}
+                    {checkState()}
             </div>
         </>
     );
