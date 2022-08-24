@@ -180,9 +180,7 @@ const spotsReducer = (state = initialState, action) => {
         }
         case DELETE_SPOT: {
             console.log('INSIDE DELETE SPOT REDUCER');
-            console.log('DELETE ACTION ID', action.spotId)
             const newState = { ...state };
-
             return newState;
         }
         default:

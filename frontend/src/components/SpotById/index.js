@@ -65,7 +65,6 @@ const SpotById = () => {
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
         <>
-        <div>{currentNum}</div>
             <div className='font-family'>
                 <h1>Spot By Id: Spot {singleSpot.id}</h1>
                 <h1>Description: {singleSpot.description}</h1>
@@ -76,7 +75,6 @@ const SpotById = () => {
                 {singleSpot.ownerId === sessionId &&
                     (
                     <>
-                    <div>{currentNum}</div>
                     <NavLink to={`/spots/${id}/edit`}>
                     Edit This Spot
                     </NavLink>

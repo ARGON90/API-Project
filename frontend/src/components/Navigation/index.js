@@ -71,7 +71,10 @@ function Navigation({ isLoaded }) {
             {checkState()}
             {isLoaded && sessionLinks}
             {sessionId && (
-              <NavLink to="/spots/current">View Your Spots</NavLink>
+              <NavLink to="/spots/current"> View Your Spots </NavLink>
+            )}
+            {sessionId && (
+              <NavLink to="/reviews/current"> View Your Reviews </NavLink>
             )}
           </div>
         </li>

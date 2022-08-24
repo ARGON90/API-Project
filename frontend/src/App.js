@@ -13,6 +13,7 @@ import EditSpot from "./components/EditSpot";
 import CurrentUserSpot from "./components/CurrentUserSpot";
 import { sessionUserId } from "./store/session";
 import { getState } from "./store/session";
+import ReviewsCurrentUser from "./components/ReviewsCurrentUser";
 
 
 import notFoundRalph from "./data/ralph.gif"
@@ -68,6 +69,9 @@ function App() {
           </Route> */}
           <Route path='/spots/:spotId/edit' exact={true}>
             <EditSpot />
+          </Route>
+          <Route path='/reviews/current' exact={true}>
+            <ReviewsCurrentUser />
           </Route>
 
           <>

@@ -20,7 +20,8 @@ frontend authorization: how to get user information on frontend?
 
 ## Reviews
 
-### get all reviews of current user
+### get all reviews of current user (done)
+
 ### get all reviews by spot Id
 ### create reviews by spotId
 ### add Image to review by reviewId
@@ -47,5 +48,5 @@ Potential Addons
 --the state turns all of the image id's to the respective spot number when it is refreshed upon image creation - if it isn't refreshed, it shouldn't be a problem. If I'm not fetching all Images, I don't think it'll be a problem
 --the server tries to perform a fetch to spots/{color} upon loading. Is it just trying to fetch the data?
 
-*SPOTBYID
---if you logout, the delete and edit spot buttons are still available. need to trigger a rerender everytime the profile button?
+*REVIEWSCURRENTUSER
+currently, the Images shown are not iterating, it just pics the first one (should be fine?)
