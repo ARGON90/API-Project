@@ -77,6 +77,7 @@ export const createReview = (spotId, review) => async (dispatch) => {
 //THUNK - DELETE A REVIEW
 export const deleteReview = (id) => async (dispatch) => {
     console.log("INSIDE DELETE REVIEWS THUNK")
+    console.log('ID INSIDE REVIEW THUNK', id)
     const response = await csrfFetch(`/api/reviews/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },

@@ -66,3 +66,5 @@ Potential Addons
 
 *add multiple dispatches to a useEffect to re-render stuff
 
+*SPOTS-REVIEWS
+is there an on-delete cascade for this??
