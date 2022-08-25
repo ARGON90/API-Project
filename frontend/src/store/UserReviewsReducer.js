@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf"
 
 const CURRENT_USER_REVIEWS = 'reviews/currentUser'
 const REVIEWS_SPOT_ID = 'reviews/spotId'
@@ -13,6 +14,12 @@ const spotReviews = (reviews) => {
     return {
         type: REVIEWS_SPOT_ID,
         reviews
+    }
+}
+const addReview = (spotId, review) => {
+    return {
+        type: REVIEWS_SPOT_ID,
+        review
     }
 }
 
@@ -37,6 +44,21 @@ export const getReviewsCurrentsSpot = (spotId) => async (dispatch) => {
         console.log('REVIEWS CURRENT SPOT THUNK DATA', data)
         dispatch(spotReviews(data));
         return data;
+    }
+}
+
+export const createReview = (spotId, payload) => async (dispatch) => {
+    console.log("INSIDE CREATE SPOTS THUNK")
+    const response = await csrfFetch('/api/spots/:spotId/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    console.log(' CREATE SPOTS THUNK RESPONSE', response)
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(addReview(spot));
+        return spot;
     }
 }
 

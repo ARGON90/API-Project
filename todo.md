@@ -24,7 +24,7 @@ frontend authorization: how to get user information on frontend?
 ### get all reviews by spot Id (done)
 
 ### create reviews by spotId
-### add Image to review by reviewId
+
 ### delete a review by reviewId
 
 ### add use history for routing on reviews?
@@ -35,6 +35,10 @@ frontend authorization: how to get user information on frontend?
 ### better understand proxy
 
 ### make frontend error validations with a modal or an alert
+
+### refactor routes
+
+### work on normalization of data in reducers (both spots and reviews)
 
 
 # NOTES

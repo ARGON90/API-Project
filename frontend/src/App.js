@@ -15,6 +15,7 @@ import { sessionUserId } from "./store/session";
 import { getState } from "./store/session";
 import ReviewsCurrentUser from "./components/ReviewsCurrentUser";
 import ReviewsSpotId from "./components/ReviewsSpotId";
+import CreateReview from "./components/ReviewCreate";
 
 
 import notFoundRalph from "./data/ralph.gif"
@@ -76,6 +77,9 @@ function App() {
           </Route>
           <Route path='/spots/:spotId/reviews' exact={true}>
             <ReviewsSpotId />
+          </Route>
+          <Route path='/review/create/:spotId' exact={true}>
+            <CreateReview />
           </Route>
 
           <>
