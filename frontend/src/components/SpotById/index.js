@@ -19,7 +19,7 @@ const SpotById = () => {
     const spotsList = useSelector((state) => (state.spots));
     const singleSpot = spotsList[id]
 
-  const {currentNum, setCurrentNum} = useContext(ButtonContext)
+    const { currentNum, setCurrentNum } = useContext(ButtonContext)
     let sessionId;
     if (sessionUserId && sessionUserId.user) {
         sessionId = sessionUserId.user.id
@@ -39,7 +39,7 @@ const SpotById = () => {
 
     function checkState() {
         dispatch(getState());
-      }
+    }
 
     function imageCheck(singleSpot) {
         if (singleSpot.images) {
@@ -78,16 +78,21 @@ const SpotById = () => {
                 {checkState()}
                 {singleSpot.ownerId === sessionId &&
                     (
-                    <div>
-                    <NavLink to={`/spots/${id}/edit`}>
-                    Edit This Spot
-                    </NavLink>
-                    <button onClick={onClickDelete}>
-                        Delete This Spot
-                    </button>
-                    </div>
+                        <div>
+                            <NavLink to={`/spots/${id}/edit`}>
+                                Edit This Spot
+                            </NavLink>
+                            <button onClick={onClickDelete}>
+                                Delete This Spot
+                            </button>
+                        </div>
                     )}
-                    {checkState()}
+                {checkState()}
+                <div>
+                    <NavLink to={`/review/create/${id}`}>
+                        Create a review for this spot
+                    </NavLink>
+                </div>
             </div>
         </>
     );

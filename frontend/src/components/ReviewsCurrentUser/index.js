@@ -22,7 +22,7 @@ const ReviewsCurrentUser = () => {
 
     function imageCheck(review) {
         if (!review.Images.length) {
-            return <p>No Preview Image Exists for Spot</p>
+            return <p>No image was added to this review</p>
         } else {
             return <img key={review.Images[0].id} className='img-size'
             src={review.Images[0].url} alt='Review Image' />

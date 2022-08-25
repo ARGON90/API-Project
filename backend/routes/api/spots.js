@@ -474,9 +474,15 @@ router.get('/:spotId/reviews', async (req, res) => {
 
 //CREATE A REVIEW FOR SPOT ON SPOT ID
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+    console.log('INSIDE REVIEW CREATE ROUTE 477')
+
+
     const { spotId } = req.params
     const { user } = req;
-    const { review, stars } = req.body;
+    let { review, stars } = req.body;
+
+
+    stars = Number(stars)
 
     //SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);

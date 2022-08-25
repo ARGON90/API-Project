@@ -29,6 +29,9 @@ const CreateReview = () => {
 
         console.log('INSIDE CREATE REVIEW FORM SUBMIT')
         console.log('PAYLOAD', payload)
+        console.log('SPOT ID', spotId)
+
+
 
         let createdReview;
           createdReview = await dispatch(createReview(spotId, payload));
@@ -58,13 +61,13 @@ const CreateReview = () => {
                     <div>
                         Number of Stars:
                         <input
-                            type="text"
+                            type="number"
                             placeholder="Stars (1-5)"
                             required
                             value={stars}
                             onChange={updateStars} />
                     </div>
-                    <button type="submit">Create new Spot</button>
+                    <button type="submit">Create new Review</button>
                 </form>
             </div>
         </section>
