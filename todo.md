@@ -29,13 +29,21 @@ frontend authorization: how to get user information on frontend?
 
 # MISC
 
-### better understand proxy
+## NEED TO BE ABLE TO ADD AN IMAGE - image url or the image itself? UPON SPOT CREATION
+### - add this to the spot create form!!!
+### this may be done using two fetch requests?
 
-### make frontend error validations with a modal or an alert
 
 ### refactor routes
 
-### work on normalization of data in reducers (both spots and reviews)
+### make a textarea for reviews
+
+### better understand proxy
+
+### make frontend error validations with a modal or an alert (optional?)
+
+### work on normalization of data in reducers (both spots and reviews) (optional?)
+
 
 
 # NOTES
@@ -53,13 +61,7 @@ Potential Addons
 
 *REVIEWSCURRENTUSER
 --currently, the Images shown are not iterating, it just pics the first one (should be fine?)
---found a bug with logging out and logging in- maybe redirect after logout?
---usecurrent num state to do that
+--this link is broken spots by Id!!!!
 
 *REVIEWSCURRENTSPOT
 --currently, the Images shown are not iterating, it just pics the first one (should be fine?)
---current spot reviews -> current user reviews -> error
-
-*both reviews: make 'not logged in page'
-
-*add multiple dispatches to a useEffect to re-render stuff

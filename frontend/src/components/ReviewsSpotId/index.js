@@ -52,19 +52,21 @@ const ReviewsSpotId = ({ id }) => {
     if (!reviewsList) return <div className='font-family'>Loading Reviews of Current Spot...</div>
     return (
         <>
-            <h1 className='font-family'>Reviews for Spot {id}:</h1>
-            <div className='flex-box justify-content-center'>
-                {checkReviewList()}
-                {reviewsList.map((review) => (
-                    <NavLink key={review.id} to={`/spots/${review.id}`}>
-                        <div className='card font-family'>
-                            <p>Review by: {review.User.firstName}{' '}{review.User.lastName}</p>
-                            <p>Description: {review.review}</p>
-                            <p>Stars: ⭐ {review.stars}</p>
-                            {imageCheck(review)}
-                        </div>
-                    </NavLink>
-                ))}
+            <div className='flex-box flex-start'>
+                <h1 className='font-family'>Reviews for Spot {id}:</h1>
+                <div className='flex-box'>
+                    <div>
+                        {checkReviewList()}
+                        {reviewsList.map((review) => (
+                                <div className='card font-family'>
+                                    <p>Review by: {review.User.firstName}{' '}{review.User.lastName}</p>
+                                    <p>Description: {review.review}</p>
+                                    <p>Stars: ⭐ {review.stars}</p>
+                                    {imageCheck(review)}
+                                </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </>
     );

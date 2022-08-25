@@ -70,26 +70,35 @@ const SpotById = () => {
                 <h1> Spot {singleSpot.id}:{' '}{singleSpot.description}</h1>
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
-                {imageCheck(singleSpot)}
-                {checkState()}
-                {singleSpot.ownerId === sessionId &&
-                    (
-                        <div>
-                            <NavLink to={`/spots/${id}/edit`}>
-                                Edit This Spot
-                            </NavLink>
-                            <button onClick={onClickDelete}>
-                                Delete This Spot
-                            </button>
-                            <NavLink to={`/review/create/${id}`} className='font-black'>
-                                Create a review for this spot
-                            </NavLink>
-                        </div>
-                    )}
-                <ReviewsSpotId id={id} />
-                {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
-                    Create a review for this spot
-                </NavLink>)}
+                <div>
+                    {imageCheck(singleSpot)}
+                    {checkState()}
+                    <div className='flex-box flex-start'>
+                        {singleSpot.ownerId === sessionId &&
+                            (
+                                <div>
+                                    <div>
+                                        <NavLink to={`/spots/${id}/edit`}>
+                                            Edit This Spot
+                                        </NavLink>
+                                    </div>
+                                    <div>
+                                        <button onClick={onClickDelete}>
+                                            Delete This Spot
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                    </div>
+                    <div>
+                        {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
+                            Create a review for this spot
+                        </NavLink>)}
+                    </div>
+                    <div>
+                        <ReviewsSpotId id={id} />
+                    </div>
+                </div>
             </div>
         </>
     );
