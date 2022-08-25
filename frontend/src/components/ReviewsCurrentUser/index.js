@@ -36,10 +36,10 @@ const ReviewsCurrentUser = () => {
         }
     }
 
-    async function onClickDelete(id) {
+    async function onClickDelete() {
         console.log('hello')
-        console.log(id)
-        // await dispatch(deleteReview(id))
+        let button = document.getElementById("button")
+        console.log('BUTTON', button)
     }
 
     console.log('REVIEWSLIST IN CURRENT REVIEWS', reviewsList)
@@ -56,7 +56,6 @@ const ReviewsCurrentUser = () => {
                     <div>
                         <div key={review.id}>
                             <NavLink to={`/spots/${review.id}`}>
-                                {console.log('REVIEWID', review.id)}
                                 <div className='card font-family'>
                                     <p>Review for Spot {review.Spot.id}</p>
                                     <p>Description: {review.review}</p>
@@ -65,7 +64,8 @@ const ReviewsCurrentUser = () => {
                                 </div>
                             </NavLink>
                         </div>
-                        <button onClick={onClickDelete(review.id)}>
+                        {console.log('reviewID', review.id)}
+                        <button className='button' data-type={review.id} onClick={onClickDelete}>
                             Delete This Review
                         </button>
                     </div>

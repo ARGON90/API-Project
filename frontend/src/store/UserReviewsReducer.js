@@ -96,6 +96,11 @@ const initialState = {}
 //REDUCER
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case DELETE_REVIEW: {
+            console.log('INSIDE DELETE SPOT REDUCER');
+            const newState = { ...state };
+            return newState;
+        }
         case CURRENT_USER_REVIEWS: {
             const newState = action.reviews
             console.log('NEWSTATE', newState)
