@@ -81,18 +81,15 @@ const SpotById = () => {
                             <button onClick={onClickDelete}>
                                 Delete This Spot
                             </button>
+                            <NavLink to={`/review/create/${id}`} className='font-black'>
+                                Create a review for this spot
+                            </NavLink>
                         </div>
                     )}
-                {checkState()}
-                <div>
-                    <NavLink to={`/review/create/${id}`}>
-                        Create a review for this spot
-                    </NavLink>
-                </div>
-                <ReviewsSpotId id={id}/>
-                {/* <NavLink to={`/spots/${id}/reviews`}>
-                    Reviews of this spot
-                </NavLink> */}
+                <ReviewsSpotId id={id} />
+                {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
+                    Create a review for this spot
+                </NavLink>)}
             </div>
         </>
     );

@@ -18,15 +18,13 @@ frontend authorization: how to get user information on frontend?
 
 ### Add image to spot based on spot Id (partial)
 
+
 ## Reviews
 
 ### get all reviews of current user (done)
 ### get all reviews by spot Id (done)
 ### create reviews by spotId (done)
-
-### delete a review by reviewId
-
-### add use history for routing on reviews?
+### delete a review by reviewId (done)
 
 
 # MISC
@@ -65,4 +63,3 @@ Potential Addons
 *both reviews: make 'not logged in page'
 
 *add multiple dispatches to a useEffect to re-render stuff
-

@@ -59,18 +59,21 @@ export const getReviewsCurrentSpot = (spotId) => async (dispatch) => {
 
 //THUNK - CREATE REVIEW
 export const createReview = (spotId, review) => async (dispatch) => {
-    console.log("INSIDE CREATE SPOTS THUNK")
+    console.log("INSIDE Review SPOTS THUNK")
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(review)
     });
-    console.log(' CREATE SPOTS THUNK RESPONSE', response)
+    console.log(' CREATE REVIEW THUNK RESPONSE', response)
     if (response.ok) {
         const review = await response.json();
-        console.log(' CREATE SPOTS THUNK RESPONSE', review)
+        console.log(' CREATE REVIEW THUNK RESPONSE', review)
         dispatch(addReview(review));
         return review;
+    }
+    if (response.status == 403) {
+        alert('You already have a review for this spot!')
     }
 }
 

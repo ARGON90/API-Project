@@ -60,7 +60,7 @@ const CreateSpotForm = () => {
             <div className='flex-box flex-direction-column'>
                     <form onSubmit={handleSubmit}>
                     <div>
-                        <h1>Create A Spot</h1>
+                        <h1>Become a Host - Create Your Spot!</h1>
                     </div>
                     <div>
                         Address
