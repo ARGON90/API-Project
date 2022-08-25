@@ -10,20 +10,20 @@ const ReviewsSpotId = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
 
+    // const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
+
+    const reviewState = useSelector((state) => (state.reviews));
+    console.log('REVIEWSTATE', reviewState)
+    let reviewsList;
+    if (reviewState) {
+        console.log('REVIEWSTATE', reviewState.Reviews)
+        reviewsList = Object.values(reviewState.Reviews)
+    }
+
     useEffect(() => {
         console.log('INSIDE SPOT-BY-ID USE EFFECT')
         dispatch(getReviewsCurrentSpot(spotId))
-    }, [dispatch])
-
-    const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
-
-
-    // const reviewState = useSelector((state) => (state.reviews));
-    // console.log('REVIEWSTATE', reviewState)
-    // let reviewsList;
-    // if (reviewState) {
-    //     reviewsList = Object.values(reviewState.Reviews)
-    // }
+    }, [dispatch, reviewsList])
 
     function imageCheck(review) {
         if (!review.Images.length) {
@@ -44,6 +44,7 @@ const ReviewsSpotId = () => {
         }
     }
 
+    console.log('REVIEWSLIST', reviewsList)
     if (!reviewsList) return <div className='font-family'>Loading Reviews of Current Spot...</div>
     return (
         <>
