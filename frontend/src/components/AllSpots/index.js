@@ -37,14 +37,14 @@ const SpotsList = () => {
     if (!spotsList) return <div>Loading All Spots...</div>
     return (
         <>
-            <h1 className='font-family'>SpotsList</h1>
+            <h1 className='font-family'></h1>
             <div className='flex-box justify-content-center  flex-wrap-wrap'>
                 {spotsList.map((spot) => (
                     <NavLink key={spot.id} to={`/spots/${spot.id}`}>
                         <div className='card font-family'>
                             {imageCheck(spot)}
                             <div className='flex-box justify-content-between'>
-                                <p>{spot.city}, {spot.state}</p>
+                                <p className='font-black bold'>{spot.city}, {spot.state}</p>
                                 <p>
                                     <svg
                                     viewBox='0 0 32 32'
@@ -57,7 +57,7 @@ const SpotsList = () => {
                                     {spot.avgRating}
                                 </p>
                             </div>
-                            <p>${spot.price}/night</p>
+                            <p className='font-grey margin-remove'>${spot.price}/night</p>
                         </div>
                     </NavLink>
                 ))}

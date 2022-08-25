@@ -67,8 +67,7 @@ const SpotById = () => {
     return (
         <>
             <div className='font-family'>
-                <h1>Spot By Id: Spot {singleSpot.id}</h1>
-                <h1>Description: {singleSpot.description}</h1>
+                <h1> Spot {singleSpot.id}:{' '}{singleSpot.description}</h1>
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
                 {imageCheck(singleSpot)}
@@ -91,9 +90,9 @@ const SpotById = () => {
                     </NavLink>
                 </div>
                 <ReviewsSpotId id={id}/>
-                <NavLink to={`/spots/${id}/reviews`}>
+                {/* <NavLink to={`/spots/${id}/reviews`}>
                     Reviews of this spot
-                </NavLink>
+                </NavLink> */}
             </div>
         </>
     );

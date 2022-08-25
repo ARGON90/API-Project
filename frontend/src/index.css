@@ -2,6 +2,18 @@
     font-family: sans-serif;
 }
 
+.font-black {
+    color:black;
+}
+
+.font-grey {
+    color:grey;
+}
+
+.bold {
+    font-weight: bold;
+}
+
 .flex-box {
     display: flex;
 }
@@ -28,6 +40,10 @@
 
 .padding-remove {
     padding: 0px;
+}
+
+.margin-remove {
+    margin: 0px;
 }
 
 .column-gap {

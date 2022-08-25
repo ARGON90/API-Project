@@ -49,12 +49,10 @@ const ReviewsSpotId = ({ id }) => {
         }
     }
 
-    console.log('REVIEWSLIST', reviewsList)
-    console.log('REVIEWSLIST', reviewsList[1])
     if (!reviewsList) return <div className='font-family'>Loading Reviews of Current Spot...</div>
     return (
         <>
-            <h1 className='font-family'>Reviews for Spot {spotId}</h1>
+            <h1 className='font-family'>Reviews for Spot {id}:</h1>
             <div className='flex-box justify-content-center'>
                 {checkReviewList()}
                 {reviewsList.map((review) => (

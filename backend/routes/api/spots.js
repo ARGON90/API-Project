@@ -55,9 +55,9 @@ router.get('/', async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating = "N/A"
+            spot.dataValues.avgRating = "New"
         } else {
-            spot.dataValues.avgRating = Number(avgRating).toFixed(1)
+            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
         }
     }
 
@@ -87,12 +87,7 @@ router.get('/', async (req, res) => {
     }
 
     //question: what if the spot has no images attached, do we still want a previewImageId?
-
     res.json({ Spots, page, size })
-
-
-
-
 });
 
 
@@ -114,9 +109,9 @@ router.get('/current', requireAuth, async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating = "N/A"
+            spot.dataValues.avgRating = "New"
         } else {
-            spot.dataValues.avgRating = Number(avgRating).toFixed(1)
+            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
         }
     }
 
@@ -187,9 +182,9 @@ router.get('/:spotId', async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating =  "N/A"
+            spot.dataValues.avgRating =  "New"
         } else {
-            spot.dataValues.avgRating = Number(avgRating).toFixed(1)
+            spot.dataValues.avgRating = Number(avgRating).toFixed(2)
         }
     }
 

@@ -1,8 +1,8 @@
-import { useParams, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { getOneSpot } from '../../store/spotsReducer';
+
 import { getCurrentUserSpot } from '../../store/spotsReducer';
 import './CurrentUserSpot.css'
 import '../../index.css'
@@ -32,15 +32,16 @@ const CurrentUserSpot = () => {
         if (!spot.previewImage) {
             return <p>No Preview Image Exists for Spot</p>
         } else {
-            return <img src={spot.previewImage} alt='Main Image' />
+            return <img src={spot.previewImage}
+            className='img-size' alt='Main Image' />
         }
     }
 
     if (!spotsList) return <div>Loading Current User's Spots...</div>
     return (
         <>
-            <h1 className='font-family'>SpotsList</h1>
-            <div className='flex-box justify-content-center'>
+            <h1 className='font-family'>Here are your Spots!</h1>
+            <div className='flex-box justify-content-center flex-wrap-wrap'>
                 {spotsList.map((spot) => (
                     <NavLink key={spot.id} to={`/spots/${spot.id}`}>
                         <div className='card font-family'>
