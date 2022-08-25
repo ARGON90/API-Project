@@ -2,7 +2,7 @@ import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useContext } from 'react';
 
-import { getReviewsCurrentsSpot } from '../../store/UserReviewsReducer';
+import { getReviewsCurrentSpot } from '../../store/UserReviewsReducer';
 import '../../index.css'
 
 const ReviewsSpotId = () => {
@@ -12,11 +12,18 @@ const ReviewsSpotId = () => {
 
     useEffect(() => {
         console.log('INSIDE SPOT-BY-ID USE EFFECT')
-        dispatch(getReviewsCurrentsSpot(spotId))
+        dispatch(getReviewsCurrentSpot(spotId))
     }, [dispatch])
 
     const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
-    console.log('REVIEWSLIST', reviewsList)
+
+
+    // const reviewState = useSelector((state) => (state.reviews));
+    // console.log('REVIEWSTATE', reviewState)
+    // let reviewsList;
+    // if (reviewState) {
+    //     reviewsList = Object.values(reviewState.Reviews)
+    // }
 
     function imageCheck(review) {
         if (!review.Images.length) {

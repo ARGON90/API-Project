@@ -7,6 +7,7 @@ import { deleteSpot } from '../../store/spotsReducer';
 import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
 import { ButtonContext } from "../../context/ButtonContext";
+import { getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 
 import './SpotById.css'
 import '../../index.css'

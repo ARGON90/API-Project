@@ -16,7 +16,17 @@ const ReviewsCurrentUser = () => {
     }, [dispatch])
 
     //from reducer just return the relevant state, don't get the values first!
-    const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
+    // const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
+    let reviewsState = useSelector((state) => (state.reviews));
+
+
+    let reviewsList;
+    if (reviewsState.Reviews) {
+        reviewsList = Object.values(reviewsState.Reviews)
+        // if (spotsList[0]) {
+        //     let newList = Array.from(spotsList[0])
+        //     spotsList = newList
+    }
     console.log('REVIEWSLIST', reviewsList)
 
 
@@ -25,15 +35,16 @@ const ReviewsCurrentUser = () => {
             return <p>No image was added to this review</p>
         } else {
             return <img key={review.Images[0].id} className='img-size'
-            src={review.Images[0].url} alt='Review Image' />
+                src={review.Images[0].url} alt='Review Image' />
         }
     }
 
     if (!reviewsList) return <div>Loading Current User's Reviews...</div>
+    if (!reviewsList[0].Spot) return <div>Loading Current User's Reviews...</div>
     return (
         <>
             <h1 className='font-family'>Reviews by {reviewsList[0].User.firstName}{' '}
-            {reviewsList[0].User.lastName}</h1>
+                {reviewsList[0].User.lastName}</h1>
             <div className='flex-box justify-content-center'>
                 {reviewsList.map((review) => (
                     <NavLink key={review.id} to={`/spots/${review.id}`}>

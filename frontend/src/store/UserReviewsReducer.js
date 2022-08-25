@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf"
+import { getAllSpots } from "./spotsReducer"
 
 const CURRENT_USER_REVIEWS = 'reviews/currentUser'
 const REVIEWS_SPOT_ID = 'reviews/spotId'
@@ -26,6 +27,7 @@ const addReview = (review) => {
 
 //THUNK - GET CURRENT USER REVIEWS
 export const getReviewsCurrentUser = () => async (dispatch) => {
+    await dispatch(getAllSpots())
     console.log('INSIDE REVIEWS CURRENT USER')
     const response = await fetch(`/api/reviews/current`);
     if (response.ok) {
@@ -37,7 +39,7 @@ export const getReviewsCurrentUser = () => async (dispatch) => {
 }
 
 //THUNK - GET CURRENT SPOT REVIEWS
-export const getReviewsCurrentsSpot = (spotId) => async (dispatch) => {
+export const getReviewsCurrentSpot = (spotId) => async (dispatch) => {
     console.log('INSIDE REVIEWS CURRENT SPOT')
     const response = await fetch(`/api/spots/${spotId}/reviews`);
     if (response.ok) {
