@@ -55,7 +55,9 @@ Potential Addons
 
 *REVIEWSCURRENTUSER
 --currently, the Images shown are not iterating, it just pics the first one (should be fine?)
+--found a bug with logging out and logging in- maybe redirect after logout?
+--usecurrent num state to do that
 
 *REVIEWSCURRENTSPOT
 --currently, the Images shown are not iterating, it just pics the first one (should be fine?)
---breaks upon hard refresh
+--current spot reviews -> current user reviews -> error

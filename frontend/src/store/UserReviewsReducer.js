@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf"
 const CURRENT_USER_REVIEWS = 'reviews/currentUser'
 const REVIEWS_SPOT_ID = 'reviews/spotId'
 const ADD_REVIEW = 'reviews/create'
+const DELETE_REVIEW = 'reviews/delete'
 
 //ACTIONS
 const userReviews = (reviews) => {
@@ -24,10 +25,18 @@ const addReview = (review) => {
     }
 }
 
+const deleteReviewById = (id) => {
+    return {
+        type: DELETE_REVIEW,
+        id
+    }
+}
+
 //THUNK - GET CURRENT USER REVIEWS
 export const getReviewsCurrentUser = () => async (dispatch) => {
     console.log('INSIDE REVIEWS CURRENT USER')
     const response = await fetch(`/api/reviews/current`);
+    console.log('REVIEWS CURRENT USER THUNK RESPONSE', response)
     if (response.ok) {
         const data = await response.json()
         console.log('REVIEWS CURRENT USER THUNK DATA', data)
@@ -65,6 +74,23 @@ export const createReview = (spotId, review) => async (dispatch) => {
     }
 }
 
+//THUNK - DELETE A REVIEW
+export const deleteReview = (id) => async (dispatch) => {
+    console.log("INSIDE DELETE REVIEWS THUNK")
+    const response = await csrfFetch(`/api/reviews/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('DELETE REVIEWS THUNK RESPONSE', response)
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(deleteReviewById(id));
+        return spot;
+    }
+}
+
+
+
 const initialState = {}
 
 //REDUCER
@@ -72,6 +98,7 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case CURRENT_USER_REVIEWS: {
             const newState = action.reviews
+            console.log('NEWSTATE', newState)
             console.log('INSIDE REVIEWS CURRENT USER REDUCER');
             return newState
         }

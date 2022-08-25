@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 
-import { getReviewsCurrentUser } from '../../store/UserReviewsReducer';
+import { deleteReview, getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 import '../../index.css'
 
 const ReviewsCurrentUser = () => {
@@ -36,25 +36,42 @@ const ReviewsCurrentUser = () => {
         }
     }
 
+    async function onClickDelete(id) {
+        console.log('hello')
+        console.log(id)
+        // await dispatch(deleteReview(id))
+    }
+
+    console.log('REVIEWSLIST IN CURRENT REVIEWS', reviewsList)
     if (!reviewsList) return <div>Loading Current User's Reviews...</div>
+    if (!reviewsList[0]) return <div>You have no Reviews!</div>
     if (!reviewsList[0].Spot) return <div>Loading Current User's Reviews...</div>
     return (
-        <>
+        <div>
             <h1 className='font-family'>Reviews by {reviewsList[0].User.firstName}{' '}
                 {reviewsList[0].User.lastName}</h1>
             <div className='flex-box justify-content-center'>
+
                 {reviewsList.map((review) => (
-                    <NavLink key={review.id} to={`/spots/${review.id}`}>
-                        <div className='card font-family'>
-                            <p>Review for Spot {review.Spot.id}</p>
-                            <p>Description: {review.review}</p>
-                            <p>Stars: ⭐ {review.stars}</p>
-                            {imageCheck(review)}
+                    <div>
+                        <div key={review.id}>
+                            <NavLink to={`/spots/${review.id}`}>
+                                {console.log('REVIEWID', review.id)}
+                                <div className='card font-family'>
+                                    <p>Review for Spot {review.Spot.id}</p>
+                                    <p>Description: {review.review}</p>
+                                    <p>Stars: ⭐ {review.stars}</p>
+                                    {imageCheck(review)}
+                                </div>
+                            </NavLink>
                         </div>
-                    </NavLink>
+                        <button onClick={onClickDelete(review.id)}>
+                            Delete This Review
+                        </button>
+                    </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 };
 
