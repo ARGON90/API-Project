@@ -22,8 +22,7 @@ frontend authorization: how to get user information on frontend?
 
 ### get all reviews of current user (done)
 ### get all reviews by spot Id (done)
-
-### create reviews by spotId
+### create reviews by spotId (done)
 
 ### delete a review by reviewId
 

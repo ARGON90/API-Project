@@ -10,9 +10,18 @@ import '../../index.css'
 const CurrentUserSpot = () => {
     console.log('INSIDE CURRENT-USER-SPOT COMPONENT')
     const dispatch = useDispatch()
-    let spotsList = useSelector((state) => Object.values(state.spots))
-    let newList = Array.from(spotsList[0])
-    spotsList = newList
+    // let spotsState = useSelector((state) => Object.values(state.spots))
+    let spotsState = useSelector((state) => (state.spots))
+    console.log('SPOTSSTATE', spotsState)
+
+    let spotsList;
+    if (spotsState) {
+        spotsList = Object.values(spotsState)
+        if (spotsList[0]) {
+            let newList = Array.from(spotsList[0])
+            spotsList = newList
+        }
+    }
 
     useEffect(() => {
         console.log('INSIDE CURRENT USER SPOT USE EFFECT')
