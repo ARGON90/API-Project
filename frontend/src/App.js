@@ -75,9 +75,9 @@ function App() {
           <Route path='/reviews/current' exact={true}>
             <ReviewsCurrentUser />
           </Route>
-          <Route path='/spots/:spotId/reviews' exact={true}>
+          {/* <Route path='/spots/:spotId/reviews' exact={true}>
             <ReviewsSpotId />
-          </Route>
+          </Route> */}
           <Route path='/review/create/:spotId' exact={true}>
             <CreateReview />
           </Route>

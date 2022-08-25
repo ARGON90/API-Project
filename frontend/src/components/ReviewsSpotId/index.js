@@ -5,8 +5,9 @@ import { useEffect, useContext } from 'react';
 import { getReviewsCurrentSpot } from '../../store/UserReviewsReducer';
 import '../../index.css'
 
-const ReviewsSpotId = () => {
-    console.log('INSIDE SPOTS-BY-ID COMPONENT')
+const ReviewsSpotId = ({ id }) => {
+    console.log('INSIDE REVIEWS SPOT-BY-ID COMPONENT')
+    console.log('PROPS ID', id)
     const dispatch = useDispatch()
     const { spotId } = useParams()
 
@@ -25,8 +26,8 @@ const ReviewsSpotId = () => {
 
 
     useEffect(() => {
-        console.log('INSIDE SPOT-BY-ID USE EFFECT')
-        dispatch(getReviewsCurrentSpot(spotId))
+        console.log('INSIDE REVIEWS SPOT-BY-ID USE EFFECT')
+        dispatch(getReviewsCurrentSpot(id))
     }, [dispatch])
 
     function imageCheck(review) {
@@ -49,6 +50,7 @@ const ReviewsSpotId = () => {
     }
 
     console.log('REVIEWSLIST', reviewsList)
+    console.log('REVIEWSLIST', reviewsList[1])
     if (!reviewsList) return <div className='font-family'>Loading Reviews of Current Spot...</div>
     return (
         <>

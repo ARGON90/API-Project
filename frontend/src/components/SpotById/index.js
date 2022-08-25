@@ -7,7 +7,7 @@ import { deleteSpot } from '../../store/spotsReducer';
 import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
 import { ButtonContext } from "../../context/ButtonContext";
-import { getReviewsCurrentUser } from '../../store/UserReviewsReducer';
+import ReviewsSpotId from '../ReviewsSpotId';
 
 import './SpotById.css'
 import '../../index.css'
@@ -72,10 +72,6 @@ const SpotById = () => {
                 <h1>⭐ {singleSpot.avgRating}</h1>
                 <h1>Images</h1>
                 {imageCheck(singleSpot)}
-                <NavLink to={`/spots/${id}/reviews`}>
-                    Reviews of this spot
-                </NavLink>
-
                 {checkState()}
                 {singleSpot.ownerId === sessionId &&
                     (
@@ -94,6 +90,10 @@ const SpotById = () => {
                         Create a review for this spot
                     </NavLink>
                 </div>
+                <ReviewsSpotId id={id}/>
+                <NavLink to={`/spots/${id}/reviews`}>
+                    Reviews of this spot
+                </NavLink>
             </div>
         </>
     );
