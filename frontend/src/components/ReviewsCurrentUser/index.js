@@ -15,10 +15,7 @@ const ReviewsCurrentUser = () => {
         dispatch(getReviewsCurrentUser())
     }, [dispatch])
 
-    //from reducer just return the relevant state, don't get the values first!
-    // const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
     let reviewsState = useSelector((state) => (state.reviews));
-
 
     let reviewsList;
     if (reviewsState.Reviews) {

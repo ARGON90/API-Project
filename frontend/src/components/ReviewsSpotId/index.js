@@ -12,18 +12,22 @@ const ReviewsSpotId = () => {
 
     // const reviewsList = useSelector((state) => Object.values(state.reviews.Reviews));
 
-    const reviewState = useSelector((state) => (state.reviews));
-    console.log('REVIEWSTATE', reviewState)
+    let reviewsState = useSelector((state) => (state.reviews));
+
+
     let reviewsList;
-    if (reviewState) {
-        console.log('REVIEWSTATE', reviewState.Reviews)
-        reviewsList = Object.values(reviewState.Reviews)
+    if (reviewsState.Reviews) {
+        reviewsList = Object.values(reviewsState.Reviews)
+        // if (spotsList[0]) {
+        //     let newList = Array.from(spotsList[0])
+        //     spotsList = newList
     }
+
 
     useEffect(() => {
         console.log('INSIDE SPOT-BY-ID USE EFFECT')
         dispatch(getReviewsCurrentSpot(spotId))
-    }, [dispatch, reviewsList])
+    }, [dispatch])
 
     function imageCheck(review) {
         if (!review.Images.length) {
