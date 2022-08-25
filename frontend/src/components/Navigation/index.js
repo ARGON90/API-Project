@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -8,6 +8,8 @@ import LoginFormModal from '../LoginFormModal';
 import DemoIndex from '../LoginFormModal/DemoIndex'
 import { sessionUserId } from '../../store/session';
 import { getState } from '../../store/session';
+import { ButtonContext } from "../../context/ButtonContext";
+
 import './Navigation.css';
 import '../../index.css'
 
@@ -15,6 +17,8 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   const dispatch = useDispatch()
+
+  const {currentNum, setCurrentNum} = useContext(ButtonContext)
 
   let sessionId;
   if (sessionUserId && sessionUserId.user) {
@@ -25,7 +29,7 @@ function Navigation({ isLoaded }) {
   useEffect(() => {
     console.log('NAVIGATION GETSTATE USE EFFECT ')
     dispatch(getState())
-  }, [dispatch, sessionId])
+  }, [dispatch, sessionId, currentNum])
 
 
   function checkState() {

@@ -61,3 +61,8 @@ Potential Addons
 *REVIEWSCURRENTSPOT
 --currently, the Images shown are not iterating, it just pics the first one (should be fine?)
 --current spot reviews -> current user reviews -> error
+
+*both reviews: make 'not logged in page'
+
+*add multiple dispatches to a useEffect to re-render stuff
+

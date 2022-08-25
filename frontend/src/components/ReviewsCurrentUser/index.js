@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import { deleteReview, getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 import '../../index.css'
+import { deleteSpot } from '../../store/spotsReducer';
 
 const ReviewsCurrentUser = () => {
     console.log('INSIDE REVIEWS-CURRENT-USER COMPONENT')
@@ -37,9 +38,10 @@ const ReviewsCurrentUser = () => {
     }
 
     async function onClickDelete() {
-        console.log('hello')
-        let button = document.getElementById("button")
-        console.log('BUTTON', button)
+        // console.log('hello')
+        // let button = document.getElementById("button")
+        // console.log('BUTTON', button)
+        dispatch(deleteSpot())
     }
 
     console.log('REVIEWSLIST IN CURRENT REVIEWS', reviewsList)
