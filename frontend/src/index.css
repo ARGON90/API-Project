@@ -54,12 +54,6 @@
     column-gap: 0.8rem;
 }
 
-.img-size{
-    height: 250px;
-    width:250px;
-    border-radius: 12px;
-}
-
 a {
     text-decoration: none;
 }
@@ -69,6 +63,27 @@ a {
 }
 
 #root {
-    max-width: 950px;
-    margin: auto;
+    margin: 0;
+    padding: 0 80px;
+}
+
+.width-card {
+    width: 280px;
+}
+
+.height-card {
+    height: 350px;
+
+}
+
+.width-image {
+    width: 100%;
+}
+
+.height-image {
+    height: 75%
+}
+
+.border-radius-12 {
+    border-radius: 12px;
 }
