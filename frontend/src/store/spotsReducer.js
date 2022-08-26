@@ -94,6 +94,7 @@ export const getCurrentUserSpot = () => async (dispatch) => {
     }
 }
 
+let createdSpotId;
 //THUNK - CREATE A SPOT
 export const createSpot = (payload) => async (dispatch) => {
     console.log("INSIDE CREATE SPOTS THUNK")
@@ -105,6 +106,7 @@ export const createSpot = (payload) => async (dispatch) => {
     console.log(' CREATE SPOTS THUNK RESPONSE', response)
     if (response.ok) {
         const spot = await response.json();
+        createdSpotId = spot.id
         dispatch(addSpot(spot));
         return spot;
     }
@@ -179,10 +181,12 @@ const initialState = {}
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_IMG_TO_SPOT: {
+            console.log(action.url)
             console.log('INSIDE ADD IMG ACTION / REDUCER')
             const newState = { ...state };
             console.log('ADDIMG STATE', newState)
-            newState.previewImage = action.image
+            newState[createdSpotId].previewImage = action.url.url
+            console.log('ADDIMG STATE AFTER PRVIEWIMAGE ADD', newState)
             return state;
         }
         case GET_ALL_SPOTS: {
