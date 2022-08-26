@@ -29,10 +29,7 @@ frontend authorization: how to get user information on frontend?
 
 # MISC
 
-## NEED TO BE ABLE TO ADD AN IMAGE - image url or the image itself? UPON SPOT CREATION
-### - add this to the spot create form!!!
-### this may be done using two fetch requests?
-
+### no default values on CSS elements!
 
 ### refactor routes
 
