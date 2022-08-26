@@ -94,6 +94,7 @@ export const getCurrentUserSpot = () => async (dispatch) => {
     }
 }
 
+let newSpotId;
 //THUNK - CREATE A SPOT
 export const createSpot = (payload) => async (dispatch) => {
     console.log("INSIDE CREATE SPOTS THUNK")
@@ -102,9 +103,10 @@ export const createSpot = (payload) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     });
-    console.log(' CREATE SPOTS THUNK RESPONSE', response)
     if (response.ok) {
         const spot = await response.json();
+        newSpotId = spot.id
+        console.log('NEWSPOTID', newSpotId)
         dispatch(addSpot(spot));
         return spot;
     }
@@ -179,10 +181,11 @@ const initialState = {}
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_IMG_TO_SPOT: {
-            console.log('INSIDE ADD IMG ACTION / REDUCER')
+            // console.log(action.url)
+            // console.log('INSIDE ADD IMG ACTION / REDUCER')
             const newState = { ...state };
-            console.log('ADDIMG STATE', newState)
-            newState.previewImage = action.image
+            // newState[newSpotId].previewImage = action.url.url
+            // console.log('ADDIMG STATE AFTER PRVIEWIMAGE ADD', newState)
             return state;
         }
         case GET_ALL_SPOTS: {
@@ -195,6 +198,10 @@ const spotsReducer = (state = initialState, action) => {
             const newState = { ...state }
             console.log('INSIDE SPOT-BY-ID REDUCER');
             let id = action.spotId
+            // console.log('INSIDE SPOT-BY-ID REDUCER', action);
+            // console.log('INSIDE SPOT-BY-ID REDUCER', newState);
+            // console.log('INSIDE SPOT-BY-ID REDUCER', newState[id]);
+            // console.log('INSIDE SPOT-BY-ID REDUCER', newState[id].images);
             newState[id].images = action.images
             return newState
         }
