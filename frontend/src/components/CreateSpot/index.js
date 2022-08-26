@@ -56,7 +56,7 @@ const CreateSpotForm = () => {
             console.log('NEWLYC CREATED SPOT', createdSpot)
             let id = createdSpot.id
             await dispatch(addImgSpot(id, url))
-          history.push(`/spots/${createdSpot.id}`);
+           history.push(`/spots/${createdSpot.id}`);
         }
       };
 
