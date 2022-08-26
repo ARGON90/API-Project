@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { addImgSpot, createSpot } from '../../store/spotsReducer';
+import { addImgSpot, createSpot, getAllSpots } from '../../store/spotsReducer';
 import '../../index.css'
 
 // const CreateSpotForm = ({ hideForm }) => {
@@ -56,6 +56,7 @@ const CreateSpotForm = () => {
             console.log('NEWLYC CREATED SPOT', createdSpot)
             let id = createdSpot.id
             await dispatch(addImgSpot(id, url))
+            await dispatch(getAllSpots())
           history.push(`/spots/${createdSpot.id}`);
         }
       };
