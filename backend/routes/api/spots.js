@@ -302,6 +302,9 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
 
+    console.log('INSIDE IMG ADD BACKEND ')
+    console.log(url, previewImage, spotId)
+
     // SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);
     if (!spotExist) {

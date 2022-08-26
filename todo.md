@@ -54,7 +54,6 @@ Potential Addons
 
 
 --BUGS
-
 *ADD IMG TO SPOT ON ID
 --the state turns all of the image id's to the respective spot number when it is refreshed upon image creation - if it isn't refreshed, it shouldn't be a problem. If I'm not fetching all Images, I don't think it'll be a problem
 --the server tries to perform a fetch to spots/{color} upon loading. Is it just trying to fetch the data?

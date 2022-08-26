@@ -143,12 +143,48 @@ export const deleteSpot = (id) => async (dispatch) => {
     }
 }
 
+const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
+
+//ACTION FOR IMG TO SPOT
+const addImg = (spotId, url) => {
+    console.log('INSIDE ADD IMG image', url)
+    console.log('INSIDE ADD IMG spotId', spotId)
+    return {
+        type: ADD_IMG_TO_SPOT,
+        url
+    }
+}
+
+//THUNK - ADD IMG TO ONE SPOT
+export const addImgSpot = (spotId, url) => async (dispatch) => {
+    console.log('INSIDE ADD-IMG-SPOT THUNK')
+    console.log('url', url)
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({url})
+    })
+    console.log('IMAGESS', response)
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(addImg(spotId, data));
+        return data;
+    }
+}
+
 
 const initialState = {}
 
 //REDUCER
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ADD_IMG_TO_SPOT: {
+            console.log('INSIDE ADD IMG ACTION / REDUCER')
+            const newState = { ...state };
+            console.log('ADDIMG STATE', newState)
+            newState.previewImage = action.image
+            return state;
+        }
         case GET_ALL_SPOTS: {
             console.log('INSIDE GET SPOTS REDUCER')
             const newState = {};
@@ -158,7 +194,7 @@ const spotsReducer = (state = initialState, action) => {
         case GET_ONE_SPOT: {
             const newState = { ...state }
             console.log('INSIDE SPOT-BY-ID REDUCER');
-            let id =  action.spotId
+            let id = action.spotId
             newState[id].images = action.images
             return newState
         }
@@ -172,7 +208,7 @@ const spotsReducer = (state = initialState, action) => {
             console.log('STATE', state);
             const newState = { ...state, [action.newSpot.id]: action.newSpot };
             return newState;
-            }
+        }
         case EDIT_SPOT: {
             console.log('INSIDE EDIT SPOT REDUCER');
             const newState = { ...state };

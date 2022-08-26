@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { createSpot } from '../../store/spotsReducer';
+import { addImgSpot, createSpot } from '../../store/spotsReducer';
 import '../../index.css'
 
 // const CreateSpotForm = ({ hideForm }) => {
@@ -18,6 +18,7 @@ const CreateSpotForm = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [url, setUrl] = useState('');
 
     const updateAddress = (e) => setAddress(e.target.value);
     const updateCity = (e) => setCity(e.target.value);
@@ -28,6 +29,7 @@ const CreateSpotForm = () => {
     const updateName = (e) => setName(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePrice = (e) => setPrice(e.target.value);
+    const updateUrl = (e) => setUrl(e.target.value);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -50,7 +52,10 @@ const CreateSpotForm = () => {
         let createdSpot;
           createdSpot = await dispatch(createSpot(payload));
         if (createdSpot) {
-            console.log(createdSpot)
+
+            console.log('NEWLYC CREATED SPOT', createdSpot)
+            let id = createdSpot.id
+            await dispatch(addImgSpot(id, url))
           history.push(`/spots/${createdSpot.id}`);
         }
       };
@@ -136,6 +141,14 @@ const CreateSpotForm = () => {
                             placeholder="Price (numbers only!)"
                             value={price}
                             onChange={updatePrice} />
+                    </div>
+                    <div>
+                        Image URL:
+                        <input
+                            type="text"
+                            placeholder="URL format: http://..."
+                            value={url}
+                            onChange={updateUrl} />
                     </div>
                     <button type="submit">Create new Spot</button>
                 </form>
