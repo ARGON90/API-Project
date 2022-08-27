@@ -61,6 +61,7 @@ const SpotById = () => {
     async function onClickDelete() {
         await dispatch(deleteSpot(id))
         history.push(`/spots/`);
+        // await dispatch(deleteSpot(id))
     }
 
     if (!singleSpot) return <div className='font-family'>Loading...</div>

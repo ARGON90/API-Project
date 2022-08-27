@@ -41,7 +41,6 @@ function Navigation({ isLoaded }) {
   /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
   function myFunction() {
-    console.log('inside my function')
     document.getElementById("myDropdown").classList.toggle("show");
   }
 
@@ -66,6 +65,18 @@ toggle between hiding and showing the dropdown content */
     sessionLinks = (
       <>
         <ProfileButton user={sessionUser} />
+        <div class="dropdown">
+          <button onClick={()=> myFunction()} class="dropbtn">LOGO</button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <LoginFormModal />
+            <DemoIndex />
+            <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
+            <NavLink to='/create' className='font-black'>Host Your Home</NavLink>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
       </>
     );
   } else {
@@ -76,9 +87,13 @@ toggle between hiding and showing the dropdown content */
         <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
 
         <div class="dropdown">
-          <button onClick={()=> myFunction()} class="dropbtn">Dropdown</button>
+          <button onClick={()=> myFunction()} class="dropbtn">LOGO</button>
           <div id="myDropdown" class="dropdown-content">
             <a href="#home">Home</a>
+            <LoginFormModal />
+            <DemoIndex />
+            <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
+            <NavLink to="/signup" className='font-black'>Host Your Home</NavLink>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
           </div>
