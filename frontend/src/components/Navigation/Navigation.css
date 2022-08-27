@@ -58,11 +58,12 @@
     cursor: pointer;
     border: 1px lightgrey solid;
     border-radius: 20px;
-    background-color: white;
+    background-color: transparent;
+    z-index: 2;
   }
 
   .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
+    box-shadow: -0.5px 3.5px 6px #dbdfdb;
   }
 
   .drop-menu {
@@ -93,3 +94,8 @@
   .dropdown a:hover {background-color: #ddd;}
 
   .show {display: block;}
+
+  .pointer-events-none {
+    pointer-events: none;
+    z-index: -2;
+  }
