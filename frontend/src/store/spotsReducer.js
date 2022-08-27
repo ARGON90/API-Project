@@ -94,23 +94,7 @@ export const getCurrentUserSpot = () => async (dispatch) => {
     }
 }
 
-let createdSpotId;
-//THUNK - CREATE A SPOT
-export const createSpot = (payload) => async (dispatch) => {
-    console.log("INSIDE CREATE SPOTS THUNK")
-    const response = await csrfFetch('/api/spots/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    });
-    console.log(' CREATE SPOTS THUNK RESPONSE', response)
-    if (response.ok) {
-        const spot = await response.json();
-        createdSpotId = spot.id
-        dispatch(addSpot(spot));
-        return spot;
-    }
-}
+
 
 //THUNK - EDIT A SPOT
 export const editSpot = (spotId, spotInfo) => async (dispatch) => {
@@ -144,6 +128,26 @@ export const deleteSpot = (id) => async (dispatch) => {
         return spot;
     }
 }
+
+
+let createdSpotId;
+//THUNK - CREATE A SPOT
+export const createSpot = (payload) => async (dispatch) => {
+    console.log("INSIDE CREATE SPOTS THUNK")
+    const response = await csrfFetch('/api/spots/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    console.log(' CREATE SPOTS THUNK RESPONSE', response)
+    if (response.ok) {
+        const spot = await response.json();
+        createdSpotId = spot.id
+        dispatch(addSpot(spot));
+        return spot;
+    }
+}
+
 
 const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
