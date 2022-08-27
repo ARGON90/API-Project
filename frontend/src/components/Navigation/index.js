@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -19,7 +19,7 @@ function Navigation({ isLoaded }) {
 
   const dispatch = useDispatch()
 
-  const {currentNum, setCurrentNum} = useContext(ButtonContext)
+  const { currentNum, setCurrentNum } = useContext(ButtonContext)
 
   let sessionId;
   if (sessionUserId && sessionUserId.user) {
@@ -37,6 +37,28 @@ function Navigation({ isLoaded }) {
     dispatch(getState())
   }
 
+  //
+  /* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+  function myFunction() {
+    console.log('inside my function')
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function (e) {
+    if (!e.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+  //
   console.log('SESSIONID', sessionId)
 
   let sessionLinks;
@@ -52,6 +74,15 @@ function Navigation({ isLoaded }) {
         <LoginFormModal />
         <DemoIndex />
         <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
+
+        <div class="dropdown">
+          <button onClick={()=> myFunction()} class="dropbtn">Dropdown</button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
       </>
     );
   }
