@@ -13,76 +13,74 @@
     height: 50px;
 }
 
-.drop-down-container {
-    position: relative;
-    display: inline-block;
+.padding-all-4 {
+    padding: 12px;
 }
 
-.drop-button {
-    background-color: #3498DB;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
+.padding-below-12 {
+    padding-bottom: 12px;
 }
 
-.drop-button:hover,
-.drop-button:focus {
-    background-color: #2980B9;
+.padding-top-5 {
+    padding-top: 5px;
 }
 
-.contents {
-    display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+.padding-right-5 {
+    padding-right: 10px;
 }
 
-.contents a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
+.align-self-start {
+    align-self: flex-start;
 }
 
-.contents a:hover {
-    background-color: #ddd
+.profile-svg {
+    height: 10px;
+    width: 10px;
+    fill: #686968;
+    transform: scale(2.6);
+    padding: 0px;
+    margin: 0px;
+    align-self: flex-end;
 }
 
-.show {display:block;}
-
-/*  */
+.hamburger {
+    height: 26px;
+    width: 26px;
+}
 
 .dropbtn {
-    background-color: #04AA6D;
-    color: white;
-    padding: 16px;
+    height: 42px;
+    width: 80px;
+    color: black;
+    padding: 0px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    border: 1px lightgrey solid;
+    border-radius: 20px;
+    background-color: white;
   }
 
   .dropbtn:hover, .dropbtn:focus {
     background-color: #3e8e41;
   }
 
-  .dropdown {
-    float: right;
+  .drop-menu {
     position: relative;
     display: inline-block;
+    border-radius: 12px;
   }
 
-  .dropdown-content {
+  .drop-content {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
+    background-color: white;
     min-width: 160px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     right: 0;
     z-index: 1;
+    border-radius: 12px;
   }
 
   .dropdown-content a {

@@ -10,13 +10,16 @@ import { sessionUserId } from '../../store/session';
 import { getState } from '../../store/session';
 import { ButtonContext } from "../../context/ButtonContext";
 import logo from '../../data/logo.png'
+import * as sessionActions from '../../store/session';
+import { useHistory } from "react-router-dom";
 
+import hamburger from "../../data/hamburger.png"
 import './Navigation.css';
 import '../../index.css'
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
-
+  const history = useHistory()
   const dispatch = useDispatch()
 
   const { currentNum, setCurrentNum } = useContext(ButtonContext)
@@ -37,20 +40,25 @@ function Navigation({ isLoaded }) {
     dispatch(getState())
   }
 
-  //
-  /* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
 
-  // Close the dropdown if the user clicks outside of it
+  const logout = async (e) => {
+    e.preventDefault();
+    await dispatch(sessionActions.logout());
+    setCurrentNum((num) => num + 1)
+    console.log('HELLO LOGOUT')
+    history.push(`/spots/`);
+  };
+
+
+  //OPEN-CLOSE DROPDOWN FUNCTION
+  function showHide() {
+    document.getElementById("drop-id").classList.toggle("show");
+  }
   window.onclick = function (e) {
     if (!e.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
+      let dropdowns = document.getElementsByClassName("drop-content");
+      for (let i = 0; i < dropdowns.length; i++) {
+        let openDropdown = dropdowns[i];
         if (openDropdown.classList.contains('show')) {
           openDropdown.classList.remove('show');
         }
@@ -60,42 +68,87 @@ toggle between hiding and showing the dropdown content */
   //
   console.log('SESSIONID', sessionId)
 
+  // IF LOGGED IN
+  //create spot, view all spots, view all reviews
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
       <>
-        <ProfileButton user={sessionUser} />
-        <div class="dropdown">
-          <button onClick={()=> myFunction()} class="dropbtn">LOGO</button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href="#home">Home</a>
-            <LoginFormModal />
-            <DemoIndex />
-            <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
-            <NavLink to='/create' className='font-black'>Host Your Home</NavLink>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+        {/* <ProfileButton user={sessionUser} /> */}
+        <div class="drop-menu">
+          <button onClick={() => showHide()} class="dropbtn">LOGO</button>
+          <div id="drop-id" class="drop-content
+          flex-column
+          padding-all-4
+          font-black">
+            <div className='padding-below-12'>
+              <NavLink to='/create' className='font-black'>Host Your Home</NavLink>
+            </div>
+            <div className='padding-below-12'>
+              <NavLink to='/spots/current' className='font-black'>See Your Listings</NavLink>
+            </div>
+            <div className='padding-below-12'>
+              <NavLink to='/reviews/current' className='font-black'>See Your Reviews</NavLink>
+            </div>
+            <div>
+              <button onClick={logout}>Log Out</button>
+            </div>
           </div>
         </div>
       </>
     );
+
+
+    // IF NOT LOGGED IN
+    // Login, Demo-login, Sign-up
   } else {
     sessionLinks = (
       <>
-        <LoginFormModal />
+        {/* <LoginFormModal />
         <DemoIndex />
-        <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
+        <NavLink to="/signup" className='font-black'>Sign Up</NavLink> */}
 
-        <div class="dropdown">
-          <button onClick={()=> myFunction()} class="dropbtn">LOGO</button>
-          <div id="myDropdown" class="dropdown-content">
-            <a href="#home">Home</a>
-            <LoginFormModal />
-            <DemoIndex />
-            <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
-            <NavLink to="/signup" className='font-black'>Host Your Home</NavLink>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+        <div class="drop-menu">
+          <button onClick={() => showHide()} class="dropbtn">
+            <div className='
+            flex-row
+            justify-content-around
+            align-items-center'>
+
+              <div>
+                <img src={hamburger} alt='hamburger' className='hamburger
+                padding-top-5
+                padding-right-5'>
+                </img>
+              </div>
+
+              <div className='PROFILESVG
+              padding-right-5'>
+                <svg className='profile-svg' viewBox='0 0 32 32'>
+                  <path
+                    d='m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z'>
+                  </path>
+                </svg>
+              </div>
+
+            </div>
+          </button>
+          <div id="drop-id" class="drop-content
+          flex-column
+          padding-all-4
+          font-black">
+            <div className='padding-below-12'>
+              <LoginFormModal />
+            </div>
+            <div className='padding-below-12'>
+              <DemoIndex />
+            </div>
+            <div className='padding-below-12'>
+              <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
+            </div>
+            <div className='padding-below-12'>
+              <NavLink to="/signup" className='font-black'>Host Your Home</NavLink>
+            </div>
           </div>
         </div>
       </>
@@ -108,9 +161,9 @@ toggle between hiding and showing the dropdown content */
         <li id='container'>
           <div className='flex-box column-gap align-items-center'>
             <NavLink exact to="/spots"><img id='logo' src={logo} alt='Abnb Logo'></img></NavLink>
-            {sessionId && (
+            {/* {sessionId && (
               <NavLink to="/create" className='font-black'>Become a Host</NavLink>
-            )}
+            )} */}
           </div>
           <div className='flex-box justify-content-center align-items-center'>
             <div id='search-bar'>
@@ -121,11 +174,17 @@ toggle between hiding and showing the dropdown content */
           align-items-center'>
             {checkState()}
             {isLoaded && sessionLinks}
-            {sessionId && (
+            {/* {sessionId && (
               <NavLink to="/spots/current" className='font-black'> View Your Spots </NavLink>
             )}
             {sessionId && (
               <NavLink to="/reviews/current" className='font-black'> View Your Reviews </NavLink>
+            )} */}
+            {sessionId && (
+              <NavLink to="/create" className='font-black'>Become a Host</NavLink>
+            )}
+            {!sessionId && (
+              <NavLink to="/signup" className='font-black'>Become a Host</NavLink>
             )}
           </div>
         </li>
