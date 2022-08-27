@@ -1,3 +1,9 @@
+svg {
+    height: 15px;
+    width: 15px;
+    margin-right: 6px;
+}
+
 .font-family {
     font-family: sans-serif;
 }
@@ -19,7 +25,13 @@
 }
 
 .flex-column {
+    display: flex;
     flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
 }
 
 .row-reverse {
@@ -37,6 +49,8 @@
 .align-items-center {
     align-items: center;
 }
+
+
 
 .flex-end {
     align-items: flex-end;
@@ -68,9 +82,8 @@ a {
 
 #root {
     margin: 0;
-    padding: 0 80px;
+    padding: 0 160px;
 }
-
 
 .padding-card {
     padding: 8px 10px;
@@ -81,7 +94,18 @@ a {
 }
 
 .height-card {
-    height: 350px;
+    height: 320px;
+}
+
+.height-card-image-container {
+    height: 80%;
+}
+.width-card-image-container {
+    width: 100%;
+}
+
+.margin-card-image-container {
+    margin-bottom: 10px;
 }
 
 .width-card-image {
@@ -92,20 +116,8 @@ a {
     height: 100%
 }
 
-.height-card-image-container {
-    height: 75%;
-}
-.width-card-image-container {
-    width: 100%;
-}
-
 .border-radius-12 {
     border-radius: 12px;
-}
-
-.height {
-    height: 250px;
-    width: 300px;
 }
 
 .block {
@@ -118,4 +130,32 @@ a {
 
 .flex-shrink-0 {
     flex-shrink: 0;
+}
+
+.margin-card {
+    margin-bottom: 10px;
+}
+
+.padding-card-text {
+    padding-top: 8px;
+}
+
+.margin-top-6 {
+    margin-top: 6px;
+}
+
+.column-gap-15 {
+    column-gap: 15px;
+}
+
+.row-gap-15 {
+    row-gap: 15px;
+}
+
+.align-content-stretch {
+    align-content: stretch;
+}
+
+.max-width-400 {
+    max-width: 400px;
 }
