@@ -185,34 +185,55 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <div className='font-family'>
-      <ul className='padding-remove'>
-        <li id='container'>
-          <div className='flex-box column-gap align-items-center'>
-            <NavLink exact to="/spots" className={'flex-box align-items-center'}>
-              <img id='logo' src={beelogo} alt='Bee-Bee Logo'></img>
-              <div className='logo-font font-black padding-16'>Bee & Bee</div>
-              <img id='logo' src={beelogo} alt='Bee-Bee Logo'></img>
-            </NavLink>
-            {/* {sessionId && (
-              <NavLink to="/create" className='font-black'>Become a Host</NavLink>
-            )} */}
-          </div>
-          <div className='flex-box justify-content-center align-items-center'>
-            <div id='search-bar'>
-              See what the buzz is about!
+    <div className='
+    flex-box
+    justify-content-center'>
+
+
+      <div className='font-family
+    flex-row
+    justify-content-between
+    align-items-center
+    width-90'>
+
+
+        <div className='
+      width-25
+      flex-box
+      '>
+          <NavLink exact to="/spots" className={'flex-column align-items-center'}>
+            <div className='
+          width-100
+          flex-box
+          justify-content-around'>
+              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-30'></img>
+              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-10'></img>
             </div>
-          </div>
+
+            <div className='
+          flex-column
+          justify-content-center
+          flex-end'>
+              <div className='logo-font font-black padding-16'>Bee & Bee</div>
+            </div>
+          </NavLink>
+        </div>
+
+
+        <div id='search-bar' className='
+      width-50
+      justify-content-center
+      text-center'>
+          See what the buzz is about!
+        </div>
+
+
+        <div className='
+      width-25'>
           <div className='flex-box row-reverse column-gap
           align-items-center'>
             {checkState()}
             {isLoaded && sessionLinks}
-            {/* {sessionId && (
-              <NavLink to="/spots/current" className='font-black'> View Your Spots </NavLink>
-            )}
-            {sessionId && (
-              <NavLink to="/reviews/current" className='font-black'> View Your Reviews </NavLink>
-            )} */}
             {sessionId && (
               <NavLink to="/create" className='font-black'>Become a Host</NavLink>
             )}
@@ -220,10 +241,11 @@ function Navigation({ isLoaded }) {
               <NavLink to="/signup" className='font-black'>Become a Host</NavLink>
             )}
           </div>
-        </li>
-      </ul>
-    </div>
+        </div>
 
+
+      </div>
+    </div>
   );
 }
 

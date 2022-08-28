@@ -69,7 +69,7 @@ const SpotById = () => {
                     flex-row
                     flex-wrap-wrap'
                     ><img key={image.id} src={image.url} alt='Spot Image'
-                        className={'img-sizing image-border'}/></div>
+                        className={'img-sizing image-border'} /></div>
                 ))
             }
         }
@@ -92,13 +92,49 @@ const SpotById = () => {
 
             {/* HEADER DIV */}
             <div >
-                <h1>{singleSpot.description}</h1>
-                <h1> <svg viewBox='0 0 32 32'>
-                    <path
-                        d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                        fillRule='evenodd'
-                    ></path>
-                </svg> {singleSpot.avgRating}</h1>
+
+                <div>
+                    <h1>{singleSpot.description}</h1>
+                </div>
+
+                <div className='
+                flex-row
+                justify-content-between'
+                >
+                    <div>
+                        <svg viewBox='0 0 32 32'>
+                            <path
+                                d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                fillRule='evenodd'
+                            ></path>
+                        </svg> {singleSpot.avgRating}
+                    </div>
+
+                    <div className='
+                    flex-row'>
+                        {singleSpot.ownerId === sessionId &&
+                            (
+                                <>
+                                    <div>
+                                        <NavLink to={`/spots/${id}/edit`}>
+                                            Edit This Spot
+                                        </NavLink>
+                                    </div>
+                                    <div>
+                                        <button onClick={onClickDelete}>
+                                            Delete This Spot
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        <div>
+                            {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
+                                Create a review for this spot
+                            </NavLink>)}
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             {/* IMAGES DIV */}
@@ -117,7 +153,7 @@ const SpotById = () => {
                 </div>
 
                 {/* small image container */}
-                    <div className='
+                <div className='
                 height-400
                 width-400
                 flex-row
@@ -126,35 +162,14 @@ const SpotById = () => {
                 image-row-gap
                 image-column-gap
                 '>
-                        {imageCheck(singleSpot)}
-                    </div>
-
-
-
+                    {imageCheck(singleSpot)}
+                </div>
             </div>
+
+
             {checkState()}
-            <div className='flex-box flex-start'>
-                {singleSpot.ownerId === sessionId &&
-                    (
-                        <div>
-                            <div>
-                                <NavLink to={`/spots/${id}/edit`}>
-                                    Edit This Spot
-                                </NavLink>
-                            </div>
-                            <div>
-                                <button onClick={onClickDelete}>
-                                    Delete This Spot
-                                </button>
-                            </div>
-                        </div>
-                    )}
-            </div>
-            <div>
-                {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
-                    Create a review for this spot
-                </NavLink>)}
-            </div>
+
+
             <div>
                 <ReviewsSpotId id={id} />
             </div>

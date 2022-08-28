@@ -40,14 +40,15 @@ const SpotsList = () => {
     console.log('SPOTSLIST ALL SPOTS', spotsList)
     if (!spotsList) return <div>Loading All Spots...</div>
     return (
-        <>
+        <div className='flex-box justify-content-center'>
             {/* ALL CARDS CONTAINER */}
             <div className='
             flex-box
             justify-content-between
             flex-wrap-wrap
             column-gap-15
-            row-gap-15'>
+            row-gap-15
+            width-90'>
 
                 {spotsList.map((spot) => (
                     <NavLink key={spot.id} to={`/spots/${spot.id}`} className=''>
@@ -116,7 +117,7 @@ const SpotsList = () => {
                 ))}
 
             </div>
-        </>
+        </div>
     );
 };
 

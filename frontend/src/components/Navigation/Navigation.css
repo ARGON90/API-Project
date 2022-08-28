@@ -5,7 +5,6 @@
 
 #search-bar {
     border: 2px #CCCCCC solid;
-    padding: 5px 50px;
     border-radius: 999px;
     font-family: 'Lato', sans-serif;
     font-size: 22px;
@@ -13,8 +12,20 @@
 
 }
 
+.text-center {
+  text-align: center;
+}
+
 #logo {
     height: 50px;
+}
+
+.width-25 {
+  width: 30%
+}
+
+.width-50 {
+  width:38%
 }
 
 .padding-topbottom-4 {
@@ -113,10 +124,21 @@
 
   .dropdown a:hover {background-color: #ddd;}
 
-
   .show {display: block;}
 
   .pointer-events-none {
     pointer-events: none;
     z-index: -2;
+  }
+
+  .padding-r-10 {
+    padding-right: 10px;
+  }
+
+  .padding-r-30 {
+    padding-right: 30px;
+  }
+
+  .width-90 {
+    width:90%
   }

@@ -6,7 +6,7 @@
 
 .logo-font {
     font-family: 'Nerko One', sans-serif;
-    font-size: 40px;
+    font-size: 44px;
 }
 
 .font-family {
@@ -93,7 +93,7 @@ a {
 
 #root {
     margin: 0;
-    padding: 0 160px;
+    padding: 0;
 }
 
 .padding-card {
@@ -148,7 +148,7 @@ a {
 }
 
 .padding-16 {
-    padding: 16px;
+    padding: 0px 16px 16px 0px;
 }
 
 .padding-card-text {
@@ -182,4 +182,12 @@ a {
     padding: 0px;
     font-size: 12pt;
     cursor: pointer;
+}
+
+.width-100 {
+    width: 100%
+}
+
+.width-90 {
+    width: 90%
 }
