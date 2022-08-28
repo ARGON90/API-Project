@@ -104,19 +104,19 @@ function Navigation({ isLoaded }) {
 
           <div id="drop-id" class="drop-content
           flex-column
-          padding-all-4
+          padding-topbottom-4
           font-black">
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <NavLink to='/create' className='font-black'>Host Your Home</NavLink>
             </div>
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <NavLink to='/spots/current' className='font-black'>See Your Listings</NavLink>
             </div>
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <NavLink to='/reviews/current' className='font-black'>See Your Reviews</NavLink>
             </div>
-            <div>
-              <button onClick={logout}>Log Out</button>
+            <div className='navbar-divs'>
+              <button className='nav-button-styling' onClick={logout}>Log Out</button>
             </div>
           </div>
         </div>
@@ -163,18 +163,18 @@ function Navigation({ isLoaded }) {
             </button>
           <div id="drop-id" class="drop-content
           flex-column
-          padding-all-4
+          padding-topbottom-4
           font-black">
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <LoginFormModal />
             </div>
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <DemoIndex />
             </div>
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <NavLink to="/signup" className='font-black'>Sign Up</NavLink>
             </div>
-            <div className='padding-below-12'>
+            <div className='navbar-divs'>
               <NavLink to="/signup" className='font-black'>Host Your Home</NavLink>
             </div>
           </div>

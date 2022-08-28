@@ -167,3 +167,12 @@ a {
 .max-width-400 {
     max-width: 400px;
 }
+
+.nav-button-styling {
+    background-color: transparent;
+    border: none;
+    font-family: sans-serif;
+    padding: 0px;
+    font-size: 12pt;
+    cursor: pointer;
+}
