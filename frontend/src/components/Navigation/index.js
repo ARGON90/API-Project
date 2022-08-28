@@ -11,6 +11,7 @@ import { getState } from '../../store/session';
 import { ButtonContext } from "../../context/ButtonContext";
 import logo from '../../data/logo.png'
 import beelogo from '../../data/beelogo.png'
+import hive from '../../data/hive.png'
 import * as sessionActions from '../../store/session';
 import { useHistory } from "react-router-dom";
 
@@ -206,15 +207,20 @@ function Navigation({ isLoaded }) {
           width-100
           flex-box
           justify-content-around'>
-              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-30'></img>
-              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-10'></img>
+              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className=''></img>
+              <img id='logo' src={hive} alt='Hive Logo' className='padding-r-4 padding-l-10'></img>
+              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-4 bee-2'></img>
             </div>
 
             <div className='
           flex-column
           justify-content-center
           flex-end'>
-              <div className='logo-font font-black padding-16'>Bee & Bee</div>
+              <div className='logo-font font-black padding-16'>
+                <div className='padding-l-10'>
+                  Bee & Bee
+                </div>
+              </div>
             </div>
           </NavLink>
         </div>

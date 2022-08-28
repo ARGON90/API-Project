@@ -135,10 +135,26 @@
     padding-right: 10px;
   }
 
-  .padding-r-30 {
-    padding-right: 30px;
+  .padding-r-8 {
+    padding-right: 8px;
+  }
+
+  .padding-r-4 {
+    padding-right: 4px;
+  }
+
+  .padding-l-10 {
+    padding-left: 10px;
+  }
+
+  .padding-r-15 {
+    padding-right: 15px;
   }
 
   .width-90 {
     width:90%
+  }
+
+  .bee-2 {
+    transform: scaleX(-1)
   }
