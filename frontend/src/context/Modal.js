@@ -2,6 +2,7 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
+import '../index.css'
 
 const ModalContext = React.createContext();
 
@@ -31,7 +32,16 @@ export function Modal({ onClose, children }) {
     <div id="modal">
       <div id="modal-background" onClick={onClose} />
       <div id="modal-content">
-        {children}
+        <div id='modal-container' className='
+        font-family'>
+          <div id='modal-header'>
+            Log In
+          </div>
+          <div>
+            Welcome to Airbnb
+          </div>
+            {children}
+        </div>
       </div>
     </div>,
     modalNode
