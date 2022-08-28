@@ -30,8 +30,9 @@ svg {
 }
 
 .width-48 {
-    width: 48%
+    width: 49%
 }
+
 
 .image-row-gap {
     row-gap: 7px;
@@ -47,5 +48,5 @@ svg {
 
 .large-image-pad {
     padding-top: 3px;
-    padding-right: 8px;
+    padding-right: 0px;
 }

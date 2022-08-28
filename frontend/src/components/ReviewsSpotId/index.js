@@ -52,8 +52,11 @@ const ReviewsSpotId = ({ id }) => {
     if (!reviewsList) return <div className='font-family'>Loading Reviews of Current Spot...</div>
     return (
         <>
-            <div className='flex-box flex-start'>
-                <h1 className='font-family'>Reviews for Spot {id}:</h1>
+            {/* REVIEWS CONTAINER */}
+            <div className='
+            flex-column'>
+
+                {/* STARS */}
                 <div className='flex-box'>
                     <div>
                         {checkReviewList()}
