@@ -42,21 +42,41 @@ const SpotById = () => {
         dispatch(getState());
     }
 
-    function imageCheck(singleSpot) {
+    function imageCheckSingle(singleSpot) {
         if (singleSpot.images) {
             let imgArray = Object.values(singleSpot.images)
             if (singleSpot.images.length < 1) {
                 return <p>No Images Exists for Spot</p>
             } else {
-                return imgArray.map((image) => (
-                    <div key={image.id}>
-                        <img src={image.url} key={image.id}
-                            className={'img-size'} alt='Spot Image' />
-                    </div>
+                return (
+                    <img key={imgArray[0].id} src={imgArray[0].url} alt='Spot Image'
+                        className={'img-sizing image-border'} />
+
+                )
+            }
+        }
+    }
+
+    function imageCheck(singleSpot) {
+        if (singleSpot.images) {
+            let imgArray = Object.values(singleSpot.images)
+            let imgSlice = imgArray.slice(1, imgArray.length)
+            if (imgSlice.length > 0) {
+                return imgSlice.map((image) => (
+                    <div className='
+                    width-48
+                    height-48
+                    flex-row
+                    flex-wrap-wrap'
+                    ><img key={image.id} src={image.url} alt='Spot Image'
+                        className={'img-sizing image-border'}/></div>
                 ))
             }
         }
     }
+
+
+
 
     async function onClickDelete() {
         await dispatch(deleteSpot(id))
@@ -66,47 +86,80 @@ const SpotById = () => {
 
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
-        <>
-            <div className='font-family'>
-                <h1> Spot {singleSpot.id}:{' '}{singleSpot.description}</h1>
+        // PAGE DIV
+        <div className='font-family
+        flex-column'>
+
+            {/* HEADER DIV */}
+            <div >
+                <h1>{singleSpot.description}</h1>
                 <h1> <svg viewBox='0 0 32 32'>
-                                                <path
-                                                    d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                                                    fillRule='evenodd'
-                                                ></path>
-                                            </svg> {singleSpot.avgRating}</h1>
-                <h1>Images</h1>
-                <div>
-                    {imageCheck(singleSpot)}
-                    {checkState()}
-                    <div className='flex-box flex-start'>
-                        {singleSpot.ownerId === sessionId &&
-                            (
-                                <div>
-                                    <div>
-                                        <NavLink to={`/spots/${id}/edit`}>
-                                            Edit This Spot
-                                        </NavLink>
-                                    </div>
-                                    <div>
-                                        <button onClick={onClickDelete}>
-                                            Delete This Spot
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                    </div>
-                    <div>
-                        {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
-                            Create a review for this spot
-                        </NavLink>)}
-                    </div>
-                    <div>
-                        <ReviewsSpotId id={id} />
-                    </div>
-                </div>
+                    <path
+                        d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                        fillRule='evenodd'
+                    ></path>
+                </svg> {singleSpot.avgRating}</h1>
             </div>
-        </>
+
+            {/* IMAGES DIV */}
+            <div className='
+            flex-row
+            flex-wrap-wrap'>
+
+                {/* large image container */}
+                <div className='
+                height-400
+                width-400
+                large-image-pad
+                '>
+                    {imageCheckSingle(singleSpot)}
+                </div>
+
+                {/* small image container */}
+                    <div className='
+                height-400
+                width-400
+                flex-row
+                flex-end
+                flex-wrap-wrap
+                image-row-gap
+                image-column-gap
+                '>
+                        {imageCheck(singleSpot)}
+                    </div>
+
+
+
+            </div>
+            {checkState()}
+            <div className='flex-box flex-start'>
+                {singleSpot.ownerId === sessionId &&
+                    (
+                        <div>
+                            <div>
+                                <NavLink to={`/spots/${id}/edit`}>
+                                    Edit This Spot
+                                </NavLink>
+                            </div>
+                            <div>
+                                <button onClick={onClickDelete}>
+                                    Delete This Spot
+                                </button>
+                            </div>
+                        </div>
+                    )}
+            </div>
+            <div>
+                {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
+                    Create a review for this spot
+                </NavLink>)}
+            </div>
+            <div>
+                <ReviewsSpotId id={id} />
+            </div>
+
+
+        </div>
     );
 };
 
