@@ -94,21 +94,7 @@ export const getCurrentUserSpot = () => async (dispatch) => {
     }
 }
 
-//THUNK - CREATE A SPOT
-export const createSpot = (payload) => async (dispatch) => {
-    console.log("INSIDE CREATE SPOTS THUNK")
-    const response = await csrfFetch('/api/spots/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    });
-    console.log(' CREATE SPOTS THUNK RESPONSE', response)
-    if (response.ok) {
-        const spot = await response.json();
-        dispatch(addSpot(spot));
-        return spot;
-    }
-}
+
 
 //THUNK - EDIT A SPOT
 export const editSpot = (spotId, spotInfo) => async (dispatch) => {
@@ -142,6 +128,26 @@ export const deleteSpot = (id) => async (dispatch) => {
         return spot;
     }
 }
+
+
+let createdSpotId;
+//THUNK - CREATE A SPOT
+export const createSpot = (payload) => async (dispatch) => {
+    console.log("INSIDE CREATE SPOTS THUNK")
+    const response = await csrfFetch('/api/spots/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    console.log(' CREATE SPOTS THUNK RESPONSE', response)
+    if (response.ok) {
+        const spot = await response.json();
+        createdSpotId = spot.id
+        dispatch(addSpot(spot));
+        return spot;
+    }
+}
+
 
 const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
@@ -179,10 +185,12 @@ const initialState = {}
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_IMG_TO_SPOT: {
+            console.log(action.url)
             console.log('INSIDE ADD IMG ACTION / REDUCER')
             const newState = { ...state };
             console.log('ADDIMG STATE', newState)
-            newState.previewImage = action.image
+            newState[createdSpotId].previewImage = action.url.url
+            console.log('ADDIMG STATE AFTER PRVIEWIMAGE ADD', newState)
             return state;
         }
         case GET_ALL_SPOTS: {

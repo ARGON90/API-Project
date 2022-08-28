@@ -7,3 +7,45 @@ svg {
     width: 15px;
     margin-right: 6px;
 }
+
+.img-sizing {
+    height: 100%;
+    width: 100%;
+}
+
+.height-400{
+    height: 400px
+}
+
+.height-392{
+    height: 392px
+}
+
+.width-400{
+    width: 400px
+}
+
+.height-48 {
+    height: 48%
+}
+
+.width-48 {
+    width: 48%
+}
+
+.image-row-gap {
+    row-gap: 7px;
+}
+
+.image-column-gap {
+    column-gap: 8px;
+}
+
+.image-border {
+    border-radius: 12px;
+}
+
+.large-image-pad {
+    padding-top: 3px;
+    padding-right: 8px;
+}

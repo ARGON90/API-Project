@@ -28,8 +28,12 @@ const SpotsList = () => {
         if (!spot.previewImage) {
             return <p>No Preview Image Exists for Spot</p>
         } else {
-            return <img src={spot.previewImage}
-                className='img-size' alt='Main Image' />
+            return (
+                <img src={spot.previewImage} alt='Main Image' className='
+            width-card-image
+            height-card-image
+            border-radius-12'/>
+            )
         }
     }
 
@@ -37,30 +41,80 @@ const SpotsList = () => {
     if (!spotsList) return <div>Loading All Spots...</div>
     return (
         <>
-            <h1 className='font-family'></h1>
-            <div className='flex-box justify-content-center  flex-wrap-wrap'>
+            {/* ALL CARDS CONTAINER */}
+            <div className='
+            flex-box
+            justify-content-between
+            flex-wrap-wrap
+            column-gap-15
+            row-gap-15'>
+
                 {spotsList.map((spot) => (
-                    <NavLink key={spot.id} to={`/spots/${spot.id}`}>
-                        <div className='card font-family'>
-                            {imageCheck(spot)}
-                            <div className='flex-box justify-content-between'>
-                                <p className='font-black bold'>{spot.city}, {spot.state}</p>
-                                <p>
-                                    <svg
-                                    viewBox='0 0 32 32'
-                                    >
-                                        <path
-                                            d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                                            fillRule='evenodd'
-                                        ></path>
-                                    </svg>
-                                    {spot.avgRating}
-                                </p>
+                    <NavLink key={spot.id} to={`/spots/${spot.id}`} className=''>
+
+                        <div className=' font-family
+                        max-width-400
+                        flex-column
+                        width-card
+                        height-card'>
+
+                            {/* IMG CONTAINER DIV */}
+                            <div className='
+                                    height-card-image-container
+                                    width-card-image-container
+                                    margin-card-image-container'>
+                                {imageCheck(spot)}
                             </div>
-                            <p className='font-grey margin-remove'>${spot.price}/night</p>
+
+                            {/* TEXT CONTAINER */}
+                            <div className='
+                            flex-column'>
+
+                                <div>
+                                    {/* LOCATION / STAR CONTAINER  */}
+                                    <div className='
+                                font-black
+                                flex-row
+                                justify-content-between'>
+                                        <div className='
+                                        bold'>
+                                            {spot.city}, {spot.state}
+                                        </div>
+
+                                        <div>
+                                            <svg viewBox='0 0 32 32'>
+                                                <path
+                                                    d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                                    fillRule='evenodd'
+                                                ></path>
+                                            </svg>
+                                            {spot.avgRating}
+                                        </div>
+
+                                    </div>
+
+                                    <div className='
+                                    margin-top-6
+                                    flex-row'>
+                                        <div className='
+                                        font-black
+                                        bold'>
+                                            ${spot.price}
+                                        </div>
+                                        <div className='
+                                        font-grey'>
+                                            /night
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
                     </NavLink>
                 ))}
+
             </div>
         </>
     );

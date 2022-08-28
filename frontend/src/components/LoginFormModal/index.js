@@ -15,7 +15,7 @@ function LoginFormModal() {
 
   return (
     <>
-      <button onClick={clicky}>Log In</button>
+      <button className='nav-button-styling' onClick={clicky}>Log In</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <LoginForm />

@@ -11,7 +11,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const {currentNum, setCurrentNum} = useContext(ButtonContext)
+  const { currentNum, setCurrentNum } = useContext(ButtonContext)
   const history = useHistory()
 
   const handleSubmit = async (e) => {
@@ -34,32 +34,57 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
-      <label>
-        Username or Email
-        <input
-          type="text"
-          value={credential}
-          onChange={(e) => setCredential(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button onClick={setCurrent} type="submit">Log In</button>
-    </form>
+    <div className='form-container'>
+      <form className='form' onSubmit={handleSubmit}>
+        <ul>
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </ul>
+
+        <div className="
+      grey-border
+      width-90
+      margin-bottom-30
+      font-grey">
+          <div className='border-bottom
+          padding-topbottom-10'>
+            <label>
+              Username or Email
+              <div>
+                <input
+                  type="text"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
+                  required
+                  className="inputs font-grey"
+                />
+              </div>
+            </label>
+          </div>
+          <div className="padding-topbottom-10">
+            <label>
+              Password
+              <div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="inputs font-grey"
+                />
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div className='
+        width-90'>
+          <button className='login-button' onClick={setCurrent} type="submit">Continue</button>
+        </div>
+
+      </form>
+    </div>
   );
 }
 

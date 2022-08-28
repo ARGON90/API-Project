@@ -22,6 +22,7 @@ const CreateReview = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        let errors = {}
         const payload = {
           review,
           stars,
@@ -31,7 +32,17 @@ const CreateReview = () => {
         console.log('PAYLOAD', payload)
         console.log('SPOT ID', spotId)
 
+        if (stars < 1 || stars > 5) {
+          errors.stars = 'stars must be between 1 and 5'
+        }
 
+        if (review.length < 10) {
+          errors.review = 'review must be atleast 10 characters!'
+        }
+
+        if (Object.keys(errors).length > 0){
+          alert(Object.values(errors))
+        }
 
         let createdReview;
           createdReview = await dispatch(createReview(spotId, payload));

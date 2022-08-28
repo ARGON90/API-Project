@@ -1,5 +1,16 @@
+.star {
+    height: 15px;
+    width: 15px;
+    margin-right: 6px;
+}
+
+.logo-font {
+    font-family: 'Nerko One', sans-serif;
+    font-size: 40px;
+}
+
 .font-family {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .font-black {
@@ -11,11 +22,21 @@
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .flex-box {
     display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
 }
 
 .row-reverse {
@@ -28,6 +49,14 @@
 
 .justify-content-between {
     justify-content: space-between;
+}
+
+.justify-content-evenly {
+    justify-content: space-evenly;
+}
+
+.justify-content-around {
+    justify-content:space-around;
 }
 
 .align-items-center {
@@ -54,12 +83,6 @@
     column-gap: 0.8rem;
 }
 
-.img-size{
-    height: 250px;
-    width:250px;
-    border-radius: 12px;
-}
-
 a {
     text-decoration: none;
 }
@@ -69,6 +92,94 @@ a {
 }
 
 #root {
-    max-width: 950px;
-    margin: auto;
+    margin: 0;
+    padding: 0 160px;
+}
+
+.padding-card {
+    padding: 8px 10px;
+}
+
+.width-card {
+    width: 280px;
+}
+
+.height-card {
+    height: 320px;
+}
+
+.height-card-image-container {
+    height: 80%;
+}
+.width-card-image-container {
+    width: 100%;
+}
+
+.margin-card-image-container {
+    margin-bottom: 10px;
+}
+
+.width-card-image {
+    width: 100%;
+}
+
+.height-card-image {
+    height: 100%
+}
+
+.border-radius-12 {
+    border-radius: 12px;
+}
+
+.block {
+    display: block;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.margin-card {
+    margin-bottom: 10px;
+}
+
+.padding-16 {
+    padding: 16px;
+}
+
+.padding-card-text {
+    padding-top: 8px;
+}
+
+.margin-top-6 {
+    margin-top: 6px;
+}
+
+.column-gap-15 {
+    column-gap: 15px;
+}
+
+.row-gap-15 {
+    row-gap: 15px;
+}
+
+.align-content-stretch {
+    align-content: stretch;
+}
+
+.max-width-400 {
+    max-width: 400px;
+}
+
+.nav-button-styling {
+    background-color: transparent;
+    border: none;
+    font-family: sans-serif;
+    padding: 0px;
+    font-size: 12pt;
+    cursor: pointer;
 }
