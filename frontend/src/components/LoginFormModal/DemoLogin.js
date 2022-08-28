@@ -4,6 +4,10 @@ import { useDispatch } from "react-redux";
 import { ButtonContext } from "../../context/ButtonContext";
 import { useHistory } from "react-router-dom";
 
+import './Login.css'
+import '../../index.css'
+
+
 function DemoLogin() {
   const dispatch = useDispatch();
   const [demoCredential, setDemoCredential] = useState("Demo-lition");
@@ -11,8 +15,8 @@ function DemoLogin() {
   let password = 'password'
   const [demoPassword, setDemoPassword] = useState("password");
   const [errors, setErrors] = useState([]);
-const history = useHistory()
-  const {currentNum, setCurrentNum} = useContext(ButtonContext)
+  const history = useHistory()
+  const { currentNum, setCurrentNum } = useContext(ButtonContext)
 
 
   const handleSubmit = async (e) => {
@@ -33,32 +37,57 @@ const history = useHistory()
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
-      <label>
-        Username or Email
-        <input
-          type="text"
-          value={demoCredential}
-          onChange={(e) => setDemoCredential(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={demoPassword}
-          onChange={(e) => setDemoPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button onClick={setCurrent} type="submit">Demo Login</button>
-    </form>
+    <div className="form-container">
+      <form className='form' onSubmit={handleSubmit}>
+        <ul>
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </ul>
+
+        <div className="
+        grey-border
+        width-90
+        margin-bottom-30
+        font-grey">
+          <div className='border-bottom
+          padding-topbottom-10'>
+            <label>
+              Username or Email
+              <div>
+              <input
+                type="text"
+                value={demoCredential}
+                onChange={(e) => setDemoCredential(e.target.value)}
+                required
+                className="inputs font-grey"
+              />
+              </div>
+            </label>
+          </div>
+          <div className="padding-topbottom-10">
+            <label>
+              Password
+              <div>
+              <input
+                type="password"
+                value={demoPassword}
+                onChange={(e) => setDemoPassword(e.target.value)}
+                required
+                className="inputs font-grey"
+              />
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div className='
+        width-90'>
+            <button className='login-button' onClick={setCurrent} type="submit">Continue</button>
+        </div>
+
+      </form>
+    </div>
   );
 }
 

@@ -52,12 +52,10 @@ const CreateSpotForm = () => {
         let createdSpot;
           createdSpot = await dispatch(createSpot(payload));
         if (createdSpot) {
-
-            console.log('NEWLYC CREATED SPOT', createdSpot)
+            console.log('NEWLY CREATED SPOT', createdSpot)
             let id = createdSpot.id
             await dispatch(addImgSpot(id, url))
            history.push(`/spots/${createdSpot.id}`);
-
         }
       };
 

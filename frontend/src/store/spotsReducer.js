@@ -94,6 +94,7 @@ export const getCurrentUserSpot = () => async (dispatch) => {
     }
 }
 
+
 let createdSpotId;
 //THUNK - CREATE A SPOT
 export const createSpot = (payload) => async (dispatch) => {
@@ -144,6 +145,10 @@ export const deleteSpot = (id) => async (dispatch) => {
         return spot;
     }
 }
+
+
+
+
 
 const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
