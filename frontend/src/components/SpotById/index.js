@@ -104,7 +104,8 @@ const SpotById = () => {
             {/* IMAGES DIV */}
             <div className='
             flex-row
-            flex-wrap-wrap'>
+            flex-wrap-wrap
+            '>
 
                 {/* large image container */}
                 <div className='
