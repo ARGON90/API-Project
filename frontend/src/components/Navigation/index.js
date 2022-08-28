@@ -10,6 +10,7 @@ import { sessionUserId } from '../../store/session';
 import { getState } from '../../store/session';
 import { ButtonContext } from "../../context/ButtonContext";
 import logo from '../../data/logo.png'
+import beelogo from '../../data/beelogo.png'
 import * as sessionActions from '../../store/session';
 import { useHistory } from "react-router-dom";
 
@@ -78,7 +79,7 @@ function Navigation({ isLoaded }) {
         <div class="drop-menu">
           <button onClick={() => showHide()} class="dropbtn">
 
-          <div className='
+            <div className='
             pointer-events-none
             flex-row
             justify-content-around
@@ -160,7 +161,7 @@ function Navigation({ isLoaded }) {
             </div>
 
 
-            </button>
+          </button>
           <div id="drop-id" class="drop-content
           flex-column
           padding-topbottom-4
@@ -188,14 +189,18 @@ function Navigation({ isLoaded }) {
       <ul className='padding-remove'>
         <li id='container'>
           <div className='flex-box column-gap align-items-center'>
-            <NavLink exact to="/spots"><img id='logo' src={logo} alt='Abnb Logo'></img></NavLink>
+            <NavLink exact to="/spots" className={'flex-box align-items-center'}>
+              <img id='logo' src={beelogo} alt='Bee-Bee Logo'></img>
+              <div className='logo-font font-black padding-16'>Bee & Bee</div>
+              <img id='logo' src={beelogo} alt='Bee-Bee Logo'></img>
+            </NavLink>
             {/* {sessionId && (
               <NavLink to="/create" className='font-black'>Become a Host</NavLink>
             )} */}
           </div>
           <div className='flex-box justify-content-center align-items-center'>
             <div id='search-bar'>
-              Search...
+              See what the buzz is about!
             </div>
           </div>
           <div className='flex-box row-reverse column-gap

@@ -4,8 +4,13 @@
     margin-right: 6px;
 }
 
+.logo-font {
+    font-family: 'Nerko One', sans-serif;
+    font-size: 40px;
+}
+
 .font-family {
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .font-black {
@@ -17,7 +22,7 @@
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .flex-box {
@@ -57,8 +62,6 @@
 .align-items-center {
     align-items: center;
 }
-
-
 
 .flex-end {
     align-items: flex-end;
@@ -142,6 +145,10 @@ a {
 
 .margin-card {
     margin-bottom: 10px;
+}
+
+.padding-16 {
+    padding: 16px;
 }
 
 .padding-card-text {

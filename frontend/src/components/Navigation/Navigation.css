@@ -7,6 +7,10 @@
     border: 2px #CCCCCC solid;
     padding: 5px 50px;
     border-radius: 999px;
+    font-family: 'Lato', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+
 }
 
 #logo {
@@ -20,6 +24,7 @@
 .navbar-divs {
     height: 30px;
     padding-top: 15px;
+    padding-left: 8px;
 }
 
 .button-styling {
@@ -87,7 +92,7 @@
     display: none;
     position: absolute;
     background-color: white;
-    min-width: 160px;
+    min-width: 280px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     right: 0;
