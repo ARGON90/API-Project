@@ -184,7 +184,7 @@ function SignupFormPage() {
                                 width-90'>
 
                   <button type="submit" className='
-                                    looks-good-btn'>
+                                    login-button'>
                     Sign Up
                   </button>
                 </div>
