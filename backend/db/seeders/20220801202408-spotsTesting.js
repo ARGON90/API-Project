@@ -30,7 +30,7 @@ module.exports = {
         lat: 33.1234567,
         lng: -44.1234567,
         name: 'Lakehouse',
-        description: 'This is a lakehouse',
+        description: 'This is a lakehouse, it has a lakeview and everything',
         price: 699
       },
       {
@@ -42,7 +42,7 @@ module.exports = {
         lat: 13.1234567,
         lng: -21.1234567,
         name: 'Mountain House',
-        description: 'This is a mountain house',
+        description: 'This is a mountain house with great views',
         price: 50
       },
       {
@@ -54,7 +54,7 @@ module.exports = {
         lat: 13.1234567,
         lng: -21.1234567,
         name: 'Beach House',
-        description: 'This is a beach house',
+        description: 'This is an island spot for island people',
         price: 320
       },
       {
@@ -66,7 +66,7 @@ module.exports = {
         lat: 33.1234567,
         lng: -44.1234567,
         name: 'City House',
-        description: 'This is a city house',
+        description: 'This is a modern house located in the city',
         price: 199
       },
       {
@@ -78,7 +78,7 @@ module.exports = {
         lat: 33.1234567,
         lng: -44.1234567,
         name: 'Normal Place',
-        description: 'This is a normal place',
+        description: 'Fancy place with nice things',
         price: 459
       },
     ],

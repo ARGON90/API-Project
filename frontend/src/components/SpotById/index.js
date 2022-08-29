@@ -51,7 +51,6 @@ const SpotById = () => {
                 return (
                     <img key={imgArray[0].id} src={imgArray[0].url} alt='Spot Image'
                         className={'img-sizing image-border'} />
-
                 )
             }
         }
@@ -188,7 +187,7 @@ const SpotById = () => {
 
                 {/* HOSTED BY ... */}
                 <div>
-                    <h2>This spot is hosted by </h2>
+                    <h2>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
                 </div>
                 <div>
                     <svg viewBox='0 0 32 32'>
