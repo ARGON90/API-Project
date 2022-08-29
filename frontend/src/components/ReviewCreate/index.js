@@ -82,13 +82,11 @@ const CreateReview = () => {
     console.log('PAYLOAD', payload)
     console.log('SPOT ID', spotId)
 
-    if (stars < 1 || stars > 5) {
-      errors.stars = 'stars must be between 1 and 5'
-    }
-
-    if (review.length < 10) {
-      errors.review = 'review must be atleast 10 characters!'
-    }
+    if (!review) errors.review = "Review text is required"
+    if (!stars) errors.stars = "  Stars must be an integer from 1 to 5"
+    if (typeof stars != 'number') errors.stars = "  Stars must be an integer from 1 to 5"
+    if (stars > 5) errors.stars = "  Stars must be an integer from 1 to 5"
+    if (stars < 1) errors.stars = "  Stars must be an integer from 1 to 5"
 
     if (Object.keys(errors).length > 0) {
       return alert(Object.values(errors))
@@ -188,8 +186,8 @@ const CreateReview = () => {
                   padding-left-5'>
                       <input
                         type="number"
-                        placeholder="Stars (1-5)"
-                        required
+                        placeholder="Must be a number 1-5!"
+
                         value={stars}
                         onChange={updateStars}
                         className='
@@ -207,7 +205,7 @@ const CreateReview = () => {
                     <textarea
                       type="text"
                       placeholder="Review here"
-                      required
+
                       value={review}
                       onChange={updateReview}
                       className='

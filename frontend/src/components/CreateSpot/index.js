@@ -13,8 +13,8 @@ const CreateSpotForm = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
+    let [lat, setLat] = useState('');
+    let [lng, setLng] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
@@ -33,7 +33,7 @@ const CreateSpotForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        let errors = {}
         const payload = {
             address,
             city,
@@ -45,6 +45,26 @@ const CreateSpotForm = () => {
             description,
             price
         };
+
+        lng = Number(lng)
+        lat = Number(lat)
+
+        if (!address) errors.address = "Street address is required"
+        if (!city) errors.city = "  City is required"
+        if (!state) errors.state = "  State is required"
+        if (typeof lat != 'number') errors.lat = "  Latitude is not valid"
+        if (typeof lng != 'number') errors.lng = "  Longitude is not valid"
+        if (!country) errors.country = "  Country address is required"
+        if (!name) errors.name = "  Name is required"
+        if (name.length >= 50) errors.name = "  Name must be less than 50 characters"
+        if (!description) errors.description = "  Description is required"
+        if (!price) errors.price = "  Price per day is required"
+
+
+        if (Object.keys(errors).length != 0) {
+            return alert(Object.values(errors))
+        }
+
 
         console.log('INSIDE CREATE FORM SUBMIT')
         console.log('PAYLOAD', payload)
@@ -107,7 +127,7 @@ const CreateSpotForm = () => {
                                                         <input
                                                             type="text"
                                                             placeholder="Address"
-                                                            required
+
                                                             value={address}
                                                             onChange={updateAddress}
                                                             className='inputs' />
@@ -124,7 +144,7 @@ const CreateSpotForm = () => {
                                                     <input
                                                         type="text"
                                                         placeholder="City"
-                                                        required
+
                                                         value={city}
                                                         onChange={updateCity}
                                                         className='inputs' />
@@ -139,7 +159,7 @@ const CreateSpotForm = () => {
                                                     <input
                                                         type="text"
                                                         placeholder="State"
-                                                        required
+                                                        
                                                         value={state}
                                                         onChange={updateState}
                                                         className='inputs' />

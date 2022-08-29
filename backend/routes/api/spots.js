@@ -345,7 +345,8 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     let { address, city, state, country, lat,
         lng, name, description, price } = req.body;
         console.log('BACKEND EDIT SPOTS 349')
-    lng = Number(lng)
+
+        lng = Number(lng)
     lat = Number(lat)
 
     if (!address) errors.address = "Street address is required"

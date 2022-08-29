@@ -82,7 +82,7 @@ function SignupFormPage() {
                                   <div className='padding-left-5' >
                         <input
                           type="text"
-                          placeholder="Address"
+                          placeholder="First Name"
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                           required
@@ -99,7 +99,7 @@ function SignupFormPage() {
                                   <div className='padding-left-5' >
                         <input
                           type="text"
-                          placeholder="Address"
+                          placeholder="Last Name"
                           value={lastName}
                           onChange={(e) => setLastName(e.target.value)}
                           required
@@ -116,7 +116,7 @@ function SignupFormPage() {
                                   <div className='padding-left-5' >
                         <input
                           type="text"
-                          placeholder="Address"
+                          placeholder="Email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
@@ -133,7 +133,7 @@ function SignupFormPage() {
                                   <div className='padding-left-5' >
                         <input
                           type="text"
-                          placeholder="Address"
+                          placeholder="Username"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
                           required
@@ -150,7 +150,7 @@ function SignupFormPage() {
                                   <div className='padding-left-5' >
                         <input
                           type="password"
-                          placeholder="Address"
+                          placeholder="Password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           required
@@ -168,7 +168,7 @@ function SignupFormPage() {
                                   <div className='padding-left-5' >
                         <input
                           type="password"
-                          placeholder="Address"
+                          placeholder="Confirm Password"
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           required
