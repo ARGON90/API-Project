@@ -17,7 +17,7 @@ const CreateReview = () => {
   const history = useHistory();
   const { spotId } = useParams()
   const [review, setReview] = useState('');
-  const [stars, setStars] = useState('');
+  let [stars, setStars] = useState('');
 
 
   // begin spotID
@@ -81,6 +81,8 @@ const CreateReview = () => {
     console.log('INSIDE CREATE REVIEW FORM SUBMIT')
     console.log('PAYLOAD', payload)
     console.log('SPOT ID', spotId)
+
+    stars = Number(stars)
 
     if (!review) errors.review = "Review text is required"
     if (!stars) errors.stars = "  Stars must be an integer from 1 to 5"
