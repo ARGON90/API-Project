@@ -240,3 +240,93 @@ a {
 .z-index-2 {
     z-index: 2;
 }
+
+
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    border: none;
+}
+
+.login-button {
+    height: 50px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(230, 30, 77);
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.width-100 {
+    width: 100%
+}
+
+.width-90 {
+    width: 90%
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.height-60 {
+    height: 60px;
+}
+
+.height-30 {
+    height: 30px
+}
+
+.grey-border {
+    border: 1px grey solid;
+    border-radius: 12px;
+}
+
+.inputs {
+    border:none;
+    color:black;
+    width: 90%
+}
+
+.border-bottom {
+    height: 30px;
+}
+
+.looks-good-btn {
+    width: 135px;
+    height: 48px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.looks-good-btn:hover, .looks-good-btn:focus {
+    background-color: black;
+  }
+
+

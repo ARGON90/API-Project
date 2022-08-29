@@ -38,7 +38,7 @@ export function Modal({ onClose, children }) {
             Log In
           </div>
           <div>
-            Welcome to Airbnb
+            Welcome to Bee & Bee
           </div>
             {children}
         </div>
