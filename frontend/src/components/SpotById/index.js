@@ -133,7 +133,7 @@ const SpotById = () => {
                                     </>
                                 )}
                             <div>
-                                {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
+                                {sessionId !== singleSpot.ownerId && (<NavLink to={`/review/create/${id}`} className='font-black'>
                                     Create a review for this spot
                                 </NavLink>)}
                             </div>

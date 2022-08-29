@@ -91,7 +91,7 @@ const CreateReview = () => {
     }
 
     if (Object.keys(errors).length > 0) {
-      alert(Object.values(errors))
+      return alert(Object.values(errors))
     }
 
     let createdReview;
