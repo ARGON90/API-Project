@@ -125,7 +125,11 @@ const ReviewsCurrentUser = () => {
                                     <div>
 
                                         <div className='
-                                    padding-all-10'>
+                                    padding-trb-10
+                                    flex-column
+                                    '>
+                                        <div className='bold margin-bottom-5'> {review.Spot.name} </div>
+                                        <div className='bold margin-bottom-5'> {review.Spot.city}, {review.Spot.state}</div>
                                             <NavLink to={`/spots/${review.id}`}>
                                                 {review.review}
                                             </NavLink>

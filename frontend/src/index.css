@@ -237,6 +237,10 @@ a {
     padding: 10px;
 }
 
+.padding-trb-10 {
+    padding: 10px 10px 10px 0px;
+}
+
 .z-index-2 {
     z-index: 2;
 }
@@ -391,4 +395,8 @@ textarea {
 
 .font-size-18 {
     font-size: 18pt;
+}
+
+.margin-bottom-5 {
+    padding-bottom: 5;
 }
