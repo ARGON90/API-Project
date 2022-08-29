@@ -57,7 +57,7 @@ function Navigation({ isLoaded }) {
     document.getElementById("drop-id").classList.toggle("show");
   }
   window.onclick = function (e) {
-    if (!e.target.matches('.dropbtn')) {
+    if (!e.target.matches('.button-dropdown')) {
       let dropdowns = document.getElementsByClassName("drop-content");
       for (let i = 0; i < dropdowns.length; i++) {
         let openDropdown = dropdowns[i];
@@ -78,7 +78,7 @@ function Navigation({ isLoaded }) {
       <>
         {/* <ProfileButton user={sessionUser} /> */}
         <div class="drop-menu">
-          <button onClick={() => showHide()} class="dropbtn">
+          <button onClick={() => showHide()} class="button-dropdown">
 
             <div className='
             pointer-events-none
@@ -136,7 +136,7 @@ function Navigation({ isLoaded }) {
         <NavLink to="/signup" className='font-black'>Sign Up</NavLink> */}
 
         <div class="drop-menu">
-          <button onClick={() => showHide()} class="dropbtn">
+          <button onClick={() => showHide()} class="button-dropdown">
 
             <div className='
             pointer-events-none

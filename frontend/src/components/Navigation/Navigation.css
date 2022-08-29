@@ -76,7 +76,7 @@
     width: 26px;
 }
 
-.dropbtn {
+.button-dropdown {
     height: 42px;
     width: 80px;
     color: black;
@@ -90,7 +90,7 @@
     z-index: 2;
   }
 
-  .dropbtn:hover, .dropbtn:focus {
+  .button-dropdown:hover, .button-dropdown:focus {
     box-shadow: -0.5px 3.5px 6px #dbdfdb;
   }
 
