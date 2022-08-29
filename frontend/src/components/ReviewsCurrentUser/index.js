@@ -2,7 +2,7 @@ import { useParams, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 
 import { deleteReview, getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 import '../../index.css'
@@ -10,6 +10,7 @@ import '../../index.css'
 const ReviewsCurrentUser = () => {
     console.log('INSIDE REVIEWS-CURRENT-USER COMPONENT')
     const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(() => {
         console.log('INSIDE REVIEWS CURRENT USER')
@@ -62,6 +63,9 @@ const ReviewsCurrentUser = () => {
                 await dispatch(deleteReview(buttonId))
             }
             deletion()
+            dispatch(getReviewsCurrentUser())
+            history.push(`/reviews/current`)
+            dispatch(getReviewsCurrentUser())
         }
     }, [buttonId])
 
@@ -122,21 +126,21 @@ const ReviewsCurrentUser = () => {
                                         </svg>
                                         {review.stars}
                                     </div>
-                                    <div div='
-                                    padding-all-10'>
-                                        {console.log('reviewID', review.id)}
-                                        <button id={`${review.id}`} className={`button padding-all-10`} data-type={review.id}
-                                            onClick={(e) => setButtonId(e.target.id)
-                                            }>
-                                            Delete This Review
-                                        </button>
-                                    </div>
                                 </div>
                                 <div className='
                                 width-25'>
                                     {imageCheck(review)}
                                 </div>
                             </NavLink>
+                            <div div='
+                                    padding-all-10'>
+                                {console.log('reviewID', review.id)}
+                                <button id={`${review.id}`} className={`button padding-all-10 z-index-2`} data-type={review.id}
+                                    onClick={(e) => setButtonId(e.target.id)
+                                    }>
+                                    Delete This Review
+                                </button>
+                            </div>
 
 
                         </div>
