@@ -84,6 +84,18 @@ const SpotById = () => {
         // await dispatch(deleteSpot(id))
     }
 
+    function sessionCheck() {
+        console.log('IN SESSION CHECK')
+        if (sessionId && sessionId !== singleSpot.ownerId) {
+            console.log('IN SESSION CHECK CONDITIONAL')
+            return (
+                <NavLink to={`/review/create/${id}`} className='font-black bold'>
+                    Create a review for this spot
+                </NavLink>
+            )
+        }
+    }
+
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
         <div className='
@@ -96,6 +108,7 @@ const SpotById = () => {
 
                 {/* HEADER DIV */}
                 <div >
+
 
                     <div>
                         <h1>{singleSpot.description}</h1>
@@ -120,22 +133,23 @@ const SpotById = () => {
                             {singleSpot.ownerId === sessionId &&
                                 (
                                     <>
-                                        <div>
-                                            <NavLink to={`/spots/${id}/edit`}>
+                                        <div className='flex-box bold align-items-center'>
+                                            <NavLink to={`/spots/${id}/edit`} className='
+                                            font-black margin-right-5'>
                                                 Edit This Spot
                                             </NavLink>
                                         </div>
                                         <div>
-                                            <button onClick={onClickDelete}>
+                                            <button onClick={onClickDelete} id='delete-bt' className='looks-good-btn'>
                                                 Delete This Spot
                                             </button>
                                         </div>
                                     </>
                                 )}
                             <div>
-                                {sessionId && (<NavLink to={`/review/create/${id}`} className='font-black'>
-                                    Create a review for this spot
-                                </NavLink>)}
+
+                                {sessionCheck()}
+
                             </div>
 
                         </div>

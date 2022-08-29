@@ -33,67 +33,170 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        First Name
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Last Name
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
-      </label>
+    <div className='
+        flex-box
+        justify-content-center'>
 
-      <label>
-        Email
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Username
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Confirm Password
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Sign Up</button>
-    </form>
+      {/* // PAGE DIV */}
+      <div className='font-family
+        flex-column
+        width-90'>
+
+        <div className='
+                flex-column
+                align-items-center'>
+
+          <div className='
+                '>
+
+            <h1>Confirm Your Details</h1>
+          </div>
+
+          {/* FORM DIV */}
+          <div className='
+                form-container'>
+
+            <form onSubmit={handleSubmit} className='
+                    form'>
+
+              {errors.length > 0 && (<ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+              </ul>)}
+
+              <div className='
+                        width-65
+                        flex-column
+                        align-items-center'>
+                <div
+                  className='
+                            grey-border
+                            width-90
+                            margin-bottom-30
+                            font-grey
+                            '>
+                  <div>
+                    <div>
+                    <div className='padding-left-5' >First Name</div>
+                      <div className='
+                                border-bottom'>
+                                  <div className='padding-left-5' >
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          required
+                          className='inputs'
+                        />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                    <div className='padding-left-5' >Last Name</div>
+                      <div className='
+                                border-bottom'>
+                                  <div className='padding-left-5' >
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          required
+                          className='inputs'
+                        />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                    <div className='padding-left-5' >Email</div>
+                      <div className='
+                                border-bottom'>
+                                  <div className='padding-left-5' >
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                          className='inputs'
+                        />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                    <div className='padding-left-5' >Username</div>
+                      <div className='
+                                border-bottom'>
+                                  <div className='padding-left-5' >
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          required
+                          className='inputs'
+                        />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                    <div className='padding-left-5' >Password</div>
+                      <div className='
+                                border-bottom'>
+                                  <div className='padding-left-5' >
+                        <input
+                          type="password"
+                          placeholder="Address"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                          className='inputs'
+
+                        />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                    <div className='padding-left-5' >Confirm Password</div>
+                      <div className='
+                                height-30'>
+                                  <div className='padding-left-5' >
+                        <input
+                          type="password"
+                          placeholder="Address"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          required
+                          className='inputs'
+                          />
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='
+                                flex-row
+                                width-90'>
+
+                  <button type="submit" className='
+                                    looks-good-btn'>
+                    Sign Up
+                  </button>
+                </div>
+
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
   );
 }
 
