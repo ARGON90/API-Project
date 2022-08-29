@@ -30,6 +30,10 @@ input {
     cursor: pointer;
 }
 
+.login-button:hover {
+    background-color: rgb(222, 29, 74);
+}
+
 
 .width-100 {
     width: 100%
@@ -56,5 +60,3 @@ input {
     border: 1px grey solid;
     border-radius: 12px;
 }
-
-

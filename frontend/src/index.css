@@ -179,7 +179,7 @@ a {
 .nav-button-styling {
     background-color: transparent;
     border: none;
-    font-family: sans-serif;
+    font-family: 'Lato', sans-serif;
     padding: 0px;
     font-size: 12pt;
     cursor: pointer;
@@ -383,4 +383,12 @@ textarea {
 
 .text-align-center {
     text-align: center;
+}
+
+.margin-right-5 {
+    margin-right: 10px;
+}
+
+.font-size-18 {
+    font-size: 18pt;
 }

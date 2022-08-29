@@ -34,10 +34,10 @@ export function Modal({ onClose, children }) {
       <div id="modal-content">
         <div id='modal-container' className='
         font-family'>
-          <div id='modal-header'>
+          <div id='modal-header' className='bold font-size-18'>
             Log In
           </div>
-          <div>
+          <div className='bold font-size-18'>
             Welcome to Bee & Bee
           </div>
             {children}

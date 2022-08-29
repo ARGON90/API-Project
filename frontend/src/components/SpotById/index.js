@@ -86,12 +86,12 @@ const SpotById = () => {
 
     function sessionCheck() {
         console.log('IN SESSION CHECK')
-        if (sessionId && sessionId !== singleSpot.ownerId ) {
+        if (sessionId && sessionId !== singleSpot.ownerId) {
             console.log('IN SESSION CHECK CONDITIONAL')
             return (
-                <NavLink to={`/review/create/${id}`} className='font-black'>
-                                    Create a review for this spot
-                                </NavLink>
+                <NavLink to={`/review/create/${id}`} className='font-black bold'>
+                    Create a review for this spot
+                </NavLink>
             )
         }
     }
@@ -133,20 +133,21 @@ const SpotById = () => {
                             {singleSpot.ownerId === sessionId &&
                                 (
                                     <>
-                                        <div>
-                                            <NavLink to={`/spots/${id}/edit`}>
+                                        <div className='flex-box bold align-items-center'>
+                                            <NavLink to={`/spots/${id}/edit`} className='
+                                            font-black margin-right-5'>
                                                 Edit This Spot
                                             </NavLink>
                                         </div>
                                         <div>
-                                            <button onClick={onClickDelete}>
+                                            <button onClick={onClickDelete} id='delete-bt' className='looks-good-btn'>
                                                 Delete This Spot
                                             </button>
                                         </div>
                                     </>
                                 )}
                             <div>
-                                
+
                                 {sessionCheck()}
 
                             </div>
