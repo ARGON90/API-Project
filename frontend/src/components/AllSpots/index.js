@@ -26,7 +26,7 @@ const SpotsList = () => {
 
     function imageCheck(spot) {
         if (!spot.previewImage) {
-            return <p>No Preview Image Exists for Spot</p>
+            return <p></p>
         } else {
             return (
                 <img src={spot.previewImage} alt='Main Image' className='
