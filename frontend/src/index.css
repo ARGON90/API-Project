@@ -336,3 +336,51 @@ input::-webkit-inner-spin-button {
 .looks-good-btn:focus {
     background-color: black;
 }
+
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.border-none {
+    border: none;
+}
+
+textarea {
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+}
+
+.text-area {
+    color: black;
+    width: 90%;
+    font-family: 'Lato', sans-serif;
+
+    margin-bottom: 5px;
+}
+
+.padding-left-5 {
+    margin-left: 5px;
+}
+
+.margin-bottom-10{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.padding-left{
+    padding-left: 10px;
+}
+
+.text-align-center {
+    text-align: center;
+}
