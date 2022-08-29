@@ -241,10 +241,10 @@ function Navigation({ isLoaded }) {
             {checkState()}
             {isLoaded && sessionLinks}
             {sessionId && (
-              <NavLink to="/create" className='font-black'>Become a Host</NavLink>
+              <NavLink to="/create" className='font-black bold'>Become a Host</NavLink>
             )}
             {!sessionId && (
-              <NavLink to="/signup" className='font-black'>Become a Host</NavLink>
+              <NavLink to="/signup" className='font-black bold'>Become a Host</NavLink>
             )}
           </div>
         </div>
