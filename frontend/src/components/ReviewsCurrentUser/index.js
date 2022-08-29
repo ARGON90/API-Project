@@ -32,8 +32,10 @@ const ReviewsCurrentUser = () => {
         if (!review.Images.length) {
             return <p>No image was added to this review</p>
         } else {
-            return <img key={review.Images[0].id} className='img-size'
-                src={review.Images[0].url} alt='Review Image' />
+            return <img key={review.Images[0].id}
+                src={review.Images[0].url} alt='Review Image' className='
+                 width-100
+                 border-radius-12' />
         }
     }
 
@@ -69,36 +71,77 @@ const ReviewsCurrentUser = () => {
     if (!reviewsList[0]) return <div>You have no Reviews!</div>
     if (!reviewsList[0].Spot) return <div>Loading Current User's Reviews...</div>
     return (
-        <div>
-            <h1 className='font-family'>Reviews by {reviewsList[0].User.firstName}{' '}
-                {reviewsList[0].User.lastName}</h1>
-            <div className='flex-box justify-content-center'>
+        <div className='
+        flex-box
+        justify-content-center'>
+            {/* // PAGE DIV */}
+            <div className='
+            font-family
+            flex-column
+            width-90'>
 
-                {reviewsList.map((review) => (
-                    <div key={review.id}>
-                        <div>
-                            <NavLink to={`/spots/${review.id}`}>
-                                <div className='card font-family'>
-                                    <p>Review for Spot {review.Spot.id}</p>
-                                    <p>Description: {review.review}</p>
-                                    <p>Stars: <svg viewBox='0 0 32 32'>
-                                                <path
-                                                    d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                                                    fillRule='evenodd'
-                                                ></path>
-                                            </svg> {review.stars}</p>
+                {/* NAME DIV */}
+                <div className='
+                '>
+                    <h1 className='font-family'>
+                        Reviews by {reviewsList[0].User.firstName}{' '}
+                        {reviewsList[0].User.lastName}
+                    </h1>
+                </div>
+
+                {/* ALL REVIEW DIV */}
+                <div className='flex-column
+                justify-content-center'>
+
+                    {reviewsList.map((review) => (
+
+                        // INDIVIDUAL REVIEW CARD
+                        <div key={review.id} className='
+                        flex-row
+                        width-100
+                        padding-all-15'>
+
+
+                            <NavLink to={`/spots/${review.id}`} className='
+                            flex-row
+                            width-100
+                            justify-content-evenly'>
+                                <div className='
+                                font-family'>
+                                    <div className='
+                                    padding-all-10'>
+                                        {review.review}
+                                    </div>
+                                    <div className='
+                                    padding-all-10'>
+                                        <svg viewBox='0 0 32 32'>
+                                            <path
+                                                d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                                fillRule='evenodd'
+                                            ></path>
+                                        </svg>
+                                        {review.stars}
+                                    </div>
+                                    <div div='
+                                    padding-all-10'>
+                                        {console.log('reviewID', review.id)}
+                                        <button id={`${review.id}`} className={`button padding-all-10`} data-type={review.id}
+                                            onClick={(e) => setButtonId(e.target.id)
+                                            }>
+                                            Delete This Review
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className='
+                                width-25'>
                                     {imageCheck(review)}
                                 </div>
                             </NavLink>
+
+
                         </div>
-                        {console.log('reviewID', review.id)}
-                        <button id={`${review.id}`} className={`button`} data-type={review.id}
-                            onClick={(e) => setButtonId(e.target.id)
-                            }>
-                            Delete This Review
-                        </button>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
