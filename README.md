@@ -18,8 +18,10 @@ This project was required to be viewed on a 1024 pixel screen, and it is recomme
 
 ### Home Page
 
-![image](https://user-images.githubusercontent.com/54010874/187216500-3e75c1ca-4642-4fc0-9b1d-43662b6e1185.png)
+* On this page
+  * dddd 
 
+![image](https://user-images.githubusercontent.com/54010874/187216500-3e75c1ca-4642-4fc0-9b1d-43662b6e1185.png)
 
 ![image](https://user-images.githubusercontent.com/54010874/187216693-b736370e-9872-4ec0-812a-762619d3e949.png)
 
@@ -40,7 +42,11 @@ This project was required to be viewed on a 1024 pixel screen, and it is recomme
 
 ### Create a Spot form
 
+![image](https://user-images.githubusercontent.com/54010874/187218072-a5b0ead1-4712-48bb-9ceb-25d764d5aaff.png)
+
 ![image](https://user-images.githubusercontent.com/54010874/187217957-bafbb753-5a05-49a1-8c7d-d513558b3a23.png)
+
+
 
 
 
