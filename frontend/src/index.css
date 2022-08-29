@@ -305,9 +305,16 @@ input {
 }
 
 .inputs {
-    border:none;
-    color:black;
-    width: 90%
+    border: none;
+    color: black;
+    width: 90%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .border-bottom {
@@ -325,8 +332,7 @@ input {
     cursor: pointer;
 }
 
-.looks-good-btn:hover, .looks-good-btn:focus {
+.looks-good-btn:hover,
+.looks-good-btn:focus {
     background-color: black;
-  }
-
-
+}
