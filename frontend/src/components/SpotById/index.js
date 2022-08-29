@@ -84,6 +84,18 @@ const SpotById = () => {
         // await dispatch(deleteSpot(id))
     }
 
+    function sessionCheck() {
+        console.log('IN SESSION CHECK')
+        if (sessionId && sessionId !== singleSpot.ownerId ) {
+            console.log('IN SESSION CHECK CONDITIONAL')
+            return (
+                <NavLink to={`/review/create/${id}`} className='font-black'>
+                                    Create a review for this spot
+                                </NavLink>
+            )
+        }
+    }
+
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
         <div className='
@@ -96,6 +108,7 @@ const SpotById = () => {
 
                 {/* HEADER DIV */}
                 <div >
+
 
                     <div>
                         <h1>{singleSpot.description}</h1>
@@ -133,9 +146,9 @@ const SpotById = () => {
                                     </>
                                 )}
                             <div>
-                                {sessionId !== singleSpot.ownerId && (<NavLink to={`/review/create/${id}`} className='font-black'>
-                                    Create a review for this spot
-                                </NavLink>)}
+                                
+                                {sessionCheck()}
+
                             </div>
 
                         </div>
