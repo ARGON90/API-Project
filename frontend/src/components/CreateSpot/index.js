@@ -99,127 +99,149 @@ const CreateSpotForm = () => {
                             '>
                                     <div>
                                         <div>
-                                            Address
-                                            <div className='
+                                            <div>
+                                                <div className='padding-left-5' >Address</div>
+                                                <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Address"
-                                                    required
-                                                    value={address}
-                                                    onChange={updateAddress}
-                                                    className='inputs' />
+                                                    <div className='padding-left-5'>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Address"
+                                                            required
+                                                            value={address}
+                                                            onChange={updateAddress}
+                                                            className='inputs' />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div>
-                                            City
+                                            <div className='padding-left-5'>City</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="City"
-                                                    required
-                                                    value={city}
-                                                    onChange={updateCity}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="City"
+                                                        required
+                                                        value={city}
+                                                        onChange={updateCity}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            State
+                                            <div className='padding-left-5' >City</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="State"
-                                                    required
-                                                    value={state}
-                                                    onChange={updateState}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="State"
+                                                        required
+                                                        value={state}
+                                                        onChange={updateState}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Country:
+                                            <div className='padding-left-5' >Country</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Country"
-                                                    value={country}
-                                                    onChange={updateCountry}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Country"
+                                                        value={country}
+                                                        onChange={updateCountry}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Latitude:
+                                            <div className='padding-left-5' >Latitude</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="number"
-                                                    placeholder="Latitude (numbers only!)"
-                                                    value={lat}
-                                                    onChange={updateLat}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="Latitude (numbers only!)"
+                                                        value={lat}
+                                                        onChange={updateLat}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Longitude:
+                                            <div className='padding-left-5' >Longitude</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="number"
-                                                    placeholder="Longitude (numbers only!)"
-                                                    value={lng}
-                                                    onChange={updateLng}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="Longitude (numbers only!)"
+                                                        value={lng}
+                                                        onChange={updateLng}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Name:
+                                            <div className='padding-left-5' >Name</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Name"
-                                                    value={name}
-                                                    onChange={updateName}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Name"
+                                                        value={name}
+                                                        onChange={updateName}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Description:
+                                            <div className='padding-left-5' >Description</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Description"
-                                                    value={description}
-                                                    onChange={updateDescription}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Description"
+                                                        value={description}
+                                                        onChange={updateDescription}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Price:
+                                            <div className='padding-left-5' >Price</div>
                                             <div className='
                                 border-bottom'>
-                                                <input
-                                                    type="number"
-                                                    placeholder="Price (numbers only!)"
-                                                    value={price}
-                                                    onChange={updatePrice}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="Price (numbers only!)"
+                                                        value={price}
+                                                        onChange={updatePrice}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Image URL:
+                                            <div className='padding-left-5' >Image</div>
                                             <div className='
                                 height-30'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="URL format: http://..."
-                                                    value={url}
-                                                    onChange={updateUrl}
-                                                    className='inputs' />
+                                                <div className='padding-left-5'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="URL format: http://..."
+                                                        value={url}
+                                                        onChange={updateUrl}
+                                                        className='inputs' />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +252,7 @@ const CreateSpotForm = () => {
                                     <button type="submit" className='
                                     looks-good-btn'>
                                         Looks Good
-                                        </button>
+                                    </button>
                                 </div>
 
                             </div>
