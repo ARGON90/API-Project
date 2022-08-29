@@ -18,12 +18,13 @@ const loadSpots = (payload) => {
     }
 }
 
-const loadOneSpot = (spotId, images) => {
+const loadOneSpot = (spotId, images, owner) => {
     console.log('INSIDE LOAD ONE SPOT', spotId)
     return {
         type: GET_ONE_SPOT,
         spotId,
-        images
+        images,
+        owner
     }
 }
 
@@ -77,7 +78,9 @@ export const getOneSpot = (spotId) => async (dispatch) => {
         const data = await response.json()
         console.log('GET ONE SPOT THUNK DATA', data)
         let images = data[0].Images
-        dispatch(loadOneSpot(spotId, images));
+        let owner = data[0].Owner
+        console.log('OWNER', owner)
+        dispatch(loadOneSpot(spotId, images, owner));
         return data;
     }
 }
@@ -205,6 +208,10 @@ const spotsReducer = (state = initialState, action) => {
             console.log('INSIDE SPOT-BY-ID REDUCER');
             let id = action.spotId
             newState[id].images = action.images
+            newState[id].firstName = action.owner.firstName
+            newState[id].lastName = action.owner.lastName
+            console.log('OWNDER IN REDUCER', action.owner.firstName)
+            console.log('OWNDER IN REDUCER', action.owner.lastName)
             return newState
         }
         case CURRENT_USER_SPOT: {
