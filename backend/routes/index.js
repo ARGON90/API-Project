@@ -36,16 +36,4 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-
-//STILLNEEDS is this code necessary? leftover from backend?
-// router.get('/api/csrf/restore', (req, res) => {
-//     const csrfToken = req.csrfToken();
-//     res.cookie('XSRF-TOKEN', req.csrfToken());
-//     res.status(200).json({
-//         'XSRF-Token': csrfToken
-//     });
-// });
-
-
-
 module.exports = router;

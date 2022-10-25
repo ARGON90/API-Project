@@ -4,11 +4,11 @@
 
 const bcrypt = require("bcryptjs");
 
-let firstNames = ['Alex', 'Giordan', 'Tyler', 'Chen ', 'Cecilia', 'Edward',
+let firstNames = ['Alex', 'Daniel', 'Ray', 'David', 'Bill', 'Anthony', 'Giordan', 'Tyler', 'Cecilia', 'Edward',
     'Rudy', 'Jason', 'Randy', 'Ben', 'Justine', 'Julie', 'Alec', 'Connor',
     'Tiffany']
 
-let lastNames = ['Yang', 'Venida', 'Lam', 'Felipe', 'Jung', 'Jang', 'Jean',
+let lastNames = ['Yang', 'Henry', 'Hoffman', 'Venida', 'Lam', 'Adams', 'Pizarro', 'Felipe', 'Jung', 'Jang', 'Jean',
     'Waldee', 'Chang', 'Nguyen', 'Ou', 'Maniti', 'Gonglach', 'Chen']
 
 function randomNum() {
@@ -80,6 +80,20 @@ module.exports = {
         firstName: `${firstNames[randomNum()]}`,
         lastName: `${lastNames[randomNum()]}`,
         username: 'FakeUser9',
+        hashedPassword: bcrypt.hashSync('password3')
+      },
+      {
+        email: 'user10@user.io',
+        firstName: `${firstNames[randomNum()]}`,
+        lastName: `${lastNames[randomNum()]}`,
+        username: 'FakeUser10',
+        hashedPassword: bcrypt.hashSync('password3')
+      },
+      {
+        email: 'user11@user.io',
+        firstName: `${firstNames[randomNum()]}`,
+        lastName: `${lastNames[randomNum()]}`,
+        username: 'FakeUser11',
         hashedPassword: bcrypt.hashSync('password3')
       },
     ], {});

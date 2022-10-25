@@ -8,6 +8,7 @@ import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
 import { ButtonContext } from "../../context/ButtonContext";
 import ReviewsSpotId from '../ReviewsSpotId';
+import BookingsSpotId from '../BookingsSpotId/bookingsSpotId';
 
 import './SpotById.css'
 import '../../index.css'
@@ -20,7 +21,7 @@ const SpotById = () => {
     const spotsList = useSelector((state) => (state.spots));
     const singleSpot = spotsList[id]
 
-    const { currentNum, setCurrentNum } = useContext(ButtonContext)
+    // const { currentNum, setCurrentNum } = useContext(ButtonContext)
     let sessionId;
     if (sessionUserId && sessionUserId.user) {
         sessionId = sessionUserId.user.id
@@ -33,14 +34,15 @@ const SpotById = () => {
         dispatch(getOneSpot(id))
     }, [dispatch])
 
-    useEffect(() => {
-        console.log('SPOTBYID GETSTATE USE EFFECT ')
-        dispatch(getState())
-    }, [dispatch, sessionId, currentNum])
+    // useEffect(() => {
+    //     console.log('SPOTBYID GETSTATE USE EFFECT ')
+    //     dispatch(getState())
+    // }, [dispatch, sessionId])
+    // }, [dispatch, sessionId, currentNum])
 
-    function checkState() {
-        dispatch(getState());
-    }
+    // function checkState() {
+    //     dispatch(getState());
+    // }
 
     function imageCheckSingle(singleSpot) {
         if (singleSpot.images) {
@@ -71,8 +73,6 @@ const SpotById = () => {
         }
     }
 
-
-
     async function onClickDelete() {
         await dispatch(deleteSpot(id))
         history.push(`/spots/`);
@@ -94,6 +94,8 @@ const SpotById = () => {
     return (
         <div className='page-div'>
 
+
+
             <div className='page-container'>
 
                 {/* HEADER DIV */}
@@ -112,8 +114,23 @@ const SpotById = () => {
                             </svg>
                             {singleSpot.avgRating}
                         </div>
-
-
+                        <div className='edit-delete-container'>
+                            {singleSpot.ownerId === sessionId &&
+                                (
+                                    <>
+                                        <div className='edit-delete-btn'>
+                                            <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
+                                                Edit This Spot
+                                            </NavLink>
+                                        </div>
+                                        <div className='edit-delete-btn'>
+                                            <div onClick={onClickDelete} className=''>
+                                                Delete This Spot
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                        </div>
                     </div>
                 </div>
 
@@ -133,38 +150,25 @@ const SpotById = () => {
 
                 {/* HOSTED BY ... */}
                 <div className='hosted-container'>
-
                     <h2>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
 
-                    <div className='edit-delete-container'>
-                        {singleSpot.ownerId === sessionId &&
-                            (
-                                <>
-                                    <div className='edit-delete-btn'>
-                                        <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
-                                            Edit This Spot
-                                        </NavLink>
-                                    </div>
-                                    <div className='edit-delete-btn'>
-                                        <div onClick={onClickDelete} className=''>
-                                            Delete This Spot
-                                        </div>
-                                    </div>
-                                </>
-                            )}
+                    <div>
+                        <BookingsSpotId />
                     </div>
+
                 </div>
-                <div>
-                    {/* <svg viewBox='0 0 32 32'>
+
+                <div className='all-reviews-header-container'>
+                    <h2 className='all-reviews-header'>All Reviews</h2>
+                    <svg viewBox='0 0 32 32'>
                         <path
                             d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
                             fillRule='evenodd'
                         ></path>
-                    </svg> */}
-                    {/* {singleSpot.avgRating} - */}
-                    <h2>All Reviews</h2>
+                    </svg>
+                    {singleSpot.avgRating}
                 </div>
-                {checkState()}
+                {/* {checkState()} */}
 
                 {sessionCheck()}
 
