@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         ownerId: 1,
-        address: "7524 Auden Trail",
+        address: "7524 Oak Trail",
         city: 'Sandy Springs',
         state: 'Georgia',
         country: 'United States',
@@ -47,7 +47,7 @@ module.exports = {
       },
       {
         ownerId: 1,
-        address: "310 Mustang Court",
+        address: "310 Dunwoody Drive",
         city: 'Milton',
         state: 'Georgia',
         country: 'United States',
@@ -59,7 +59,7 @@ module.exports = {
       },
       {
         ownerId: 2,
-        address: "555 address",
+        address: "555 Liberty Way",
         city: 'Philadelphia',
         state: 'Pennsylvania',
         country: 'United States',
@@ -71,7 +71,7 @@ module.exports = {
       },
       {
         ownerId: 2,
-        address: "888 Houze way",
+        address: "888 Houze Place",
         city: 'Alpharetta',
         state: 'Georgia',
         country: 'United States',

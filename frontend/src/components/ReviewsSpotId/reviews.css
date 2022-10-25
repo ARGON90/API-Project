@@ -1,0 +1,21 @@
+.reviews-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 40px;
+    width: 100%;
+}
+
+.individual-review-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    width: 40%
+}
+
+.header-title {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+    column-gap: 5px;
+}

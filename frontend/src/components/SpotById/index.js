@@ -49,8 +49,10 @@ const SpotById = () => {
                 return <p>No Images Exists for Spot</p>
             } else {
                 return (
+
                     <img key={imgArray[0].id} src={imgArray[0].url} alt='Spot Image'
-                        className={'img-sizing image-border'} />
+                        className='single-image' />
+
                 )
             }
         }
@@ -62,25 +64,18 @@ const SpotById = () => {
             let imgSlice = imgArray.slice(1, imgArray.length)
             if (imgSlice.length > 0) {
                 return imgSlice.map((image) => (
-                    <div className='
-                    width-48
-                    height-48
-                    flex-row
-                    flex-wrap-wrap'
-                    ><img key={image.id} src={image.url} alt='Spot Image'
-                        className={'img-sizing image-border'} /></div>
+                    <img key={image.id} src={image.url} alt='Spot Image'
+                        className='multi-image' />
                 ))
             }
         }
     }
 
-    console.log('SINGLESPOT', singleSpot)
 
 
     async function onClickDelete() {
         await dispatch(deleteSpot(id))
         history.push(`/spots/`);
-        // await dispatch(deleteSpot(id))
     }
 
     function sessionCheck() {
@@ -97,26 +92,17 @@ const SpotById = () => {
 
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
-        <div className='
-        flex-box
-        justify-content-center'>
-            {/* // PAGE DIV */}
-            <div className='font-family
-        flex-column
-        width-90'>
+        <div className='page-div'>
+
+            <div className='page-container'>
 
                 {/* HEADER DIV */}
                 <div >
-
-
                     <div>
                         <h1>{singleSpot.description}</h1>
                     </div>
 
-                    <div className='
-                flex-row
-                justify-content-between'
-                    >
+                    <div className=''>
                         <div>
                             <svg viewBox='0 0 32 32'>
                                 <path
@@ -127,85 +113,65 @@ const SpotById = () => {
                             {singleSpot.avgRating}
                         </div>
 
-                        <div className='
-                    flex-row'>
-                            {singleSpot.ownerId === sessionId &&
-                                (
-                                    <>
-                                        <div className='flex-box bold align-items-center'>
-                                            <NavLink to={`/spots/${id}/edit`} className='
-                                            font-black margin-right-5'>
-                                                Edit This Spot
-                                            </NavLink>
-                                        </div>
-                                        <div>
-                                            <button onClick={onClickDelete} id='delete-bt' className='looks-good-btn'>
-                                                Delete This Spot
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
-                            <div>
 
-                                {sessionCheck()}
-
-                            </div>
-
-                        </div>
                     </div>
                 </div>
 
                 {/* IMAGES DIV */}
-                <div className='
-            flex-row
-            flex-wrap-wrap
-            justify-content-around
-            '>
+                <div className='all-images-container'>
 
                     {/* large image container */}
-                    <div className='
-                height-400
-                width-48
-                large-image-pad
-                '>
+                    <div className='single-image-container'>
                         {imageCheckSingle(singleSpot)}
                     </div>
 
                     {/* small image container */}
-                    <div className='
-                height-400
-                width-48
-                flex-row
-                flex-end
-                flex-wrap-wrap
-                image-row-gap
-                image-column-gap
-                '>
+                    <div className='multi-image-container'>
                         {imageCheck(singleSpot)}
                     </div>
                 </div>
 
                 {/* HOSTED BY ... */}
-                <div>
+                <div className='hosted-container'>
+
                     <h2>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+
+                    <div className='edit-delete-container'>
+                        {singleSpot.ownerId === sessionId &&
+                            (
+                                <>
+                                    <div className='edit-delete-btn'>
+                                        <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
+                                            Edit This Spot
+                                        </NavLink>
+                                    </div>
+                                    <div className='edit-delete-btn'>
+                                        <div onClick={onClickDelete} className=''>
+                                            Delete This Spot
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                    </div>
                 </div>
                 <div>
-                    <svg viewBox='0 0 32 32'>
+                    {/* <svg viewBox='0 0 32 32'>
                         <path
                             d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
                             fillRule='evenodd'
                         ></path>
-                    </svg>
-                    {singleSpot.avgRating} - All Reviews
+                    </svg> */}
+                    {/* {singleSpot.avgRating} - */}
+                    <h2>All Reviews</h2>
                 </div>
                 {checkState()}
+
+                {sessionCheck()}
+
 
 
                 {/* REVIEWS SECTION */}
                 <ReviewsSpotId id={id} />
-
-
-
             </div>
         </div>
     );
