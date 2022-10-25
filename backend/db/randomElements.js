@@ -1,8 +1,8 @@
-let firstNames = ['Alex', 'Giordan', 'Tyler', 'Chen ', 'Cecilia', 'Edward',
+export let firstNames = ['Alex', 'Giordan', 'Tyler', 'Chen ', 'Cecilia', 'Edward',
     'Rudy', 'Jason', 'Randy', 'Ben', 'Justine', 'Julie', 'Alec', 'Connor',
     'Tiffany']
 
-let lastNames = ['Yang', 'Venida', 'Lam', 'Felipe', 'Jung', 'Jang', 'Jean',
+export let lastNames = ['Yang', 'Venida', 'Lam', 'Felipe', 'Jung', 'Jang', 'Jean',
     'Waldee', 'Chang', 'Nguyen', 'Ou', 'Maniti', 'Gonglach', 'Chen']
 
 const randomFirst = firstNames[Math.floor(Math.random() * firstNames.length)];
