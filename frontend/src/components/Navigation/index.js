@@ -14,6 +14,7 @@ import beelogo from '../../data/beelogo.png'
 import hive from '../../data/hive.png'
 import * as sessionActions from '../../store/session';
 import { useHistory } from "react-router-dom";
+import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 
 import hamburger from "../../data/hamburger.png"
 import './Navigation.css';
@@ -45,7 +46,8 @@ function Navigation({ isLoaded }) {
 
   const logout = async (e) => {
     e.preventDefault();
-    await dispatch(sessionActions.logout());
+    dispatch(sessionActions.logout());
+    dispatch(getBookingsCurrentUser())
     setCurrentNum((num) => num + 1)
     console.log('HELLO LOGOUT')
     history.push(`/spots/`);

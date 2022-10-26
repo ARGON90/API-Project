@@ -1,0 +1,80 @@
+.errors-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.errors-title {
+    align-self: center;
+}
+
+.user-booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.booking-title {
+    font-weight: bold;
+}
+
+.price-stars {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.check-dates-container {
+    display: flex;
+    border: 1px solid grey;
+    border-radius: 12px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.date-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-input {
+    font-family: Lato, sans-serif;
+    border: 0;
+    outline: 0;
+}
+
+.subtotal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.total {
+    width: 80%;
+}
+
+.spot-booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spot-title {
+    font-weight: bold;
+}

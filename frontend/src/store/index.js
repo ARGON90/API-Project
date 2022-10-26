@@ -5,7 +5,7 @@ import spotsReducer from "./spotsReducer";
 import singleSpotReducer from "./singleSpotReducer";
 import reviewsReducer from "./UserReviewsReducer";
 import bookingsReducer from "./bookingsReducer";
-
+import spotBookingsReducer from "./spotbookingsReducer";
 
 
 const rootReducer = combineReducers({
@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
   spots: spotsReducer,
   reviews: reviewsReducer,
   bookings: bookingsReducer,
+  spotBookings: spotBookingsReducer,
   // singleSpot: singleSpotReducer
 });
 

@@ -7,8 +7,7 @@ import '../../index.css'
 import './reviews.css'
 
 const ReviewsSpotId = ({ id }) => {
-    console.log('INSIDE REVIEWS SPOT-BY-ID COMPONENT')
-    console.log('PROPS ID', id)
+    // console.log('INSIDE REVIEWS SPOT-BY-ID COMPONENT')
     const dispatch = useDispatch()
 
     let reviewsState = useSelector((state) => (state?.reviews));
@@ -21,7 +20,7 @@ const ReviewsSpotId = ({ id }) => {
 
 
     useEffect(() => {
-        console.log('INSIDE REVIEWS SPOT-BY-ID USE EFFECT')
+        // console.log('INSIDE REVIEWS SPOT-BY-ID USE EFFECT')
         dispatch(getReviewsCurrentSpot(id))
     }, [dispatch])
 

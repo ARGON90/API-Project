@@ -14,7 +14,7 @@ import './SpotById.css'
 import '../../index.css'
 
 const SpotById = () => {
-    console.log('INSIDE SPOTS-BY-ID COMPONENT')
+    // console.log('INSIDE SPOTS-BY-ID COMPONENT')
     const dispatch = useDispatch()
     const history = useHistory();
     const { id } = useParams()
@@ -27,10 +27,9 @@ const SpotById = () => {
         sessionId = sessionUserId.user.id
     }
 
-    console.log('ID OF SPOT-BY-ID', id)
 
     useEffect(() => {
-        console.log('INSIDE SPOT-BY-ID USE EFFECT')
+        // console.log('INSIDE SPOT-BY-ID USE EFFECT')
         dispatch(getOneSpot(id))
     }, [dispatch])
 
@@ -65,8 +64,8 @@ const SpotById = () => {
             let imgArray = Object.values(singleSpot.images)
             let imgSlice = imgArray.slice(1, imgArray.length)
             if (imgSlice.length > 0) {
-                return imgSlice.map((image) => (
-                    <img key={image.id} src={image.url} alt='Spot Image'
+                return imgSlice.map((image, idx) => (
+                    <img key={idx} src={image.url} alt='Spot Image'
                         className='multi-image' />
                 ))
             }
@@ -79,9 +78,9 @@ const SpotById = () => {
     }
 
     function sessionCheck() {
-        console.log('IN SESSION CHECK')
+
         if (sessionId && sessionId !== singleSpot.ownerId) {
-            console.log('IN SESSION CHECK CONDITIONAL')
+
             return (
                 <NavLink to={`/review/create/${id}`} className='font-black bold'>
                     Create a review for this spot
@@ -150,10 +149,10 @@ const SpotById = () => {
 
                 {/* HOSTED BY ... */}
                 <div className='hosted-container'>
-                    <h2>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+                    <h2 className='hosted-header'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
 
-                    <div>
-                        <BookingsSpotId id={id} />
+                    <div className='bookings-container'>
+                        <BookingsSpotId rating={singleSpot.avgRating} price={singleSpot.price} id={id}/>
                     </div>
 
                 </div>
