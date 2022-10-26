@@ -34,7 +34,7 @@ module.exports = {
         price: 699
       },
       {
-        ownerId: 1,
+        ownerId: 3,
         address: "7524 Oak Trail",
         city: 'Sandy Springs',
         state: 'Georgia',
@@ -46,7 +46,7 @@ module.exports = {
         price: 50
       },
       {
-        ownerId: 1,
+        ownerId: 4,
         address: "310 Dunwoody Drive",
         city: 'Milton',
         state: 'Georgia',
@@ -58,7 +58,7 @@ module.exports = {
         price: 320
       },
       {
-        ownerId: 2,
+        ownerId: 5,
         address: "555 Liberty Way",
         city: 'Philadelphia',
         state: 'Pennsylvania',
@@ -70,7 +70,7 @@ module.exports = {
         price: 199
       },
       {
-        ownerId: 2,
+        ownerId: 6,
         address: "888 Houze Place",
         city: 'Alpharetta',
         state: 'Georgia',

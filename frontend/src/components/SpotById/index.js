@@ -153,7 +153,7 @@ const SpotById = () => {
                     <h2>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
 
                     <div>
-                        <BookingsSpotId />
+                        <BookingsSpotId id={id} />
                     </div>
 
                 </div>

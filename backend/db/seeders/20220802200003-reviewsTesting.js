@@ -111,25 +111,19 @@ module.exports = {
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
-      userId: 10,
+      userId: 3,
       spotId: 2,
     },
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
-      userId: 9,
+      userId: 4,
       spotId: 2,
     },
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
-      userId: 8,
-      spotId: 2,
-    },
-    {
-      review: `${comments[randomNum()].review}`,
-      stars: comments[randInt].stars,
-      userId: 7,
+      userId: 5,
       spotId: 2,
     },
     {
@@ -138,20 +132,14 @@ module.exports = {
       userId: 6,
       spotId: 2,
     },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 2,
+    },
 
     // REVIEWS FOR SPOT 3
-    {
-      review: `${comments[randomNum()].review}`,
-      stars: comments[randInt].stars,
-      userId: 2,
-      spotId: 3,
-    },
-    {
-      review: `${comments[randomNum()].review}`,
-      stars: comments[randInt].stars,
-      userId: 3,
-      spotId: 3,
-    },
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
@@ -161,7 +149,19 @@ module.exports = {
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
+      userId: 5,
+      spotId: 3,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
       userId: 6,
+      spotId: 3,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
       spotId: 3,
     },
     {
@@ -173,7 +173,7 @@ module.exports = {
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
-      userId: 10,
+      userId: 9,
       spotId: 3,
     },
 
