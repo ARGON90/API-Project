@@ -58,8 +58,7 @@ export const createBooking = (spotId, booking) => async (dispatch) => {
 
 //THUNK - DELETE A BOOKING
 export const deleteBooking = (id) => async (dispatch) => {
-    console.log("INSIDE DELETE BOOKINGS THUNK")
-    console.log('ID INSIDE BOOKING THUNK', id)
+
     const response = await csrfFetch(`/api/reviews/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -80,19 +79,15 @@ const initialState = {}
 const bookingsReducer = (state = initialState, action) => {
     switch (action.type) {
         case DELETE_BOOKING: {
-            console.log('INSIDE DELETE BOOKING REDUCER');
             const newState = { ...state };
             return newState;
         }
         case CURRENT_USER_BOOKINGS: {
             const newState = action.bookings
-            console.log('NEWSTATE', newState)
-            console.log('INSIDE BOOKINGS CURRENT USER REDUCER');
             return newState
         }
         case ADD_BOOKING: {
             const newState = { ...state, [action.bookings.id]: action.bookings };
-            console.log('INSIDE CREATE BOOKING REDUCER');
             return newState;
         }
         default:

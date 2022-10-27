@@ -35,13 +35,13 @@ function Navigation({ isLoaded }) {
 
   useEffect(() => {
     console.log('NAVIGATION GETSTATE USE EFFECT ')
-    dispatch(getState())
+    // dispatch(getState())
   }, [dispatch, sessionId, currentNum])
 
 
-  function checkState() {
-    dispatch(getState())
-  }
+  // function checkState() {
+  //   dispatch(getState())
+  // }
 
 
   const logout = async (e) => {
@@ -240,7 +240,7 @@ function Navigation({ isLoaded }) {
       width-25'>
           <div className='flex-box row-reverse column-gap
           align-items-center'>
-            {checkState()}
+            {/* {checkState()} */}
             {isLoaded && sessionLinks}
             {sessionId && (
               <NavLink to="/create" className='font-black bold'>Become a Host</NavLink>

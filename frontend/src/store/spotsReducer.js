@@ -60,7 +60,7 @@ const deleteSpotById = (id) => {
 
 //THUNK - GET ALL SPOTS
 export const getAllSpots = () => async (dispatch) => {
-    console.log('INSIDE GET ALL SPOTS THUNK')
+
     const response = await fetch('/api/spots/');
     if (response.ok) {
         const data = await response.json();
@@ -72,7 +72,7 @@ export const getAllSpots = () => async (dispatch) => {
 //THUNK - GET ONE SPOT
 export const getOneSpot = (spotId) => async (dispatch) => {
     await dispatch(getAllSpots())
-    console.log('INSIDE SPOT-BY-ID THUNK')
+
     const response = await fetch(`/api/spots/${spotId}`);
     if (response.ok) {
         const data = await response.json()
@@ -87,11 +87,11 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 //THUNK - GET CURRENT USER SPOT
 export const getCurrentUserSpot = () => async (dispatch) => {
     await dispatch(getAllSpots())
-    console.log('INSIDE CURRENT USER THUNK')
+
     const response = await fetch(`/api/spots/current`);
     if (response.ok) {
         const data = await response.json()
-        console.log('CURRENT USER THUNK DATA', data)
+
         dispatch(currentUser(data));
         return data;
     }
@@ -101,13 +101,13 @@ export const getCurrentUserSpot = () => async (dispatch) => {
 let createdSpotId;
 //THUNK - CREATE A SPOT
 export const createSpot = (payload) => async (dispatch) => {
-    console.log("INSIDE CREATE SPOTS THUNK")
+
     const response = await csrfFetch('/api/spots/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     });
-    console.log(' CREATE SPOTS THUNK RESPONSE', response)
+
     if (response.ok) {
         const spot = await response.json();
         createdSpotId = spot.id
@@ -119,13 +119,13 @@ export const createSpot = (payload) => async (dispatch) => {
 //THUNK - EDIT A SPOT
 export const editSpot = (spotId, spotInfo) => async (dispatch) => {
     await dispatch(getAllSpots())
-    console.log("INSIDE EDIT SPOTS THUNK")
+
     const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(spotInfo)
     });
-    console.log('EDIT SPOTS THUNK RESPONSE', response)
+
     if (response.ok) {
         const spot = await response.json();
         dispatch(putSpot(spotId, spot));
@@ -136,12 +136,12 @@ export const editSpot = (spotId, spotInfo) => async (dispatch) => {
 //THUNK - DELETE A SPOT
 export const deleteSpot = (id) => async (dispatch) => {
     await dispatch(getAllSpots())
-    console.log("INSIDE DELETE SPOTS THUNK")
+
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     });
-    console.log('DELETE SPOT THUNK RESPONSE', response)
+
     if (response.ok) {
         const spot = await response.json();
         dispatch(deleteSpotById(id));
@@ -157,8 +157,7 @@ const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
 //ACTION FOR IMG TO SPOT
 const addImg = (spotId, url) => {
-    console.log('INSIDE ADD IMG image', url)
-    console.log('INSIDE ADD IMG spotId', spotId)
+
     return {
         type: ADD_IMG_TO_SPOT,
         url
@@ -167,8 +166,7 @@ const addImg = (spotId, url) => {
 
 //THUNK - ADD IMG TO ONE SPOT
 export const addImgSpot = (spotId, url) => async (dispatch) => {
-    console.log('INSIDE ADD-IMG-SPOT THUNK')
-    console.log('url', url)
+
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -189,49 +187,36 @@ const initialState = {}
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_IMG_TO_SPOT: {
-            console.log(action.url)
-            console.log('INSIDE ADD IMG ACTION / REDUCER')
             const newState = { ...state };
-            console.log('ADDIMG STATE', newState)
             newState[createdSpotId].previewImage = action.url.url
-            console.log('ADDIMG STATE AFTER PRVIEWIMAGE ADD', newState)
             return state;
         }
         case GET_ALL_SPOTS: {
-            console.log('INSIDE GET SPOTS REDUCER')
             const newState = {};
             action.payload.Spots.forEach((spot) => (newState[spot.id] = spot));
             return newState
         }
         case GET_ONE_SPOT: {
             const newState = { ...state }
-            console.log('INSIDE SPOT-BY-ID REDUCER');
             let id = action.spotId
             newState[id].images = action.images
             newState[id].firstName = action.owner.firstName
             newState[id].lastName = action.owner.lastName
-            console.log('OWNDER IN REDUCER', action.owner.firstName)
-            console.log('OWNDER IN REDUCER', action.owner.lastName)
             return newState
         }
         case CURRENT_USER_SPOT: {
             const newState = action.spot
-            console.log('INSIDE SPOT-BY-ID REDUCER');
             return newState
         }
         case CREATE_SPOT: {
-            console.log('INSIDE CREATE SPOT REDUCER');
-            console.log('STATE', state);
             const newState = { ...state, [action.newSpot.id]: action.newSpot };
             return newState;
         }
         case EDIT_SPOT: {
-            console.log('INSIDE EDIT SPOT REDUCER');
             const newState = { ...state };
             return newState;
         }
         case DELETE_SPOT: {
-            console.log('INSIDE DELETE SPOT REDUCER');
             const newState = { ...state };
             return newState;
         }

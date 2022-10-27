@@ -34,14 +34,14 @@ function App() {
     sessionId = sessionUserId.user.id
   }
 
-  useEffect(() => {
-    console.log('App GETSTATE USE EFFECT ')
-    dispatch(getState())
-  }, [dispatch, sessionId])
+  // useEffect(() => {
+  //   console.log('App GETSTATE USE EFFECT ')
+  //   dispatch(getState())
+  // }, [dispatch, sessionId])
 
-  function checkState() {
-    dispatch(getState())
-  }
+  // function checkState() {
+  //   dispatch(getState())
+  // }
 
   return (
     <>
@@ -88,7 +88,7 @@ function App() {
           </>
         </Switch>
       )}
-      {checkState()}
+      {/* {checkState()} */}
     </>
   );
 }

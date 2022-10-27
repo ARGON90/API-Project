@@ -18,7 +18,7 @@ function LoginForm() {
     e.preventDefault();
     setErrors([]);
     console.log('INSIDE HANDLE SUBTMI')
-    dispatch(getState())
+    // dispatch(getState())
     await dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();

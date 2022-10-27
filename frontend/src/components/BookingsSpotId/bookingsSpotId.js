@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'
 
 import './bookings.css'
 
@@ -12,6 +14,7 @@ const BookingsSpotId = ({ rating, price, id }) => {
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
     const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
 
+    const [cleanUp, setCleanUp] = useState(false)
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
     const [errors, setErrors] = useState('')
@@ -19,20 +22,53 @@ const BookingsSpotId = ({ rating, price, id }) => {
     const updateCheckIn = (e) => setCheckIn(e.target.value);
     const updateCheckOut = (e) => setCheckOut(e.target.value);
 
-
+    let spotBookingsArray;
     useEffect(() => {
         // console.log('INSIDE BOOKINGS SPOT-BY-ID USE EFFECT')
+        if (cleanUp) {
+            if (!spotBookings) {
+                return 'Spot Bookings Issue'
+            }
+            else {
+                spotBookingsArray = Object.values(spotBookings)
+            }
+            return setCleanUp(true)
+        }
+        calendarDates()
         dispatch(getBookingsCurrentUser())
         dispatch(getBookingsCurrentSpot(id))
+        return setCleanUp(true)
     }, [dispatch, checkIn, checkOut])
 
     if (!currentUserId) return <div>Log in to create a booking!</div>
     if (!userBookings) return <div>Log in to create a booking!</div>
+    if (!spotBookings) return <div>Spot Bookings Issue</div>
 
     const userBookingsArray = Object.values(userBookings)
-    const userBookingsSpot = userBookingsArray.filter(booking => booking.spotId === Number(id))
-    const spotBookingsArray = Object.values(spotBookings)
+    const userBookingsSpot = userBookingsArray.filter(booking => booking?.spotId === Number(id))
+    spotBookingsArray = Object.values(spotBookings)
 
+
+    function calendarDates() {
+        console.log(spotBookingsArray, 'SPOT BOOKING ARRAY, calendar data')
+        if (!spotBookingsArray) {
+            console.log(spotBookingsArray, 'SPOT BOOKING ARRAY')
+            return null
+        }
+        let classStyler = spotBookingsArray.map((el) => {
+            let dateArr = (dateParser(el.startDate))
+            let year = dateArr[0]
+            let month = dateArr[1]
+            let day = dateArr[2]
+            let dateString = `${month} ${day}, ${year}`
+            let queryInput = `[aria-label="${dateString}"]`
+            let element = document?.querySelector(queryInput)
+            if (element) {
+                element.className = 'pink'
+            }
+            console.log(element)
+        })
+    }
 
 
     const handleSubmit = async (e) => {
@@ -84,19 +120,19 @@ const BookingsSpotId = ({ rating, price, id }) => {
             }
 
             setErrors((errors) => errors = Object.values(bookingErrors))
-
-
-            console.log('BOOKING ERRORS arr', bookingErrors)
-            console.log('BOOKING ERRORS usestate', errors)
-
         }
 
         const bookingInfo = {
-
+            spotId: id,
+            userId: currentUserId,
+            startDate: checkIn,
+            endDate: checkOut
         }
 
-        console.log('IN BOOKINGS HANDLE SUBMIT')
-
+        if (errors.length === 0) {
+            let createdBooking;
+            createdBooking = await dispatch()
+        }
     }
 
     function dateParser(string) {
@@ -201,7 +237,7 @@ const BookingsSpotId = ({ rating, price, id }) => {
                 }
                 {spotBookingsArray.length > 0 &&
                     <div className='spot-booking-container'>
-                        <div className='booking-title'> All Bookings </div>
+                        <div className='booking-title'> This Spot's Bookings </div>
                         {spotBookingsArray.map((booking) =>
                             <div key={booking.id}>
                                 <div>{`${dateParser(booking.startDate)[1]} ${dateParser(booking.startDate)[2]}, ${dateParser(booking.startDate)[0]} -
@@ -211,7 +247,10 @@ const BookingsSpotId = ({ rating, price, id }) => {
                         )}
                     </div>
                 }
-
+                <div className='react-calendar'>
+                    <Calendar />
+                </div>
+                {calendarDates()}
             </div>
         </>
     );

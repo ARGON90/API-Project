@@ -38,12 +38,12 @@ const CreateReview = () => {
 
   useEffect(() => {
     console.log('SPOTBYID GETSTATE USE EFFECT ')
-    dispatch(getState())
+    // dispatch(getState())
   }, [dispatch, sessionId, currentNum])
 
-  function checkState() {
-    dispatch(getState());
-  }
+  // function checkState() {
+  //   dispatch(getState());
+  // }
 
   function imageCheckSingle(singleSpot) {
     if (singleSpot.images) {
