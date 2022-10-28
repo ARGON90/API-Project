@@ -8,12 +8,14 @@ import 'react-calendar/dist/Calendar.css'
 
 import './bookings.css'
 
+
 const BookingsSpotId = ({ rating, price, id }) => {
     const dispatch = useDispatch()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
     const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
 
+    const [showCalendar, setShowCalendar] = useState(false)
     const [cleanUp, setCleanUp] = useState(false)
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
@@ -24,21 +26,16 @@ const BookingsSpotId = ({ rating, price, id }) => {
 
     let spotBookingsArray;
     useEffect(() => {
-        // console.log('INSIDE BOOKINGS SPOT-BY-ID USE EFFECT')
         if (cleanUp) {
             if (!spotBookings) {
                 return 'Spot Bookings Issue'
             }
-            else {
-                spotBookingsArray = Object.values(spotBookings)
-            }
-            return setCleanUp(true)
         }
-        calendarDates()
         dispatch(getBookingsCurrentUser())
         dispatch(getBookingsCurrentSpot(id))
+        calendarDates()
         return setCleanUp(true)
-    }, [dispatch, checkIn, checkOut])
+    }, [dispatch, checkIn, checkOut, showCalendar])
 
     if (!currentUserId) return <div>Log in to create a booking!</div>
     if (!userBookings) return <div>Log in to create a booking!</div>
@@ -50,13 +47,12 @@ const BookingsSpotId = ({ rating, price, id }) => {
 
 
     function calendarDates() {
-        console.log(spotBookingsArray, 'SPOT BOOKING ARRAY, calendar data')
         if (!spotBookingsArray) {
-            console.log(spotBookingsArray, 'SPOT BOOKING ARRAY')
             return null
         }
         let classStyler = spotBookingsArray.map((el) => {
             let dateArr = (dateParser(el.startDate))
+
             let year = dateArr[0]
             let month = dateArr[1]
             let day = dateArr[2]
@@ -66,7 +62,6 @@ const BookingsSpotId = ({ rating, price, id }) => {
             if (element) {
                 element.className = 'pink'
             }
-            console.log(element)
         })
     }
 
@@ -82,8 +77,6 @@ const BookingsSpotId = ({ rating, price, id }) => {
         for (let i = 0; i < spotBookingsArray.length; i++) {
             let existingStartDate = new Date(spotBookingsArray[i].startDate)
             let existingEndDate = new Date(spotBookingsArray[i].endDate)
-            console.log(existingStartDate, 'start')
-            console.log(existingEndDate, 'end')
 
             let existingStartDateErrors = String(existingStartDate).split(' ')
             let monthStartDateError = existingStartDateErrors[1]
@@ -247,9 +240,13 @@ const BookingsSpotId = ({ rating, price, id }) => {
                         )}
                     </div>
                 }
-                <div className='react-calendar'>
-                    <Calendar />
-                </div>
+
+                <button onClick={() => setShowCalendar(!showCalendar)}>show cal</button>
+                {showCalendar &&
+                    <div className='react-calendar'>
+                        <Calendar />
+                    </div>
+                }
                 {calendarDates()}
             </div>
         </>
