@@ -98,11 +98,6 @@
 
 }
 
-button:has(> abbr[aria-label='October 19, 2022']) {
-    color: black;
-    background-color: rgb(238, 0, 255);
-}
-
 .pink {
     background-color: pink;
     padding: 4px;
