@@ -117,6 +117,9 @@ function Navigation({ isLoaded }) {
               <NavLink to='/spots/current' className='font-black'>See Your Listings</NavLink>
             </div>
             <div className='navbar-divs'>
+              <NavLink to='/bookings' className='font-black'>See Your Bookings</NavLink>
+            </div>
+            <div className='navbar-divs'>
               <NavLink to='/reviews/current' className='font-black'>See Your Reviews</NavLink>
             </div>
             <div className='navbar-divs'>

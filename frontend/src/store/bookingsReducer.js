@@ -37,11 +37,10 @@ export const getBookingsCurrentUser = () => async (dispatch) => {
     }
 }
 
-
-
 //THUNK - CREATE BOOKING
-export const createBooking = (spotId, booking) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+export const createBooking = (booking) => async (dispatch) => {
+    console.log('create bookings reducer', booking)
+    const response = await csrfFetch(`/api/spots/${booking.spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(booking)
@@ -50,9 +49,6 @@ export const createBooking = (spotId, booking) => async (dispatch) => {
         const booking = await response.json();
         dispatch(addBooking(booking));
         return booking;
-    }
-    if (response.status == 403) {
-        alert('You already have a review for this spot!')
     }
 }
 
