@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ARGON90/API-Project#readme",
   "dependencies": {
     "js-cookie": "^3.0.1",
+    "moment": "^2.29.4",
     "pg": "^8.7.3",
     "react-calendar": "^3.9.0"
   }

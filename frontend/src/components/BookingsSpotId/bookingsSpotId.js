@@ -6,6 +6,7 @@ import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
 import { createBooking } from '../../store/bookingsReducer';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
+import moment from 'moment'
 
 import './bookings.css'
 
@@ -16,8 +17,11 @@ const BookingsSpotId = ({ rating, price, id }) => {
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
     const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
 
-    const [checkInDate, setCheckInDate] = useState(new Date())
-    const [checkOutDate, setCheckOutDate] = useState(new Date())
+    const [currentSelectedDate, setCurrentSelectedDate] = useState(new Date())
+    const [checkInDate, setCheckInDate] = useState('')
+    const [checkOutDate, setCheckOutDate] = useState('')
+    const [totalDays, setTotalDays] = useState(0)
+    const [totalPrice, setTotalPrice] = useState('')
     const [checkInSelected, setCheckInSelected] = useState(false)
     const [checkOutSelected, setCheckOutSelected] = useState(false)
     const [calClick, setCalClick] = useState(false)
@@ -28,16 +32,17 @@ const BookingsSpotId = ({ rating, price, id }) => {
     const [errors, setErrors] = useState('')
 
 
-    let buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
-    let testvar;
+    // let buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
+    // let testvar;
+    // updateDate()
+    // checkOutSetter()
+
+    const updateSelectedDate = async (e) => { setCurrentSelectedDate(e) };
+    const updateCheckInDate = (e) => setCheckInDate(e.target.value);
+    const updateCheckOutDate = (e) => setCheckOutDate(e.target.value);
+
+    let buttonSelected;
     let bothDatesSelected;
-    updateDate()
-    checkOutSetter()
-
-    const updateCheckInDate = async (e) => { setCheckInDate(e) };
-    const updateCheckIn = (e) => setCheckIn(e.target.value);
-    const updateCheckOut = (e) => setCheckOut(e.target.value);
-
     let spotBookingsArray;
     let allDatesButtons;
     useEffect(() => {
@@ -50,8 +55,11 @@ const BookingsSpotId = ({ rating, price, id }) => {
         dispatch(getBookingsCurrentSpot(id))
         calendarDates()
         allDatesButtonsFxn()
+        if (checkInDate && checkOutDate) {
+            selectCheckOutDate()
+        }
         return setCleanUp(true)
-    }, [dispatch, checkOut, showCalendar, calClick, checkInDate])
+    }, [dispatch, checkOut, showCalendar, calClick, currentSelectedDate, checkOutDate])
 
     if (!currentUserId) return <div>Log in to create a booking!</div>
     if (!userBookings) return <div>Log in to create a booking!</div>
@@ -66,54 +74,60 @@ const BookingsSpotId = ({ rating, price, id }) => {
         calendarDates()
     }
 
-    function updateDate() {
-        testvar = checkInDate
-        onClicker()
-    }
+    // function updateDate() {
+    //     testvar = currentSelectedDate
+    //     onClicker()
+    // }
 
-    function checkOutSetter() {
-        let buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
+    function updateButtonSelected() {
+        buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
     }
 
     function onClicker() {
+        let buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
         let checkedInElement = document.querySelector('input.date-input-checkin')
         let checkedOutElement = document.querySelector('input.date-input-checkout')
+        updateButtonSelected()
 
-        if (bothDatesSelected === true) {
-            // clear out checkout date
-            checkedOutElement.value = ''
-            let checkedinElement = document.querySelector('input.date-input-checkin')
-            let splitStrDate = String(testvar).split(' ')
-            let month = monthReverseParse(splitStrDate[1])
-            let day = splitStrDate[2]
-            let year = splitStrDate[3]
-            if (checkedinElement) {
-                checkedinElement.value = `${year}-${month}-${day}`
-            }
-            bothDatesSelected = false
-        } else if (testvar && buttonSelected.length === 0) {
-            let checkedInElement = document.querySelector('input.date-input-checkin')
-            let splitStrDate = String(testvar).split(' ')
-            let month = monthReverseParse(splitStrDate[1])
-            let day = splitStrDate[2]
-            let year = splitStrDate[3]
-            if (checkedInElement) {
-                checkedInElement.value = `${year}-${month}-${day}`
-            }
-        } else if (testvar && buttonSelected && buttonSelected.length === 1) {
-            let checkedOutElement = document.querySelector('input.date-input-checkout')
-            let splitStrDate = String(testvar).split(' ')
-            let month = monthReverseParse(splitStrDate[1])
-            let day = splitStrDate[2]
-            let year = splitStrDate[3]
-            if (checkedOutElement) {
-                checkedOutElement.value = `${year}-${month}-${day}`
-            }
-        }
+        // if (bothDatesSelected === true) {
+        //     // clear out checkout date
+        //     console.log('both dates selected')
+        //     let splitStrDate = String(currentSelectedDate).split(' ')
+        //     let month = monthReverseParse(splitStrDate[1])
+        //     let day = splitStrDate[2]
+        //     let year = splitStrDate[3]
+        //     if (checkedInElement) {
+        //         checkedInElement.value = `${year}-${month}-${day}`
+        //     }
+        //     checkedOutElement.value = ''
+        //     bothDatesSelected = false
+        //     return
+        // }
 
-        if (checkedInElement && checkedOutElement && checkedInElement.value && checkedOutElement.value) {
-            bothDatesSelected = true
-        }
+        //check in date
+        // if (currentSelectedDate && buttonSelected.length === 0) {
+        //     let splitStrDate = String(currentSelectedDate).split(' ')
+        //     let month = monthReverseParse(splitStrDate[1])
+        //     let day = splitStrDate[2]
+        //     let year = splitStrDate[3]
+        //     if (checkedInElement) {
+        //         checkedInElement.value = `${year}-${month}-${day}`
+        //     }
+        // }
+
+        // if (currentSelectedDate && buttonSelected && buttonSelected.length === 1) {
+        //     let splitStrDate = String(currentSelectedDate).split(' ')
+        //     let month = monthReverseParse(splitStrDate[1])
+        //     let day = splitStrDate[2]
+        //     let year = splitStrDate[3]
+        //     if (checkedOutElement) {
+        //         checkedOutElement.value = `${year}-${month}-${day}`
+        //     }
+        // }
+
+        // if (checkedInElement && checkedOutElement && checkedInElement.value && checkedOutElement.value) {
+        //     bothDatesSelected = true
+        // }
     }
 
     function allDatesButtonsFxn() {
@@ -129,13 +143,9 @@ const BookingsSpotId = ({ rating, price, id }) => {
         if (!spotBookingsArray) {
             return null
         }
-        let classStyler = spotBookingsArray.map((el) => {
-            let startDateArr = (dateParser(el.startDate))
-            let endDateArr = (dateParser(el.endDate))
+        spotBookingsArray.map((el) => {
+            let totalDays = ((new Date(el.endDate).getTime() - new Date(el.startDate).getTime()) / 86400000)
             let startDate = el.startDate
-            let startDay = startDateArr[2]
-            let endDay = endDateArr[2]
-            let totalDays = Number(endDay) - Number(startDay)
 
             for (let i = 0; i <= totalDays; i++) {
                 let startDateMarker = new Date(startDate)
@@ -154,6 +164,27 @@ const BookingsSpotId = ({ rating, price, id }) => {
             }
         })
     }
+
+    function selectCheckInDate() {
+        if ((new Date(currentSelectedDate)).getTime() >= (new Date(checkOutDate)).getTime()) return alert('Check-in date must be before check-out date!')
+        setCheckInDate(dateParserForInput(currentSelectedDate))
+    }
+
+
+    async function selectCheckOutDate() {
+        if (!checkInDate) return alert('Please select a check-in date first!')
+        if ((new Date(checkInDate)).getTime() >= (new Date(checkOutDate)).getTime()) return alert('Check-out date must be after check-in date!')
+        setCheckOutDate(dateParserForInput(currentSelectedDate))
+
+        console.log('inside checkout conditional')
+        let totalDays = ((new Date(checkOutDate).getTime() - new Date(checkInDate).getTime()) / 86400000)
+        console.log(totalDays, checkInDate, checkOutDate)
+        if (!totalDays) return
+        setTotalDays(totalDays)
+        setTotalPrice(Number(price) * totalDays)
+
+    }
+
 
     function monthReverseParse(str) {
         let obj = {
@@ -204,6 +235,16 @@ const BookingsSpotId = ({ rating, price, id }) => {
         }
     }
 
+    function dateParserForInput(str) {
+        str = String(str)
+        let dateArray = str.split(' ')
+        let month = monthReverseParse(dateArray[1])
+        let day = dateArray[2]
+        let year = dateArray[3]
+        return `${year}-${month}-${day}`
+
+    }
+
     function dateParser(string) {
         string = String(string)
         let dateArray = string.split('-')
@@ -241,15 +282,15 @@ const BookingsSpotId = ({ rating, price, id }) => {
             let existingStartDate = new Date(spotBookingsArray[i].startDate)
             let existingEndDate = new Date(spotBookingsArray[i].endDate)
 
-            let existingStartDateErrors = String(existingStartDate).split(' ')
-            let monthStartDateError = existingStartDateErrors[1]
-            let dayStartDateError = existingStartDateErrors[2]
-            let yearStartDateError = existingStartDateErrors[3]
+            // let existingStartDateErrors = String(existingStartDate).split(' ')
+            // let monthStartDateError = existingStartDateErrors[1]
+            // let dayStartDateError = existingStartDateErrors[2]
+            // let yearStartDateError = existingStartDateErrors[3]
 
-            let existingEndDateErrors = String(existingEndDate).split(' ')
-            let monthEndDateError = existingEndDateErrors[1]
-            let dayEndDateError = existingEndDateErrors[2]
-            let yearEndDateError = existingEndDateErrors[3]
+            // let existingEndDateErrors = String(existingEndDate).split(' ')
+            // let monthEndDateError = existingEndDateErrors[1]
+            // let dayEndDateError = existingEndDateErrors[2]
+            // let yearEndDateError = existingEndDateErrors[3]
 
             if (!checkIn) bookingErrors.checkIn = 'Select a check-in date'
             if (!checkOut) bookingErrors.checkOut = 'Select a check-out date'
@@ -281,8 +322,8 @@ const BookingsSpotId = ({ rating, price, id }) => {
         const bookingInfo = {
             spotId: id,
             userId: currentUserId,
-            startDate: checkIn,
-            endDate: checkOut
+            startDate: checkInDate,
+            endDate: checkOutDate
         }
 
         if (errors.length === 0) {
@@ -346,31 +387,33 @@ const BookingsSpotId = ({ rating, price, id }) => {
                             <div className='form-container'>
                                 <div className='date-container'>
                                     <label>Check-in</label>
-                                    <input type='date' className='date-input-checkin'
-                                    //value={checkIn} onChange={updateCheckIn}
+                                    <input type='text' className='date-input-checkin'
+                                        onChange={updateCheckInDate}
+                                        value={checkInDate}
                                     >
                                     </input>
                                 </div>
 
                                 <div className='date-container'>
                                     <label>Check-Out</label>
-                                    <input type='date' className='date-input-checkout'
-                                        // value={checkOut} onChange={updateCheckOut}
-                                        >
+                                    <input type='text' className='date-input-checkout'
+                                        onChange={updateCheckOutDate}
+                                        value={checkOutDate}
+                                    >
                                     </input>
                                 </div>
                             </div>
                         </div>
 
                         <div className='subtotal'>
-                            <div>dollars</div>
-                            <div>nights</div>
+                            <div>${price} x {totalDays} nights</div>
+                            {/* <div>{totalPrice}$</div> */}
                         </div>
-                        <div className='total'>Total $</div>
+                        <div className='total'>Total: {totalPrice} $</div>
                         <button type='submit' className='reserve'>Reserve</button>
                     </form>
                 }
-                {spotBookingsArray.length > 0 &&
+                {/* {spotBookingsArray.length > 0 &&
                     <div className='spot-booking-container'>
                         <div className='booking-title'> This Spot's Bookings </div>
                         {spotBookingsArray.map((booking) =>
@@ -381,18 +424,23 @@ const BookingsSpotId = ({ rating, price, id }) => {
                             </div>
                         )}
                     </div>
-                }
+                } */}
 
                 <button onClick={() => setShowCalendar(!showCalendar)}>See this Spot's Bookings</button>
                 {showCalendar &&
-                    <div className='react-calendar' onClick={() => calClicker()}>
-                        <Calendar
-                            onChange={updateCheckInDate}
-                        />
-                    </div>
+                    <>
+                        <div className='react-calendar' onClick={() => calClicker()}>
+                            <Calendar
+                                onChange={updateSelectedDate}
+                                value={currentSelectedDate}
+                            />
+                        </div>
+                        <p>Current selected date is <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
+                        <button onClick={selectCheckInDate}>Set as Check-in Date</button>
+                        <button onClick={selectCheckOutDate}>Set as Check-out Date</button>
+                        <button onClick={() => { setCheckOutDate(''); setCheckInDate(''); setTotalPrice(0); setTotalDays(0) }}>Clear Selections</button>
+                    </>
                 }
-
-                <div>hi{allDatesButtons}</div>
                 {calendarDates()}
             </div>
         </>
