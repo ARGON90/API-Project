@@ -82,33 +82,26 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     column-gap: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
 
 }
 
-.hosted-header{
+.hosted-header-true{
+    width: 55%;
+}
+
+.bookings-container-true{
     width: 40%;
 }
 
-.bookings-container{
-    width: 60%;
-
+.hosted-bookings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
-
-.pink {
-    background-color: pink;
-    padding: 4px;
-    border-radius: 6px;
-}
-
-/* button:has(> abbr[aria-label='October 20, 2022']) {
-    background-color: rgb(238, 0, 255);
-}
- */
-
 
 
 .all-reviews-header-container {
@@ -120,6 +113,69 @@
 .all-reviews-header {
     padding-right: 10px;
 }
+
+.calendar-false-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.headers-reviews {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.calendar-false-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+.hosted-container-true{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    column-gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.headers-reviews {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+.hosted-header-true{
+    width: 100%;
+}
+
+.calendar-true-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.all-reviews-header-container-true {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookings-container-true {
+    width: 40%;
+}
+
+
 
 
 

@@ -25,6 +25,15 @@
     width: 80%;
 }
 
+.price-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.price-number {
+    font-weight: bold;
+}
+
 .check-dates-container {
     display: flex;
     border: 1px solid grey;
@@ -76,4 +85,18 @@
 
 .spot-title {
     font-weight: bold;
+}
+
+.react-calendar__tile--now {
+    background-color: grey;
+}
+
+.react-calendar__tile--now.react-calendar__tile--now::hover {
+    background-color: darkgray;
+}
+
+.pink {
+    background-color: pink;
+    padding: 4px;
+    border-radius: 6px;
 }

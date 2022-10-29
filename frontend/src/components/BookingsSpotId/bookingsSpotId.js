@@ -11,7 +11,7 @@ import moment from 'moment'
 import './bookings.css'
 
 
-const BookingsSpotId = ({ rating, price, id }) => {
+const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) => {
     const dispatch = useDispatch()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
@@ -25,7 +25,7 @@ const BookingsSpotId = ({ rating, price, id }) => {
     const [checkInSelected, setCheckInSelected] = useState(false)
     const [checkOutSelected, setCheckOutSelected] = useState(false)
     const [calClick, setCalClick] = useState(false)
-    const [showCalendar, setShowCalendar] = useState(false)
+    // const [showCalendar, setShowCalendar] = useState(false)
     const [cleanUp, setCleanUp] = useState(false)
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
@@ -365,13 +365,14 @@ const BookingsSpotId = ({ rating, price, id }) => {
                     </div>
                 }
 
-
                 {currentUserId &&
                     <form onSubmit={handleSubmit} className='booking-container'>
-                        <div className='booking-title'>Create a Booking</div>
-
+                        <div className='booking-title'></div>
                         <div className='price-stars'>
-                            <div>${price} dollars per night</div>
+                            <div className='price-div'>
+                                <div className='price-number'>${price}</div>
+                                <div>/ night</div>
+                            </div>
                             <div>
                                 <svg viewBox='0 0 32 32'>
                                     <path
@@ -390,6 +391,7 @@ const BookingsSpotId = ({ rating, price, id }) => {
                                     <input type='text' className='date-input-checkin'
                                         onChange={updateCheckInDate}
                                         value={checkInDate}
+                                        placeholder='yyyy-mm-dd'
                                     >
                                     </input>
                                 </div>
@@ -399,6 +401,7 @@ const BookingsSpotId = ({ rating, price, id }) => {
                                     <input type='text' className='date-input-checkout'
                                         onChange={updateCheckOutDate}
                                         value={checkOutDate}
+                                        placeholder='yyyy-mm-dd'
                                     >
                                     </input>
                                 </div>
