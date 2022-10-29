@@ -27,8 +27,12 @@ const BookingsSpotId = ({ rating, price, id }) => {
     const [checkOut, setCheckOut] = useState('');
     const [errors, setErrors] = useState('')
 
+
+    let buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
     let testvar;
-    console.log(checkInDate, 'checkin date outside', updateDate())
+    let bothDatesSelected;
+    updateDate()
+    checkOutSetter()
 
     const updateCheckInDate = async (e) => { setCheckInDate(e) };
     const updateCheckIn = (e) => setCheckIn(e.target.value);
@@ -62,50 +66,53 @@ const BookingsSpotId = ({ rating, price, id }) => {
         calendarDates()
     }
 
-    function selectDates() {
-        return 'hi'
-    }
-
     function updateDate() {
         testvar = checkInDate
         onClicker()
     }
 
+    function checkOutSetter() {
+        let buttonSelected = document.querySelectorAll('button.react-calendar__tile--active')
+    }
+
     function onClicker() {
+        let checkedInElement = document.querySelector('input.date-input-checkin')
+        let checkedOutElement = document.querySelector('input.date-input-checkout')
 
-        if (testvar) {
-            console.log(testvar, 'testvar')
-            let testEl = document.querySelector('input.date-input-checkin')
-
+        if (bothDatesSelected === true) {
+            // clear out checkout date
+            checkedOutElement.value = ''
+            let checkedinElement = document.querySelector('input.date-input-checkin')
             let splitStrDate = String(testvar).split(' ')
-
-            function monthReverseParse(str) {
-                console.log(str)
-                let obj = {
-                    "Jan": "01",
-                    "Feb": "02",
-                    "Mar": "03",
-                    "Apr": "04",
-                    "May": "05",
-                    "Jun": "06",
-                    "Jul": "07",
-                    "Aug": "08",
-                    "Sep": "09",
-                    "Oct": "10",
-                    "Nov": "11",
-                    "Dec": "12",
-
-                }
-                return obj[str]
-            }
-
             let month = monthReverseParse(splitStrDate[1])
-            console.log('month', month)
             let day = splitStrDate[2]
             let year = splitStrDate[3]
-            if (testEl) {
-                testEl.value = `${year}-${month}-${day}`
+            if (checkedinElement) {
+                checkedinElement.value = `${year}-${month}-${day}`
             }
+            bothDatesSelected = false
+        } else if (testvar && buttonSelected.length === 0) {
+            let checkedInElement = document.querySelector('input.date-input-checkin')
+            let splitStrDate = String(testvar).split(' ')
+            let month = monthReverseParse(splitStrDate[1])
+            let day = splitStrDate[2]
+            let year = splitStrDate[3]
+            if (checkedInElement) {
+                checkedInElement.value = `${year}-${month}-${day}`
+            }
+        } else if (testvar && buttonSelected && buttonSelected.length === 1) {
+            let checkedOutElement = document.querySelector('input.date-input-checkout')
+            let splitStrDate = String(testvar).split(' ')
+            let month = monthReverseParse(splitStrDate[1])
+            let day = splitStrDate[2]
+            let year = splitStrDate[3]
+            if (checkedOutElement) {
+                checkedOutElement.value = `${year}-${month}-${day}`
+            }
+        }
+
+        if (checkedInElement && checkedOutElement && checkedInElement.value && checkedOutElement.value) {
+            bothDatesSelected = true
         }
     }
 
@@ -116,12 +123,7 @@ const BookingsSpotId = ({ rating, price, id }) => {
                 allDatesButtons[i].addEventListener('click', onClicker)
             }
         }
-        // allDatesButtons = document.querySelector('div.react-calendar__month-view__days')
-        // if (allDatesButtons) {
-        //     allDatesButtons.addEventListener('click', onClicker)
-        // }
     }
-
 
     function calendarDates() {
         if (!spotBookingsArray) {
@@ -153,6 +155,25 @@ const BookingsSpotId = ({ rating, price, id }) => {
         })
     }
 
+    function monthReverseParse(str) {
+        let obj = {
+            "Jan": "01",
+            "Feb": "02",
+            "Mar": "03",
+            "Apr": "04",
+            "May": "05",
+            "Jun": "06",
+            "Jul": "07",
+            "Aug": "08",
+            "Sep": "09",
+            "Oct": "10",
+            "Nov": "11",
+            "Dec": "12",
+
+        }
+        return obj[str]
+    }
+
     function monthParser(month) {
         if (month === 'Oct') return "October"
         if (month === 'Nov') return "November"
@@ -178,7 +199,6 @@ const BookingsSpotId = ({ rating, price, id }) => {
         if (day === '07') return '7'
         if (day === '08') return '8'
         if (day === '09') return '9'
-
         else {
             return day
         }
@@ -327,15 +347,16 @@ const BookingsSpotId = ({ rating, price, id }) => {
                                 <div className='date-container'>
                                     <label>Check-in</label>
                                     <input type='date' className='date-input-checkin'
-                                        //value={checkIn} onChange={updateCheckIn}
-                                        >
+                                    //value={checkIn} onChange={updateCheckIn}
+                                    >
                                     </input>
                                 </div>
 
                                 <div className='date-container'>
                                     <label>Check-Out</label>
-                                    <input type='date' className='date-input'
-                                        value={checkOut} onChange={updateCheckOut}>
+                                    <input type='date' className='date-input-checkout'
+                                        // value={checkOut} onChange={updateCheckOut}
+                                        >
                                     </input>
                                 </div>
                             </div>

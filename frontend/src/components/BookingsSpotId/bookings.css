@@ -51,6 +51,12 @@
     outline: 0;
 }
 
+.date-input-checkout {
+    font-family: Lato, sans-serif;
+    border: 0;
+    outline: 0;
+}
+
 .subtotal {
     display: flex;
     flex-direction: row;
