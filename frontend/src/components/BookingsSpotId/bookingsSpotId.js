@@ -173,7 +173,10 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
 
     async function selectCheckOutDate() {
         if (!checkInDate) return alert('Please select a check-in date first!')
-        if ((new Date(checkInDate)).getTime() >= (new Date(checkOutDate)).getTime()) return alert('Check-out date must be after check-in date!')
+        if ((new Date(checkInDate)).getTime() >= (new Date(checkOutDate)).getTime()) {
+            clearSelections()
+            return alert('Check-out date must be after check-in date!')
+        }
         setCheckOutDate(dateParserForInput(currentSelectedDate))
 
         console.log('inside checkout conditional')
@@ -184,7 +187,6 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
         setTotalPrice(Number(price) * totalDays)
 
     }
-
 
     function monthReverseParse(str) {
         let obj = {
@@ -270,11 +272,18 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
         return [year, month, day]
     }
 
+    function clearSelections() {
+        setCheckOutDate('');
+        setCheckInDate('');
+        setTotalPrice(0);
+        setTotalDays(0);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        let checkInDateUser = new Date(checkIn)
-        let checkOutDateUser = new Date(checkOut)
+        let checkInDateUser = new Date(checkInDate)
+        let checkOutDateUser = new Date(checkOutDate)
         let bookingErrors = {}
 
         let today = new Date()
@@ -292,8 +301,8 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             // let dayEndDateError = existingEndDateErrors[2]
             // let yearEndDateError = existingEndDateErrors[3]
 
-            if (!checkIn) bookingErrors.checkIn = 'Select a check-in date'
-            if (!checkOut) bookingErrors.checkOut = 'Select a check-out date'
+            if (!checkInDate) bookingErrors.checkIn = 'Select a check-in date'
+            if (!checkOutDate) bookingErrors.checkOut = 'Select a check-out date'
             // start is in the past
             if (checkInDateUser.getTime() < today.getTime()) bookingErrors.past = ('You cannot select a date in the past')
             // end is before start
@@ -301,12 +310,12 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             // start date inside of an existing booking
             if (checkInDateUser.getTime() >= existingStartDate.getTime() &&
                 checkInDateUser.getTime() <= existingEndDate.getTime()) {
-                bookingErrors.startConflict = ("This start date conflicts with an existing booking")
+                bookingErrors.conflict = ("This start date conflicts with an existing booking")
             }
             // end date inside of existing booking
             if (checkOutDateUser.getTime() >= existingStartDate.getTime() &&
                 checkOutDateUser.getTime() <= existingEndDate.getTime()) {
-                bookingErrors.endConflict = ("This end date conflicts with an existing booking")
+                bookingErrors.conflict = ("This end date conflicts with an existing booking")
             }
             // check in /checkout 'surround' existing booking
             if (checkInDateUser.getTime() <= existingStartDate.getTime() &&
@@ -326,11 +335,13 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             endDate: checkOutDate
         }
 
-        if (errors.length === 0) {
+        if (bookingErrors.length === 0) {
+            console.log('entering error length conditional')
             let createdBooking;
             createdBooking = await dispatch(createBooking(bookingInfo))
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
+            clearSelections()
         }
     }
 
@@ -339,18 +350,6 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
     return (
         <>
             <div>
-                {/* {userBookingsSpot.length > 0 &&
-                    <div className='user-booking-container'>
-                        <div className='booking-title'> Your Bookings </div>
-                        {userBookingsSpot.map((booking) =>
-                            <div key={booking.id}>
-                                <div>{`${dateParser(booking.startDate)[1]} ${dateParser(booking.startDate)[2]}, ${dateParser(booking.startDate)[0]} -
-                        ${dateParser(booking.endDate)[1]} ${dateParser(booking.endDate)[2]}, ${dateParser(booking.endDate)[0]}`}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                } */}
 
                 {errors.length > 0 &&
                     <div className='errors-container'>
@@ -412,22 +411,10 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                             <div>${price} x {totalDays} nights</div>
                             {/* <div>{totalPrice}$</div> */}
                         </div>
-                        <div className='total'>Total: {totalPrice} $</div>
+                        <div className='total'>Total: ${totalPrice}</div>
                         <button type='submit' className='reserve'>Reserve</button>
                     </form>
                 }
-                {/* {spotBookingsArray.length > 0 &&
-                    <div className='spot-booking-container'>
-                        <div className='booking-title'> This Spot's Bookings </div>
-                        {spotBookingsArray.map((booking) =>
-                            <div key={booking.id}>
-                                <div>{`${dateParser(booking.startDate)[1]} ${dateParser(booking.startDate)[2]}, ${dateParser(booking.startDate)[0]} -
-                        ${dateParser(booking.endDate)[1]} ${dateParser(booking.endDate)[2]}, ${dateParser(booking.endDate)[0]}`}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                } */}
 
                 <button onClick={() => setShowCalendar(!showCalendar)}>See this Spot's Bookings</button>
                 {showCalendar &&
@@ -441,7 +428,7 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                         <p>Current selected date is <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
                         <button onClick={selectCheckInDate}>Set as Check-in Date</button>
                         <button onClick={selectCheckOutDate}>Set as Check-out Date</button>
-                        <button onClick={() => { setCheckOutDate(''); setCheckInDate(''); setTotalPrice(0); setTotalDays(0) }}>Clear Selections</button>
+                        <button onClick={clearSelections}>Clear Selections</button>
                     </>
                 }
                 {calendarDates()}

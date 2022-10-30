@@ -52,18 +52,22 @@
 .date-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .date-input-checkin {
     font-family: Lato, sans-serif;
     border: 0;
     outline: 0;
+    width: 55%;
 }
 
 .date-input-checkout {
     font-family: Lato, sans-serif;
     border: 0;
     outline: 0;
+    width: 55%
 }
 
 .subtotal {

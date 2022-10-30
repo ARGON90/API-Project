@@ -55,7 +55,6 @@ const SpotById = () => {
 
                     <img key={imgArray[0].id} src={imgArray[0].url} alt='Spot Image'
                         className='single-image' />
-
                 )
             }
         }
