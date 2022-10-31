@@ -65,14 +65,9 @@ const CreateSpotForm = () => {
             return alert(Object.values(errors))
         }
 
-
-        console.log('INSIDE CREATE FORM SUBMIT')
-        console.log('PAYLOAD', payload)
-
         let createdSpot;
         createdSpot = await dispatch(createSpot(payload));
         if (createdSpot) {
-            console.log('NEWLY CREATED SPOT', createdSpot)
             let id = createdSpot.id
             await dispatch(addImgSpot(id, url))
             history.push(`/spots/${createdSpot.id}`);
@@ -159,7 +154,7 @@ const CreateSpotForm = () => {
                                                     <input
                                                         type="text"
                                                         placeholder="State"
-                                                        
+
                                                         value={state}
                                                         onChange={updateState}
                                                         className='inputs' />

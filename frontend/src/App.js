@@ -79,7 +79,7 @@ function App() {
           {/* <Route path='/spots/:spotId/reviews' exact={true}>
             <ReviewsSpotId />
           </Route> */}
-          <Route path='/review/create/:spotId' exact={true}>
+          <Route path='/spots/review/create/:spotId' exact={true}>
             <CreateReview />
           </Route>
           <Route path='/bookings' exact={true}>

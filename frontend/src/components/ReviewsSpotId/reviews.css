@@ -10,12 +10,32 @@
     display: flex;
     flex-direction: column;
     padding-top: 15px;
-    width: 40%
+    width: 40%;
+    padding: 10px;
 }
+
 
 .header-title {
     display: flex;
     flex-direction: row;
     padding-bottom: 10px;
     column-gap: 5px;
+}
+
+
+.individual-review-container-user {
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    width: 40%;
+    background-color: #ECECEC;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.nav-edit {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    padding-left: 15px;
 }

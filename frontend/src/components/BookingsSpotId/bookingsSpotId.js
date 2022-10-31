@@ -13,6 +13,7 @@ import './bookings.css'
 
 const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
     const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
@@ -61,9 +62,9 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
         return setCleanUp(true)
     }, [dispatch, checkOut, showCalendar, calClick, currentSelectedDate, checkOutDate])
 
-    if (!currentUserId) return <div>Log in to create a booking!</div>
-    if (!userBookings) return <div>Log in to create a booking!</div>
-    if (!spotBookings) return <div>Spot Bookings Issue</div>
+    if (!currentUserId) return <div className='create-booking-login'>Log in to create a booking!</div>
+    if (!userBookings) return <div className='create-booking-login'>Log in to create a booking!</div>
+    if (!spotBookings) return <div className='create-booking-login'>Spot Bookings Issue</div>
 
     const userBookingsArray = Object.values(userBookings)
     const userBookingsSpot = userBookingsArray.filter(booking => booking?.spotId === Number(id))
@@ -291,42 +292,32 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             let existingStartDate = new Date(spotBookingsArray[i].startDate)
             let existingEndDate = new Date(spotBookingsArray[i].endDate)
 
-            // let existingStartDateErrors = String(existingStartDate).split(' ')
-            // let monthStartDateError = existingStartDateErrors[1]
-            // let dayStartDateError = existingStartDateErrors[2]
-            // let yearStartDateError = existingStartDateErrors[3]
-
-            // let existingEndDateErrors = String(existingEndDate).split(' ')
-            // let monthEndDateError = existingEndDateErrors[1]
-            // let dayEndDateError = existingEndDateErrors[2]
-            // let yearEndDateError = existingEndDateErrors[3]
-
             if (!checkInDate) bookingErrors.checkIn = 'Select a check-in date'
             if (!checkOutDate) bookingErrors.checkOut = 'Select a check-out date'
             // start is in the past
             if (checkInDateUser.getTime() < today.getTime()) bookingErrors.past = ('You cannot select a date in the past')
             // end is before start
-            if (checkInDateUser.getTime() > checkOutDateUser.getTime()) bookingErrors.future = ('Check-out must be after check-in')
+            if (checkInDateUser.getTime() > checkOutDateUser.getTime()) bookingErrors.future = (`Check-out (${checkOutDate}) must be after check-in (${checkInDate})`)
             // start date inside of an existing booking
             if (checkInDateUser.getTime() >= existingStartDate.getTime() &&
                 checkInDateUser.getTime() <= existingEndDate.getTime()) {
-                bookingErrors.conflict = ("This start date conflicts with an existing booking")
+                bookingErrors.conflict = (`This start date (${checkInDate}) conflicts with an existing booking`)
             }
             // end date inside of existing booking
             if (checkOutDateUser.getTime() >= existingStartDate.getTime() &&
                 checkOutDateUser.getTime() <= existingEndDate.getTime()) {
-                bookingErrors.conflict = ("This end date conflicts with an existing booking")
+                bookingErrors.conflict = (`This end date (${checkInDate}) conflicts with an existing booking`)
             }
             // check in /checkout 'surround' existing booking
             if (checkInDateUser.getTime() <= existingStartDate.getTime() &&
                 checkOutDateUser.getTime() >= existingEndDate.getTime()) {
-                bookingErrors.conflict = (`These dates overlap with an existing booking`)
-                //bookingErrors.conflict = (`Date Conflict: this property is booked between ${monthStartDateError} ${dayStartDateError} ${yearStartDateError}
-                // and ${monthEndDateError} ${dayEndDateError} ${yearEndDateError}. Please try different dates`)
+                bookingErrors.conflict = (`These dates (${checkInDate} - ${checkOutDate}) overlap with an existing booking`)
             }
 
             setErrors((errors) => errors = Object.values(bookingErrors))
         }
+
+        clearSelections()
 
         const bookingInfo = {
             spotId: id,
@@ -334,14 +325,20 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             startDate: checkInDate,
             endDate: checkOutDate
         }
-
+        let createdBooking;
         if (bookingErrors.length === 0) {
-            console.log('entering error length conditional')
-            let createdBooking;
             createdBooking = await dispatch(createBooking(bookingInfo))
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
             clearSelections()
+        }
+        history.push('/bookings/')
+    }
+
+    function totalPriceFormatter() {
+        if (totalPrice) {
+
+            return `$${totalPrice}`
         }
     }
 
@@ -366,7 +363,6 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
 
                 {currentUserId &&
                     <form onSubmit={handleSubmit} className='booking-container'>
-                        <div className='booking-title'></div>
                         <div className='price-stars'>
                             <div className='price-div'>
                                 <div className='price-number'>${price}</div>
@@ -407,28 +403,41 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                             </div>
                         </div>
 
-                        <div className='subtotal'>
-                            <div>${price} x {totalDays} nights</div>
-                            {/* <div>{totalPrice}$</div> */}
-                        </div>
-                        <div className='total'>Total: ${totalPrice}</div>
-                        <button type='submit' className='reserve'>Reserve</button>
+                        {showCalendar === true &&
+                            <div className='subtotal'>
+                                <div className='prices'>
+                                    <div>${price} x {totalDays} nights</div>
+                                    <div className='total-container'>
+                                        <div className='total'>Total:</div>
+                                        <div className='bold'>{totalPriceFormatter()}</div>
+                                    </div>
+                                </div>
+                                <button type='submit' className='reserve-button'>Reserve</button>
+                            </div>
+                        }
+                        {showCalendar === false &&
+                            <button className='see-cal-btn' onClick={() => setShowCalendar(!showCalendar)}>See Available Dates</button>
+                        }
                     </form>
                 }
 
-                <button onClick={() => setShowCalendar(!showCalendar)}>See this Spot's Bookings</button>
+
                 {showCalendar &&
                     <>
                         <div className='react-calendar' onClick={() => calClicker()}>
-                            <Calendar
-                                onChange={updateSelectedDate}
-                                value={currentSelectedDate}
-                            />
+                            <div className='calendar-container'>
+                                <Calendar
+                                    onChange={updateSelectedDate}
+                                    value={currentSelectedDate}
+                                />
+                                <p>Selected Date: <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
+                                <div className='check-in-out-buttons'>
+                                    <button className='calendar-btns' onClick={selectCheckInDate}>Set as Check-in</button>
+                                    <button className='calendar-btns' onClick={selectCheckOutDate}>Set as Check-out</button>
+                                <button className='calendar-btns' onClick={clearSelections}>Clear Selections</button>
+                                </div>
+                            </div>
                         </div>
-                        <p>Current selected date is <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
-                        <button onClick={selectCheckInDate}>Set as Check-in Date</button>
-                        <button onClick={selectCheckOutDate}>Set as Check-out Date</button>
-                        <button onClick={clearSelections}>Clear Selections</button>
                     </>
                 }
                 {calendarDates()}

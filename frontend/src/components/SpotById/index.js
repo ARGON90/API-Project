@@ -20,6 +20,21 @@ const SpotById = () => {
     const { id } = useParams()
     const spotsList = useSelector((state) => (state.spots));
     const singleSpot = spotsList[id]
+    const userId = useSelector((state) => state?.session?.user?.id)
+
+    let reviewsState = useSelector((state) => (state?.reviews));
+    let userReview;
+    let reviewsList;
+    if (reviewsState.Reviews) {
+        reviewsList = Object.values(reviewsState?.Reviews)
+        let i = 0;
+        for (i; i < reviewsList.length; i++) {
+            if (reviewsList[i].userId === userId) {
+                userReview = reviewsList.splice(i, 1)
+            }
+        }
+    }
+
 
     const [showCalendar, setShowCalendar] = useState(false)
 
@@ -30,10 +45,11 @@ const SpotById = () => {
     }
 
 
+
     useEffect(() => {
         // console.log('INSIDE SPOT-BY-ID USE EFFECT')
         dispatch(getOneSpot(id))
-    }, [dispatch])
+    }, [dispatch, userId])
 
     // useEffect(() => {
     //     console.log('SPOTBYID GETSTATE USE EFFECT ')
@@ -81,7 +97,7 @@ const SpotById = () => {
     function sessionCheck() {
 
         if (sessionId && sessionId !== singleSpot.ownerId) {
-
+            console.log('in session ID create')
             return (
                 <NavLink to={`/review/create/${id}`} className='font-black bold'>
                     Create a review for this spot
@@ -169,6 +185,9 @@ const SpotById = () => {
                                 ></path>
                             </svg>
                             {singleSpot.avgRating}
+                            {userId && !userReview && <NavLink className='nav-create' to={`review/create/${id}`}>Create a Review</NavLink>}
+                            {!userId && <div className='nav-create'>Log in to create a review!</div>}
+
                         </div>
 
                         {/* {checkState()} */}
@@ -183,21 +202,21 @@ const SpotById = () => {
                     <div className='calendar-true-container'>
                         {/* HOSTED BY ... */}
                         <div className='headers-reviews'>
-                                <div className='hosted-container-true'>
-                                    <h2 className='hosted-header-true'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
-                                </div>
+                            <div className='hosted-container-true'>
+                                <h2 className='hosted-header-true'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+                            </div>
 
-                                <div className='all-reviews-header-container-true'>
-                                    <h2 className='all-reviews-header'>All Reviews</h2>
-                                    <svg viewBox='0 0 32 32'>
-                                        <path
-                                            d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                                            fillRule='evenodd'
-                                        ></path>
-                                    </svg>
-                                    {singleSpot.avgRating}
-                                </div>
-                                <ReviewsSpotId id={id} />
+                            <div className='all-reviews-header-container-true'>
+                                <h2 className='all-reviews-header'>All Reviews</h2>
+                                <svg viewBox='0 0 32 32'>
+                                    <path
+                                        d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                        fillRule='evenodd'
+                                    ></path>
+                                </svg>
+                                {singleSpot.avgRating}
+                            </div>
+                            <ReviewsSpotId id={id} />
                         </div>
 
 

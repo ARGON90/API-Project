@@ -18,8 +18,8 @@ const BookingsUser = () => {
         dispatch(getBookingsCurrentUser())
     }, [dispatch])
 
-    if (!currentUserId) return <div>Log in to create a booking!</div>
-    if (!userBookings) return <div>Log in to create a booking!</div>
+    if (!currentUserId) return <div className='nav-create'>Log in to create a booking!</div>
+    if (!userBookings) return <div className='nav-create'>Log in to create a booking!</div>
 
     const userBookingsArray = Object.values(userBookings)
 
