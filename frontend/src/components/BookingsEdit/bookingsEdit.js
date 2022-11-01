@@ -5,6 +5,7 @@ import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
 import { createBooking } from '../../store/bookingsReducer';
 import BookingsEditCalendar from '../BookingsEditCalendar/bookingsEditCalendar';
+import { getAllSpots } from '../../store/spotsReducer';
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -22,8 +23,8 @@ const BookingsEdit = () => {
 
     useEffect(() => {
         dispatch(getBookingsCurrentUser())
+        dispatch(getAllSpots())
     }, [dispatch])
-
 
     if (!userBookings) return null
     if (!allSpots) return null
@@ -32,17 +33,13 @@ const BookingsEdit = () => {
     const userBookingArray = userBookingsArray.filter((bookings) => bookings.id === Number(bookingId))
     const userBooking = userBookingArray[0]
     const price = userBooking.Spot.price
+
     const spotId = userBooking.Spot.id
     const allSpotsArray = Object.values(allSpots)
     const spot = allSpotsArray.filter((spot) => spot?.id === spotId)
+
+    if (!spot[0]) return 'spot not loaded'
     const rating = spot[0].avgRating
-
-
-
-
-
-
-
 
     function dateParser(string) {
         string = String(string)
@@ -78,26 +75,28 @@ const BookingsEdit = () => {
                         <>
                             <h2 className='booking-title'> Edit Your Booking</h2>
 
-                                <div key={userBooking.id} className='user-booking-card'>
-                                    <div className='user-booking-text'>
-                                        <div className='spot-title'>{userBooking.Spot.name}</div>
-                                        <div>{`${dateParser(userBooking.startDate)[1]} ${dateParser(userBooking.startDate)[2]}, ${dateParser(userBooking.startDate)[0]} -
+                            <div key={userBooking.id} className='user-booking-card'>
+                                <div className='user-booking-text'>
+                                    <div className='spot-title'>{userBooking.Spot.name}</div>
+                                    <div>{`${dateParser(userBooking.startDate)[1]} ${dateParser(userBooking.startDate)[2]}, ${dateParser(userBooking.startDate)[0]} -
                         ${dateParser(userBooking.endDate)[1]} ${dateParser(userBooking.endDate)[2]}, ${dateParser(userBooking.endDate)[0]}`}
-                                        </div>
-                                        <div>${userBooking.Spot.price}/night</div>
-                                        <div className='bookings-container'>
-                                            <NavLink to='/bookings/' className='edit-delete-btn'>Go Back</NavLink>
-                                            <div className='edit-delete-btn'>Delete Booking</div>
-                                        </div>
                                     </div>
-                                    <div className='image-div'>
-                                        <img className='preview-image' src={userBooking.Spot.previewImage}></img>
+                                    <div>${userBooking.Spot.price}/night</div>
+                                    <div className='bookings-container'>
+                                        <NavLink to='/bookings/' className='edit-delete-btn'>Go Back</NavLink>
+                                        <div className='edit-delete-btn'>Delete Booking</div>
                                     </div>
                                 </div>
+                                <div className='image-div'>
+                                    <img className='preview-image' src={userBooking.Spot.previewImage}></img>
+                                </div>
+                            </div>
                         </>
                     }
                 </div>
-                <div><BookingsEditCalendar price={price} rating={rating}  /></div>
+                <div className='cal-container'>
+                    <div><BookingsEditCalendar price={price} rating={rating} id={spotId} bookingId={bookingId} /></div>
+                </div>
             </div>
         </div>
     );

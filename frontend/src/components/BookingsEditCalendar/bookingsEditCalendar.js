@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
 import { createBooking } from '../../store/bookingsReducer';
+import { editBookingThunk } from '../../store/bookingsReducer';
+
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
@@ -11,7 +13,7 @@ import moment from 'moment'
 import './bookingsEditCalendar.css'
 
 
-const BookingsSpotEdit = ({ rating, price, id }) => {
+const BookingsSpotEdit = ({ rating, price, id, bookingId }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
@@ -101,9 +103,7 @@ const BookingsSpotEdit = ({ rating, price, id }) => {
         }
         setCheckOutDate(dateParserForInput(currentSelectedDate))
 
-        console.log('inside checkout conditional')
         let totalDays = ((new Date(checkOutDate).getTime() - new Date(checkInDate).getTime()) / 86400000)
-        console.log(totalDays, checkInDate, checkOutDate)
         if (!totalDays) return
         setTotalDays(totalDays)
         setTotalPrice(Number(price) * totalDays)
@@ -209,7 +209,6 @@ const BookingsSpotEdit = ({ rating, price, id }) => {
                 checkOutDateUser.getTime() >= existingEndDate.getTime()) {
                 bookingErrors.conflict = (`These dates (${checkInDate} - ${checkOutDate}) overlap with an existing booking`)
             }
-
             setErrors((errors) => errors = Object.values(bookingErrors))
         }
 
@@ -221,14 +220,18 @@ const BookingsSpotEdit = ({ rating, price, id }) => {
             startDate: checkInDate,
             endDate: checkOutDate
         }
-        let createdBooking;
-        if (bookingErrors.length === 0) {
-            createdBooking = await dispatch(createBooking(bookingInfo))
+        let editedBooking;
+
+        if (Object.values(bookingErrors).length === 0) {
+
+            editedBooking = await dispatch(editBookingThunk(bookingId, bookingInfo))
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
             clearSelections()
         }
-        history.push('/bookings/')
+        if (editedBooking) {
+            history.push('/bookings/')
+        }
     }
 
     function totalPriceFormatter() {
@@ -241,23 +244,12 @@ const BookingsSpotEdit = ({ rating, price, id }) => {
 
     if (!userBookingsArray) return <div>Loading Bookings</div>
     return (
-        <>
-            <div>
 
-                {errors.length > 0 &&
-                    <div className='errors-container'>
-                        <div className='errors-title'> Sorry, there's a problem with your selection:</div>
-                        <ul>
-                            {errors.map((error, idx) =>
-                                <div key={idx}>
-                                    <li>{error}</li>
-                                </div>
-                            )}
-                        </ul>
-                    </div>
-                }
+        <div className='edit-cal-page'>
 
-                {currentUserId &&
+            <div className='dates-errors-container'>
+
+                <div className='dates-form'>
                     <form onSubmit={handleSubmit} className='booking-container'>
                         <div className='price-stars'>
                             <div className='price-div'>
@@ -299,46 +291,54 @@ const BookingsSpotEdit = ({ rating, price, id }) => {
                             </div>
                         </div>
 
-                        {showCalendar === true &&
-                            <div className='subtotal'>
-                                <div className='prices'>
-                                    <div>${price} x {totalDays} nights</div>
-                                    <div className='total-container'>
-                                        <div className='total'>Total:</div>
-                                        <div className='bold'>{totalPriceFormatter()}</div>
-                                    </div>
-                                </div>
-                                <button type='submit' className='reserve-button'>Reserve</button>
-                            </div>
-                        }
-                        {showCalendar === false &&
-                            <button className='see-cal-btn' onClick={() => setShowCalendar(!showCalendar)}>See Available Dates</button>
-                        }
-                    </form>
-                }
-
-
-                {showCalendar &&
-                    <>
-                        <div className='react-calendar' onClick={() => calClicker()}>
-                            <div className='calendar-container'>
-                                <Calendar
-                                    onChange={updateSelectedDate}
-                                    value={currentSelectedDate}
-                                />
-                                <p>Selected Date: <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
-                                <div className='check-in-out-buttons'>
-                                    <button className='calendar-btns' onClick={selectCheckInDate}>Set as Check-in</button>
-                                    <button className='calendar-btns' onClick={selectCheckOutDate}>Set as Check-out</button>
-                                <button className='calendar-btns' onClick={clearSelections}>Clear Selections</button>
+                        <div className='subtotal'>
+                            <div className='prices'>
+                                <div>${price} x {totalDays} nights</div>
+                                <div className='total-container'>
+                                    <div className='total'>Total:</div>
+                                    <div className='bold'>{totalPriceFormatter()}</div>
                                 </div>
                             </div>
+                            <button type='submit' className='reserve-button'>Edit</button>
                         </div>
-                    </>
+
+                    </form>
+                </div>
+
+                {errors.length > 0 &&
+                    <div className='errors-container'>
+                        <div className='errors-title'> Sorry, there's a problem with your selection:</div>
+                        <ul>
+                            {errors.map((error, idx) =>
+                                <div key={idx}>
+                                    <li>{error}</li>
+                                </div>
+                            )}
+                        </ul>
+                    </div>
                 }
-                {calendarDates()}
+
             </div>
-        </>
+
+            <div className='react-calendar-edit' onClick={() => calClicker()}>
+                <div className='calendar-container-edit'>
+                    <Calendar
+                        onChange={updateSelectedDate}
+                        value={currentSelectedDate}
+                    />
+                    <p>Selected Date: <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
+                    <div className='check-in-out-buttons-edit'>
+                        <button className='calendar-btns-edit' onClick={selectCheckInDate}>Set as Check-in</button>
+                        <button className='calendar-btns-edit' onClick={selectCheckOutDate}>Set as Check-out</button>
+                        <button className='calendar-btns-edit' onClick={clearSelections}>Clear Selections</button>
+                    </div>
+                </div>
+            </div>
+
+
+            {calendarDates()}
+        </div>
+
     );
 };
 

@@ -169,6 +169,7 @@
 }
 
 .see-cal-btn {
+    border: none;
     height: 30px;
     color: white;
     background-color: rgb(51, 51, 51);
@@ -178,6 +179,7 @@
 }
 
 .calendar-btns {
+    border: none;
     width: 135px;
     height: 30px;
     color: white;

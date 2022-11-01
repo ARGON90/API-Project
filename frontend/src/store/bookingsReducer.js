@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf"
 
 const CURRENT_USER_BOOKINGS = 'bookings/currentUser'
-
+const EDIT_USER_BOOKING = 'bookings/edit'
 const ADD_BOOKING = 'bookings/create'
 const DELETE_BOOKING = 'bookings/delete'
 
@@ -17,6 +17,14 @@ const addBooking = (bookings) => {
     return {
         type: ADD_BOOKING,
         bookings
+    }
+}
+
+const editBooking = (bookingId, bookingInfo) => {
+    return {
+        type: EDIT_USER_BOOKING,
+        bookingId,
+        bookingInfo
     }
 }
 
@@ -52,6 +60,22 @@ export const createBooking = (booking) => async (dispatch) => {
     }
 }
 
+export const editBookingThunk = (bookingId, bookingInfo) => async (dispatch) => {
+    console.log('thunk info', bookingId, bookingInfo)
+    const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingInfo)
+    });
+    console.log('think response', response)
+
+    if (response.ok) {
+        const booking = await response.json();
+        dispatch(editBooking(bookingId, booking));
+        return booking;
+    }
+}
+
 //THUNK - DELETE A BOOKING
 export const deleteBooking = (id) => async (dispatch) => {
 
@@ -80,6 +104,10 @@ const bookingsReducer = (state = initialState, action) => {
         }
         case CURRENT_USER_BOOKINGS: {
             const newState = action.bookings
+            return newState
+        }
+        case EDIT_USER_BOOKING: {
+            const newState = { ...state };
             return newState
         }
         case ADD_BOOKING: {

@@ -89,3 +89,8 @@
     font-size: 16px;
     cursor: pointer;
 }
+
+.cal-container {
+    width: 120%;
+    padding-top:20px;
+}

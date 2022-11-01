@@ -100,7 +100,6 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
         }
         setCheckOutDate(dateParserForInput(currentSelectedDate))
 
-        console.log('inside checkout conditional')
         let totalDays = ((new Date(checkOutDate).getTime() - new Date(checkInDate).getTime()) / 86400000)
         console.log(totalDays, checkInDate, checkOutDate)
         if (!totalDays) return
@@ -221,13 +220,16 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             endDate: checkOutDate
         }
         let createdBooking;
-        if (bookingErrors.length === 0) {
+        console.log('booking errors.lengt', bookingErrors.length)
+        if (Object.values(bookingErrors).length === 0) {
             createdBooking = await dispatch(createBooking(bookingInfo))
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
             clearSelections()
         }
-        history.push('/bookings/')
+        if (createdBooking) {
+            history.push('/bookings/')
+        }
     }
 
     function totalPriceFormatter() {
