@@ -1,0 +1,209 @@
+.errors-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.errors-title {
+    align-self: center;
+}
+
+
+
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    row-gap: 10px;
+}
+
+
+.prices {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    width: 55%;
+}
+
+.price-stars {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.price-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.price-number {
+    font-weight: bold;
+}
+
+.check-dates-container {
+    display: flex;
+    border: 1px solid grey;
+    border-radius: 12px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.date-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-input-checkin {
+    font-family: Lato, sans-serif;
+    border: 0;
+    outline: 0;
+    width: 55%;
+}
+
+.date-input-checkout {
+    font-family: Lato, sans-serif;
+    border: 0;
+    outline: 0;
+    width: 55%
+}
+
+.subtotal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    align-items: center;
+}
+
+.total {
+    width: 42px;
+}
+
+.total-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.spot-booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spot-title {
+    font-weight: bold;
+}
+
+.react-calendar {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
+
+.check-in-out-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    column-gap: 3px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.react-calendar__tile--now {
+    background-color: grey;
+}
+
+.react-calendar__tile--now.react-calendar__tile--now::hover {
+    background-color: darkgray;
+}
+.react-calendar__month-view__days__day--weekend {
+    color: black;
+}
+
+.react-calendar__tile--active {
+    background: lightblue;
+    background-color: lightblue;
+}
+
+.react-calendar__tile .react-calendar__tile--active .react-calendar__tile--range .react-calendar__tile--rangeStart .react-calendar__tile--rangeEnd .react-calendar__tile--rangeBothEnds .react-calendar__month-view__days__day .react-calendar__month-view__days__day--weekend{
+    background-color: lightblue;
+    background: lightblue;
+}
+
+.pink {
+    background-color: pink;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.create-booking-login {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    padding-top: 40px;
+    padding-left: 45px;
+}
+
+.see-cal-btn {
+    height: 30px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.calendar-btns {
+    width: 135px;
+    height: 30px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.calendar-btns:hover,
+.calendar-btns:focus {
+    background-color: black;
+}
+
+.reserve-button {
+    height: 40px;
+    width: 40%;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(230, 30, 77);
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.reserve-button:hover {
+    background-color: rgb(222, 29, 74);
+}

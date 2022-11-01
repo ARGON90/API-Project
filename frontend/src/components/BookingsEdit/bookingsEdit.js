@@ -2,25 +2,45 @@ import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
+import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
+import { createBooking } from '../../store/bookingsReducer';
+import BookingsEditCalendar from '../BookingsEditCalendar/bookingsEditCalendar';
+
 import 'react-calendar/dist/Calendar.css'
-import BookingsEdit from '../BookingsEdit/bookingsEdit';
 
-import './bookingsUser.css'
+import './bookingsedit.css'
 
 
-const BookingsUser = () => {
+const BookingsEdit = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
+    const { bookingId } = useParams()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
+    const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
+    const allSpots = useSelector((state) => state?.spots)
 
     useEffect(() => {
         dispatch(getBookingsCurrentUser())
     }, [dispatch])
 
-    if (!currentUserId) return <div className='nav-create'>Log in to create a booking!</div>
-    if (!userBookings) return <div className='nav-create'>Log in to create a booking!</div>
+
+    if (!userBookings) return null
+    if (!allSpots) return null
 
     const userBookingsArray = Object.values(userBookings)
+    const userBookingArray = userBookingsArray.filter((bookings) => bookings.id === Number(bookingId))
+    const userBooking = userBookingArray[0]
+    const price = userBooking.Spot.price
+    const spotId = userBooking.Spot.id
+    const allSpotsArray = Object.values(allSpots)
+    const spot = allSpotsArray.filter((spot) => spot?.id === spotId)
+    const rating = spot[0].avgRating
+
+
+
+
+
 
 
 
@@ -49,42 +69,38 @@ const BookingsUser = () => {
         return [year, month, day]
     }
 
-
-
-
-    if (!userBookingsArray) return <div>Loading Bookings</div>
+    if (!userBooking) return <div>Loading Booking</div>
     return (
         <div className='page'>
             <div className='page-container'>
                 <div className='user-bookings-page'>
-                    {userBookingsArray.length > 0 &&
+                    {userBookingArray.length > 0 &&
                         <>
-                            <h2 className='booking-title'> Your Bookings </h2>
-                            {userBookingsArray.map((booking) =>
-                                <div key={booking.id} className='user-booking-card'>
+                            <h2 className='booking-title'> Edit Your Booking</h2>
+
+                                <div key={userBooking.id} className='user-booking-card'>
                                     <div className='user-booking-text'>
-                                        <div className='spot-title'>{booking.Spot.name}</div>
-                                        <div>{`${dateParser(booking.startDate)[1]} ${dateParser(booking.startDate)[2]}, ${dateParser(booking.startDate)[0]} -
-                        ${dateParser(booking.endDate)[1]} ${dateParser(booking.endDate)[2]}, ${dateParser(booking.endDate)[0]}`}
+                                        <div className='spot-title'>{userBooking.Spot.name}</div>
+                                        <div>{`${dateParser(userBooking.startDate)[1]} ${dateParser(userBooking.startDate)[2]}, ${dateParser(userBooking.startDate)[0]} -
+                        ${dateParser(userBooking.endDate)[1]} ${dateParser(userBooking.endDate)[2]}, ${dateParser(userBooking.endDate)[0]}`}
                                         </div>
-                                        <div>${booking.Spot.price}/night</div>
+                                        <div>${userBooking.Spot.price}/night</div>
                                         <div className='bookings-container'>
-                                            <NavLink to={`/bookings/${booking.id}/edit`} className='edit-delete-btn'>Edit Booking</NavLink>
+                                            <NavLink to='/bookings/' className='edit-delete-btn'>Go Back</NavLink>
                                             <div className='edit-delete-btn'>Delete Booking</div>
                                         </div>
-
                                     </div>
                                     <div className='image-div'>
-                                        <img className='preview-image' src={booking.Spot.previewImage}></img>
+                                        <img className='preview-image' src={userBooking.Spot.previewImage}></img>
                                     </div>
                                 </div>
-                            )}
                         </>
                     }
                 </div>
+                <div><BookingsEditCalendar price={price} rating={rating}  /></div>
             </div>
         </div>
     );
 };
 
-export default BookingsUser;
+export default BookingsEdit;

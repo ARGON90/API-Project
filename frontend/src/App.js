@@ -17,7 +17,7 @@ import ReviewsCurrentUser from "./components/ReviewsCurrentUser";
 import ReviewsSpotId from "./components/ReviewsSpotId";
 import CreateReview from "./components/ReviewCreate";
 import BookingsUser from "./components/BookingsUser/bookingsUser";
-
+import BookingsEdit from "./components/BookingsEdit/bookingsEdit";
 
 import notFoundRalph from "./data/ralph.gif"
 
@@ -67,23 +67,22 @@ function App() {
           <Route path='/spots/:id' exact={true}>
             <SpotById />
           </Route>
-          {/* <Route path='/spots/:spotId/images' exact={true}>
-            <AddImage />
-          </Route> */}
+
           <Route path='/spots/:spotId/edit' exact={true}>
             <EditSpot />
           </Route>
           <Route path='/reviews/current' exact={true}>
             <ReviewsCurrentUser />
           </Route>
-          {/* <Route path='/spots/:spotId/reviews' exact={true}>
-            <ReviewsSpotId />
-          </Route> */}
+
           <Route path='/spots/review/create/:spotId' exact={true}>
             <CreateReview />
           </Route>
           <Route path='/bookings' exact={true}>
             <BookingsUser />
+          </Route>
+          <Route path='/bookings/:bookingId/edit' exact={true}>
+            <BookingsEdit />
           </Route>
 
           <>

@@ -8,16 +8,17 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 
-import './bookings.css'
+import './bookingsEditCalendar.css'
 
 
-const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) => {
+const BookingsSpotEdit = ({ rating, price, id }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
     const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
 
+    const [showCalendar, setShowCalendar] = useState(true)
     const [currentSelectedDate, setCurrentSelectedDate] = useState(new Date())
     const [checkInDate, setCheckInDate] = useState('')
     const [checkOutDate, setCheckOutDate] = useState('')
@@ -341,4 +342,4 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
     );
 };
 
-export default BookingsSpotId;
+export default BookingsSpotEdit;

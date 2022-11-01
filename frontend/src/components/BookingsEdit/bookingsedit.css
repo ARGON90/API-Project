@@ -1,0 +1,91 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.page-container {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.page {
+    font-family: Lato, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-bookings-page{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 10px;
+}
+
+.user-booking-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid grey;
+    border-radius: 12px;
+    padding: 10px;
+
+}
+
+.booking-title {
+    font-weight: bold;
+    align-self: center;
+}
+
+.spot-title {
+    font-weight: bold;
+}
+
+.user-booking-text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.bookings-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.nav-create {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    padding-left: 15px;
+}
+
+.image-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 30%;
+    width: 30%;
+}
+
+.preview-image {
+    align-self: flex-end;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+}
+
+.edit-delete-btn {
+    height: 30px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
