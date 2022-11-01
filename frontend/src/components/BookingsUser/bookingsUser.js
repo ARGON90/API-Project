@@ -55,23 +55,27 @@ const BookingsUser = () => {
 
     if (!userBookingsArray) return <div>Loading Bookings</div>
     return (
-        <>
-            <div className='page'>
+        <div className='page'>
+            <div className='page-container'>
                 <div className='user-bookings-page'>
                     {userBookingsArray.length > 0 &&
                         <>
-                            <div className='booking-title'> Your Bookings </div>
+                            <h2 className='booking-title'> Your Bookings </h2>
                             {userBookingsArray.map((booking) =>
                                 <div key={booking.id} className='user-booking-card'>
                                     <div className='user-booking-text'>
-                                        <div>{booking.Spot.name}</div>
+                                        <div className='spot-title'>{booking.Spot.name}</div>
                                         <div>{`${dateParser(booking.startDate)[1]} ${dateParser(booking.startDate)[2]}, ${dateParser(booking.startDate)[0]} -
                         ${dateParser(booking.endDate)[1]} ${dateParser(booking.endDate)[2]}, ${dateParser(booking.endDate)[0]}`}
                                         </div>
                                         <div>${booking.Spot.price}/night</div>
+                                        <div className='bookings-container'>
+                                            <div className='edit-delete-btn'>Edit Booking</div>
+                                            <div className='edit-delete-btn'>Delete Booking</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div> Image</div>
+                                    <div className='image-div'>
+                                        <img className='preview-image' src={booking.Spot.previewImage}></img>
                                     </div>
                                 </div>
                             )}
@@ -79,7 +83,7 @@ const BookingsUser = () => {
                     }
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
