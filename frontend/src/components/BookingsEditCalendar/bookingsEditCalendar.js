@@ -5,6 +5,7 @@ import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
 import { createBooking } from '../../store/bookingsReducer';
 import { editBookingThunk } from '../../store/bookingsReducer';
+import { editBookingThunkSpot } from '../../store/spotbookingsReducer';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
@@ -221,17 +222,18 @@ const BookingsSpotEdit = ({ rating, price, id, bookingId }) => {
             endDate: checkOutDate
         }
         let editedBooking;
-
+        let editedBookingSpot
         if (Object.values(bookingErrors).length === 0) {
 
-            editedBooking = await dispatch(editBookingThunk(bookingId, bookingInfo))
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
+            await dispatch(editBookingThunk(bookingId, bookingInfo))
+            // editedBookingSpot = await dispatch(editBookingThunkSpot(bookingId, bookingInfo))
+            alert ('Bookig Successfully Updated!')
             clearSelections()
-        }
-        if (editedBooking) {
             history.push('/bookings/')
         }
+
     }
 
     function totalPriceFormatter() {

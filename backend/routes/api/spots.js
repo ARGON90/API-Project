@@ -182,7 +182,7 @@ router.get('/:spotId', async (req, res) => {
         });
         const avgRating = spotStars[0].dataValues.avgStarRating;
         if (!avgRating) {
-            spot.dataValues.avgRating =  "New"
+            spot.dataValues.avgRating = "New"
         } else {
             spot.dataValues.avgRating = Number(avgRating).toFixed(2)
         }
@@ -344,9 +344,8 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     let errors = {}
     let { address, city, state, country, lat,
         lng, name, description, price } = req.body;
-        console.log('BACKEND EDIT SPOTS 349')
 
-        lng = Number(lng)
+    lng = Number(lng)
     lat = Number(lat)
 
     if (!address) errors.address = "Street address is required"

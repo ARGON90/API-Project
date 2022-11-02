@@ -47,7 +47,6 @@ export const getBookingsCurrentUser = () => async (dispatch) => {
 
 //THUNK - CREATE BOOKING
 export const createBooking = (booking) => async (dispatch) => {
-    console.log('create bookings reducer', booking)
     const response = await csrfFetch(`/api/spots/${booking.spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -91,27 +90,44 @@ export const deleteBooking = (id) => async (dispatch) => {
     }
 }
 
-
-
 const initialState = {}
-
 //REDUCER
 const bookingsReducer = (state = initialState, action) => {
+    let newState = { ...state }
     switch (action.type) {
         case DELETE_BOOKING: {
-            const newState = { ...state };
             return newState;
         }
         case CURRENT_USER_BOOKINGS: {
-            const newState = action.bookings
-            return newState
+            const bookings = action.bookings
+            return {
+                ...newState,
+                ...bookings
+            }
         }
         case EDIT_USER_BOOKING: {
-            const newState = { ...state };
+            let bookingInfo = action.bookingInfo
+            let i = 0;
+            for (let key in newState.Bookings) {
+                if ( newState.Bookings[key].id === Number(action.bookingId)) {
+                    console.log(i, 'i')
+                }
+                i++
+            }
+
+            newState = {
+                ...newState,
+            };
+            newState.Bookings[i - 1].startDate = action.bookingInfo.startDate
+            newState.Bookings[i - 1].endDate = action.bookingInfo.endDate
+
             return newState
         }
         case ADD_BOOKING: {
-            const newState = { ...state, [action.bookings.id]: action.bookings };
+            newState = {
+                ...state,
+                [action.bookings.id]: action.bookings
+            };
             return newState;
         }
         default:

@@ -130,23 +130,7 @@ const SpotById = () => {
                             </svg>
                             {singleSpot.avgRating}
                         </div>
-                        <div className='edit-delete-container'>
-                            {singleSpot.ownerId === sessionId &&
-                                (
-                                    <>
-                                        <div className='edit-delete-btn'>
-                                            <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
-                                                Edit This Spot
-                                            </NavLink>
-                                        </div>
-                                        <div className='edit-delete-btn'>
-                                            <div onClick={onClickDelete} className=''>
-                                                Delete This Spot
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-                        </div>
+
                     </div>
                 </div>
 
@@ -170,9 +154,28 @@ const SpotById = () => {
                         <div className='hosted-container'>
                             <h2 className='hosted-header'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
 
-                            <div className='bookings-container-true'>
-                                <BookingsSpotId showCalendar={showCalendar} setShowCalendar={setShowCalendar} rating={singleSpot.avgRating} price={singleSpot.price} id={id} />
-                            </div>
+                            {singleSpot.ownerId !== userId &&
+                                <div className='bookings-container-true'>
+                                    <BookingsSpotId showCalendar={showCalendar} setShowCalendar={setShowCalendar} rating={singleSpot.avgRating} price={singleSpot.price} id={id} />
+                                </div>
+                            }
+
+                            {singleSpot.ownerId === userId &&
+                                <div className='edit-delete-container'>
+                                    <>
+                                        <div className='edit-delete-btn'>
+                                            <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
+                                                Edit This Spot
+                                            </NavLink>
+                                        </div>
+                                        <div className='edit-delete-btn'>
+                                            <div onClick={onClickDelete} className=''>
+                                                Delete This Spot
+                                            </div>
+                                        </div>
+                                    </>
+                                </div>
+                            }
 
                         </div>
 

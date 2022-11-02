@@ -95,8 +95,9 @@ const BookingsEdit = () => {
                     }
                 </div>
                 <div className='cal-container'>
-                    <div><BookingsEditCalendar price={price} rating={rating} id={spotId} bookingId={bookingId} /></div>
+                    <BookingsEditCalendar price={price} rating={rating} id={spotId} bookingId={bookingId} />
                 </div>
+
             </div>
         </div>
     );
