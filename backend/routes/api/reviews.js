@@ -95,13 +95,13 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     const { user } = req;
     const { review, stars } = req.body;
 
-
     let errors = {}
     if (!review) errors.review = "Review text is required"
     if (!stars) errors.stars = "Stars must be an integer from 1 to 5"
     if (typeof stars != 'number') errors.stars = "Stars must be an integer from 1 to 5"
     if (stars > 5) errors.stars = "Stars must be an integer from 1 to 5"
     if (stars < 1) errors.stars = "Stars must be an integer from 1 to 5"
+
     if (Object.keys(errors).length != 0) {
         res.status(400)
         return res.json({

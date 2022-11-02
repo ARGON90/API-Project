@@ -1,0 +1,58 @@
+.name-stars {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 16px;
+    column-gap: 10px;
+
+}
+
+.review-description {
+    padding-top: 10px;
+}
+
+.inputs-review {
+    border: none;
+    color: black;
+    width: 90%;
+    border: none;
+}
+
+.inputs-review:focus {
+    outline:none;
+  }
+
+.inputs-review::placeholder {
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    color: black;
+}
+
+.text-area-review {
+    color: black;
+    width: 90%;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.text-area-review::placeholder {
+    font-size: 14px;
+    color: black;
+}
+
+.calendar-btns-edit {
+    border: none;
+    width: 135px;
+    height: 30px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.calendar-btns-edit:hover,
+.calendar-btns-edit:focus {
+    background-color: black;
+}

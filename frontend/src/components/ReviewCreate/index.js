@@ -207,7 +207,6 @@ const CreateReview = () => {
                     <textarea
                       type="text"
                       placeholder="Review here"
-
                       value={review}
                       onChange={updateReview}
                       className='

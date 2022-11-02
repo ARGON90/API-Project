@@ -71,7 +71,6 @@ export const createReview = (spotId, review) => async (dispatch) => {
     });
     if (response.ok) {
         const review = await response.json();
-        console.log(' CREATE REVIEW THUNK RESPONSE', review)
         dispatch(addReview(review));
         return review;
     }
@@ -82,13 +81,11 @@ export const createReview = (spotId, review) => async (dispatch) => {
 
 // EDIT REVIEW
 export const editReviewThunk = (reviewId, reviewInfo) => async (dispatch) => {
-    console.log('thunk info', reviewId, reviewInfo)
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reviewInfo)
     });
-    console.log('review thunk response', response)
 
     if (response.ok) {
         const booking = await response.json();
@@ -136,21 +133,21 @@ const reviewsReducer = (state = initialState, action) => {
             return newState;
         }
         case EDIT_REVIEW: {
-            let reviewInfo = action.reviewInfo
+            let newState = {...state}
             console.log( {...state}, 'state in reviews')
             let i = 0;
-            // for (let key in newState.Bookings) {
-            //     if ( newState.Bookings[key].id === Number(action.bookingId)) {
-            //         console.log(i, 'i')
-            //     }
-            //     i++
-            // }
+            for (let key in newState.Reviews) {
+                if ( newState.Reviews[key].id === Number(action.reviewId)) {
+                    console.log(i, 'i')
+                }
+                i++
+            }
 
-            // newState = {
-            //     ...newState,
-            // };
-            // newState.Bookings[i - 1].startDate = action.bookingInfo.startDate
-            // newState.Bookings[i - 1].endDate = action.bookingInfo.endDate
+            newState = {
+                ...newState,
+            };
+            newState.Reviews[i - 1].stars = action.reviewInfo.stars
+            newState.Reviews[i - 1].review = action.reviewInfo.review
 
             return state
         }

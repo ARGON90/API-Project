@@ -1,0 +1,64 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%
+}
+
+.reviews-title {
+    font-family: Lato, sans-serif;
+    padding-bottom: 20px;
+}
+
+.reviews-cards-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 10px;
+    width: 100%;
+}
+
+.review-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    border: 1px solid grey;
+    border-radius: 12px;
+}
+
+.rev-buttons-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.nav-styling {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: white;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+.reviews-btns-edit {
+    font-family: Lato, sans-serif;
+    border: none;
+    width: 135px;
+    height: 30px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.reviews-btns-edit:hover,
+.reviews-btns-edit:focus {
+    background-color: black;
+}

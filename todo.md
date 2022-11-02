@@ -1,4 +1,5 @@
 # TODO
+default images? limit images to 4
 
 Page refreshes very slowly - too many rerenders?
 Create Review / Log in to Create Review both need styling

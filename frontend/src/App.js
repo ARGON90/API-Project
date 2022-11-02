@@ -18,6 +18,7 @@ import ReviewsSpotId from "./components/ReviewsSpotId";
 import CreateReview from "./components/ReviewCreate";
 import BookingsUser from "./components/BookingsUser/bookingsUser";
 import BookingsEdit from "./components/BookingsEdit/bookingsEdit";
+import ReviewsEdit from "./components/ReviewsEdit/reviewsEdit";
 
 import notFoundRalph from "./data/ralph.gif"
 
@@ -83,6 +84,9 @@ function App() {
           </Route>
           <Route path='/bookings/:bookingId/edit' exact={true}>
             <BookingsEdit />
+          </Route>
+          <Route path='/reviews/:reviewId/edit' exact={true}>
+            <ReviewsEdit />
           </Route>
 
           <>

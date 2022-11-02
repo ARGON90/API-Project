@@ -75,68 +75,40 @@ const ReviewsCurrentUser = () => {
     if (!reviewsList) return <div className='font-family'>Loading Current User's Reviews...</div>
     if (!reviewsList[0]) return <div className='flex-row justify-content-center'><div className='font-family bold'>
         You have no Reviews!
-        </div></div>
+    </div></div>
     if (!reviewsList[0].Spot) return <div className='font-family'>Loading Current User's Reviews...</div>
     return (
-        <div className='
-        flex-box
-        justify-content-center'>
+        <div className='flex-box justify-content-center'>
             {/* // PAGE DIV */}
-            <div className='
-            font-family
-            flex-column
-            width-90
-            '>
-
-                <div className='
-            flex-column
-            align-items-center'>
-
+            <div className='page-container'>
                     {/* NAME DIV */}
                     <div>
-                        <h1 className='font-family'>
+                        <h1 className='reviews-title'>
                             Here are your reviews, {reviewsList[0].User.firstName}
                         </h1>
                     </div>
 
 
-
                     {/* ALL REVIEW DIV */}
-                    <div className='flex-column
-                justify-content-center'>
+                    <div className='reviews-cards-container'>
 
                         {reviewsList.map((review) => (
 
                             // INDIVIDUAL REVIEW CARD
-                            <div key={review.id} className='
-                        flex-row
-                        width-100
-                        padding-all-15
-                        justify-content-evenly'>
+                            <div key={review.id} className='review-card'>
 
                                 {/* nav button and delete button div */}
-                                <div className='
-                            flex-column
-                            align-content-center
-                            justify-content-evenly
-                            '>
+                                <div className='flex-column align-content-center justify-content-evenly'>
 
-
-                                    <div>
-
-                                        <div className='
-                                    padding-trb-10
-                                    flex-column
-                                    '>
-                                        <div className='bold margin-bottom-5'> {review.Spot.name} </div>
-                                        <div className='bold margin-bottom-5'> {review.Spot.city}, {review.Spot.state}</div>
+                                        <div className='padding-trb-10 flex-column'>
+                                            <div className='bold margin-bottom-5'> {review.Spot.name} </div>
+                                            <div className='bold margin-bottom-5'> {review.Spot.city}, {review.Spot.state}</div>
                                             <NavLink to={`/spots/${review.id}`}>
                                                 {review.review}
                                             </NavLink>
                                         </div>
 
-                                        <div className='
-                                    padding-all-10'>
+                                        <div className='padding-all-10'>
                                             <NavLink to={`/spots/${review.id}`}>
                                                 <svg viewBox='0 0 32 32'>
                                                     <path
@@ -148,30 +120,28 @@ const ReviewsCurrentUser = () => {
                                             {review.stars}
                                         </div>
 
-                                    </div>
 
 
-                                    <div div='
-                                    padding-all-10'>
-                                        {console.log('reviewID', review.id)}
-                                        <button id={`${review.id}`} className={`button  looks-good-btn z-index-2`} data-type={review.id}
-                                            onClick={(e) => setButtonId(e.target.id)
-                                            }>
-                                            Delete This Review
-                                        </button>
-                                        <button id={`${review.id}`} className={`button  looks-good-btn z-index-2`} data-type={review.id}
-                                            onClick={(e) => setButtonId(e.target.id)
-                                            }>
-                                            Edit This Review
-                                        </button>
+                                    <div className='rev-buttons-container'>
+
+                                            <NavLink to={`/reviews/${review.id}/edit`} className='reviews-btns-edit nav-styling'>
+                                                <div>
+                                                Edit Review
+                                                </div>
+                                            </NavLink>
+
+                                            <button id={`${review.id}`} className='reviews-btns-edit' data-type={review.id}
+                                                onClick={(e) => setButtonId(e.target.id)
+                                                }>
+                                                Delete Review
+                                            </button>
+
                                     </div>
 
                                 </div>
 
-                                <div className='
-                                width-25
-                                padding-left'>
-                                    <NavLink to={`/spots/${review.id}`}>
+                                <div className='width-25 padding-left'>
+                                    <NavLink to={`/spots/${review.Spot.id}`}>
                                         {imageCheck(review)}
                                     </NavLink>
                                 </div>
@@ -183,7 +153,7 @@ const ReviewsCurrentUser = () => {
 
                 </div>
             </div>
-        </div>
+
     );
 };
 
