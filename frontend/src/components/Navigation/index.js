@@ -79,8 +79,8 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <>
         {/* <ProfileButton user={sessionUser} /> */}
-        <div class="drop-menu">
-          <button onClick={() => showHide()} class="button-dropdown">
+        <div className="drop-menu">
+          <button onClick={() => showHide()} className="button-dropdown">
 
             <div className='
             pointer-events-none
@@ -106,7 +106,7 @@ function Navigation({ isLoaded }) {
             </div>
           </button>
 
-          <div id="drop-id" class="drop-content
+          <div id="drop-id" className="drop-content
           flex-column
           padding-topbottom-4
           font-black">
@@ -140,8 +140,8 @@ function Navigation({ isLoaded }) {
         <DemoIndex />
         <NavLink to="/signup" className='font-black'>Sign Up</NavLink> */}
 
-        <div class="drop-menu">
-          <button onClick={() => showHide()} class="button-dropdown">
+        <div className="drop-menu">
+          <button onClick={() => showHide()} className="button-dropdown">
 
             <div className='
             pointer-events-none
@@ -168,7 +168,7 @@ function Navigation({ isLoaded }) {
 
 
           </button>
-          <div id="drop-id" class="drop-content
+          <div id="drop-id" className="drop-content
           flex-column
           padding-topbottom-4
           font-black">
@@ -191,16 +191,19 @@ function Navigation({ isLoaded }) {
   }
 
   return (
+    <>
     <div className='
     flex-box
     justify-content-center'>
 
 
-      <div className='font-family
+      <div className=' nav-container '>
+      {/* <div className='font-family
     flex-row
     justify-content-between
     align-items-center
-    width-90'>
+    width-90
+    '> */}
 
 
         <div className='
@@ -257,6 +260,8 @@ function Navigation({ isLoaded }) {
 
       </div>
     </div>
+    <div className='bottom-border'></div>
+    </>
   );
 }
 

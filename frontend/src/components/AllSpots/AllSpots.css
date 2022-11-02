@@ -1,11 +1,28 @@
+.page-container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 90%;
+}
+
+
 .all-spots-page {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
     font-family: Lato, sans-serif;
-    padding-right: 10%;
-    padding-left: 6%;
+    justify-content: center;
+    /* padding-right: 10%;
+    padding-left: 6%; */
 }
 
 .all-cards-grid{
-    border: 1px solid red;
     display: grid;
     gap: 20px;
     grid-template-columns: repeat(3, 33%);
@@ -13,7 +30,6 @@
 
 @media screen and (max-width: 950px) {
     .all-cards-grid {
-        border: 1px solid red;
         display: grid;
         gap: 20px;
         grid-template-columns: repeat(2, 50%);
@@ -23,44 +39,39 @@
 
 @media screen and (min-width: 1551px) {
     .all-cards-grid {
-        border: 1px solid red;
         display: grid;
         gap: 20px;
-        grid-template-columns: repeat(5, 20%);
+        grid-template-columns: repeat(5, 19%);
 
     }
 }
 @media screen and (max-width: 1550px) {
     .all-cards-grid {
-        border: 1px solid red;
         display: grid;
         gap: 20px;
-        grid-template-columns: repeat(4, 25%);
+        grid-template-columns: repeat(4, 24%);
 
     }
 }
 @media screen and (max-width: 1200px) {
     .all-cards-grid {
-        border: 1px solid red;
         display: grid;
         gap: 20px;
-        grid-template-columns: repeat(3, 33%);
+        grid-template-columns: repeat(3, 32%);
 
     }
 }
 @media screen and (max-width: 950px) {
     .all-cards-grid {
-        border: 1px solid red;
         display: grid;
         gap: 20px;
-        grid-template-columns: repeat(2, 50%);
+        grid-template-columns: repeat(2, 49%);
 
     }
 }
 
 @media screen and (max-width: 550px) {
     .all-cards-grid {
-        border: 1px solid red;
         display: grid;
         gap: 20px;
         grid-template-columns: repeat(1, 100%);
@@ -69,7 +80,6 @@
 }
 
 .card-container {
-    border: 1px solid cyan;
 }
 
 .image-container-div {

@@ -3,6 +3,26 @@
     grid-template-columns: 300px 1fr 300px
 }
 
+.bottom-border {
+  border-top: 1px solid grey;
+  width: 120%;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-left: 0px;
+}
+
+.nav-container {
+  font-family: Lato, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 90px;
+    padding-top: 20px;
+}
+
 #search-bar {
     border: 2px #CCCCCC solid;
     border-radius: 999px;
@@ -131,6 +151,7 @@
     pointer-events: none;
     z-index: -2;
   }
+
 
   .padding-r-10 {
     padding-right: 10px;

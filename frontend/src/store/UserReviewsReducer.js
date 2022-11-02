@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf"
 const CURRENT_USER_REVIEWS = 'reviews/currentUser'
 const REVIEWS_SPOT_ID = 'reviews/spotId'
 const ADD_REVIEW = 'reviews/create'
+const EDIT_REVIEW = 'reviews/edit'
 const DELETE_REVIEW = 'reviews/delete'
 
 //ACTIONS
@@ -24,7 +25,13 @@ const addReview = (review) => {
         review
     }
 }
-
+const editReview = (reviewId, reviewInfo) => {
+    return {
+        type: EDIT_REVIEW,
+        reviewId,
+        reviewInfo
+    }
+}
 const deleteReviewById = (id) => {
     return {
         type: DELETE_REVIEW,
@@ -73,6 +80,24 @@ export const createReview = (spotId, review) => async (dispatch) => {
     }
 }
 
+// EDIT REVIEW
+export const editReviewThunk = (reviewId, reviewInfo) => async (dispatch) => {
+    console.log('thunk info', reviewId, reviewInfo)
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reviewInfo)
+    });
+    console.log('review thunk response', response)
+
+    if (response.ok) {
+        const booking = await response.json();
+        dispatch(editReview(reviewId, booking));
+        return booking;
+    }
+}
+
+
 //THUNK - DELETE A REVIEW
 export const deleteReview = (id) => async (dispatch) => {
     const response = await csrfFetch(`/api/reviews/${id}`, {
@@ -109,6 +134,25 @@ const reviewsReducer = (state = initialState, action) => {
         case ADD_REVIEW: {
             const newState = { ...state, [action.review.id]: action.review };
             return newState;
+        }
+        case EDIT_REVIEW: {
+            let reviewInfo = action.reviewInfo
+            console.log( {...state}, 'state in reviews')
+            let i = 0;
+            // for (let key in newState.Bookings) {
+            //     if ( newState.Bookings[key].id === Number(action.bookingId)) {
+            //         console.log(i, 'i')
+            //     }
+            //     i++
+            // }
+
+            // newState = {
+            //     ...newState,
+            // };
+            // newState.Bookings[i - 1].startDate = action.bookingInfo.startDate
+            // newState.Bookings[i - 1].endDate = action.bookingInfo.endDate
+
+            return state
         }
         default:
             return state;

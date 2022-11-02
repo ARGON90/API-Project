@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { deleteReview, getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 import '../../index.css'
+import './reviewsUser.css'
 
 const ReviewsCurrentUser = () => {
     console.log('INSIDE REVIEWS-CURRENT-USER COMPONENT')
@@ -66,7 +67,6 @@ const ReviewsCurrentUser = () => {
             deletion()
             dispatch(getReviewsCurrentUser())
             history.push(`/reviews/current`)
-            dispatch(getReviewsCurrentUser())
         }
     }, [buttonId])
 
@@ -158,6 +158,11 @@ const ReviewsCurrentUser = () => {
                                             onClick={(e) => setButtonId(e.target.id)
                                             }>
                                             Delete This Review
+                                        </button>
+                                        <button id={`${review.id}`} className={`button  looks-good-btn z-index-2`} data-type={review.id}
+                                            onClick={(e) => setButtonId(e.target.id)
+                                            }>
+                                            Edit This Review
                                         </button>
                                     </div>
 
