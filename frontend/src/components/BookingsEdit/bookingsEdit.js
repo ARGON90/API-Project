@@ -6,6 +6,7 @@ import { getBookingsCurrentSpot } from '../../store/spotbookingsReducer';
 import { createBooking } from '../../store/bookingsReducer';
 import BookingsEditCalendar from '../BookingsEditCalendar/bookingsEditCalendar';
 import { getAllSpots } from '../../store/spotsReducer';
+import { deleteBooking } from '../../store/bookingsReducer';
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -29,6 +30,7 @@ const BookingsEdit = () => {
     if (!userBookings) return null
     if (!allSpots) return null
 
+
     const userBookingsArray = Object.values(userBookings)
     const userBookingArray = userBookingsArray.filter((bookings) => bookings.id === Number(bookingId))
     const userBooking = userBookingArray[0]
@@ -40,6 +42,12 @@ const BookingsEdit = () => {
 
     if (!spot[0]) return 'spot not loaded'
     const rating = spot[0].avgRating
+
+    async function onClickDelete() {
+        await dispatch(deleteBooking(userBooking.id))
+        return 'Booking Successfully Deleted!'
+        history.push(`/bookings/`);
+    }
 
     function dateParser(string) {
         string = String(string)
@@ -84,7 +92,7 @@ const BookingsEdit = () => {
                                     <div>${userBooking.Spot.price}/night</div>
                                     <div className='bookings-container'>
                                         <NavLink to='/bookings/' className='edit-delete-btn'>Go Back</NavLink>
-                                        <div className='edit-delete-btn'>Delete Booking</div>
+                                        <div onClick={onClickDelete} className='edit-delete-btn'>Delete Booking</div>
                                     </div>
                                 </div>
                                 <div className='image-div'>

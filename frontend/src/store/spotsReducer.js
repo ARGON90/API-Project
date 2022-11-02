@@ -149,10 +149,6 @@ export const deleteSpot = (id) => async (dispatch) => {
     }
 }
 
-
-
-
-
 const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 
 //ACTION FOR IMG TO SPOT

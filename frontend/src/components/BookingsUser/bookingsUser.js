@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import 'react-calendar/dist/Calendar.css'
 import BookingsEdit from '../BookingsEdit/bookingsEdit';
+import { deleteBooking } from '../../store/bookingsReducer';
 
 import './bookingsUser.css'
 
@@ -49,7 +50,10 @@ const BookingsUser = () => {
         return [year, month, day]
     }
 
+    async function DeleteFxn() {
+        await useDispatch(deleteBooking())
 
+    }
 
 
     if (!userBookingsArray) return <div>Loading Bookings</div>
@@ -70,7 +74,7 @@ const BookingsUser = () => {
                                         <div>${booking.Spot.price}/night</div>
                                         <div className='bookings-container'>
                                             <NavLink to={`/bookings/${booking.id}/edit`} className='edit-delete-btn'>Edit Booking</NavLink>
-                                            <div className='edit-delete-btn'>Delete Booking</div>
+                                            {/* <div onClick={() => DeleteFxn(booking.id)} className='edit-delete-btn'>Delete Booking</div> */}
                                         </div>
 
                                     </div>

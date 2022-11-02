@@ -73,7 +73,7 @@ const ReviewsSpotId = ({ id }) => {
                                         fillRule='evenodd'
                                     ></path>
                                 </svg>
-                                <NavLink to={`/reviews/current`} className='nav-edit'>Edit Your Review</NavLink>
+                                <NavLink to={`/reviews/current`} className='nav-edit'>Edit Review</NavLink>
                             </div>
                             <div>{userReview[0].review}</div>
                         </div>

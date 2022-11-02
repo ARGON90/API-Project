@@ -133,7 +133,7 @@
     padding-right: 5px;
 }
 
-.react-calendar__tile--now {
+/* .react-calendar__tile--now {
     background-color: grey;
 }
 
@@ -152,12 +152,14 @@
 .react-calendar__tile .react-calendar__tile--active .react-calendar__tile--range .react-calendar__tile--rangeStart .react-calendar__tile--rangeEnd .react-calendar__tile--rangeBothEnds .react-calendar__month-view__days__day .react-calendar__month-view__days__day--weekend{
     background-color: lightblue;
     background: lightblue;
-}
+} */
 
 .pink {
-    background-color: pink;
+    background-color: #e61e4d;
+    color: white;
     padding: 4px;
     border-radius: 6px;
+    font-weight: bold;
 }
 
 .create-booking-login {

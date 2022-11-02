@@ -170,12 +170,14 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 })
 
 router.delete('/:bookingId', requireAuth, async (req, res) => {
+    console.log('INSIDE BOOKINGS BACKEND')
     const { bookingId } = req.params;
     const thisBooking = await Booking.findByPk(bookingId);
 
 
     //BOOKING NOT FOUND
     if (!thisBooking) {
+        console.log('BOOKING NOT FOUND  ')
         res.status(404)
         return res.json({
             message: "Booking couldn't be found",

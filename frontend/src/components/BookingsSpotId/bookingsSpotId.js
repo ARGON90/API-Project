@@ -9,6 +9,7 @@ import 'react-calendar/dist/Calendar.css'
 import moment from 'moment'
 
 import './bookings.css'
+import '../../calendar.css'
 
 
 const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) => {
@@ -220,14 +221,12 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             endDate: checkOutDate
         }
         let createdBooking;
-        console.log('booking errors.lengt', bookingErrors.length)
         if (Object.values(bookingErrors).length === 0) {
             createdBooking = await dispatch(createBooking(bookingInfo))
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
             clearSelections()
-        }
-        if (createdBooking) {
+            alert ('Bookig Successfully Created!')
             history.push('/bookings/')
         }
     }

@@ -77,8 +77,8 @@ export const editBookingThunk = (bookingId, bookingInfo) => async (dispatch) => 
 
 //THUNK - DELETE A BOOKING
 export const deleteBooking = (id) => async (dispatch) => {
-
-    const response = await csrfFetch(`/api/reviews/${id}`, {
+    console.log('DELETE BOOKINGS THUNK')
+    const response = await csrfFetch(`/api/bookings/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     });
