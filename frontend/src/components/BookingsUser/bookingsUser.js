@@ -59,7 +59,7 @@ const BookingsUser = () => {
     if (!userBookingsArray) return <div>Loading Bookings</div>
     return (
         <div className='page'>
-            <div className='page-container'>
+            <div className='page-container-user'>
                 <div className='user-bookings-page'>
                     {userBookingsArray.length > 0 &&
                         <>

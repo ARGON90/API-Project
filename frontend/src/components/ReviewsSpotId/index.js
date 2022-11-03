@@ -75,22 +75,22 @@ const ReviewsSpotId = ({ id }) => {
                                 </svg>
                                 <NavLink to={`/reviews/current`} className='nav-edit'>Edit Review</NavLink>
                             </div>
-                            <div>{userReview[0].review}</div>
+                            <div className='review-container'>{userReview[0].review}</div>
                         </div>
 
                         {reviewsList.map((review) => (
                             <div className='individual-review-container'>
                                 <div className='header-title'>
                                     <div className='bold'>{review.User.firstName}{' '}{review.User.lastName}:</div>
-                                    <div>{review.stars}</div>
                                     <svg viewBox='0 0 32 32'>
                                         <path
                                             d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
                                             fillRule='evenodd'
                                         ></path>
                                     </svg>
+                                    <div>{review.stars}</div>
                                 </div>
-                                <div>{review.review}</div>
+                                <div className='review-container'>{review.review}</div>
                             </div>
                         ))}
 
@@ -105,13 +105,15 @@ const ReviewsSpotId = ({ id }) => {
                             <div className='individual-review-container'>
                                 <div className='header-title'>
                                     <div className='bold'>{review.User.firstName}{' '}{review.User.lastName}:</div>
-                                    <div>{review.stars}</div>
-                                    <svg viewBox='0 0 32 32'>
-                                        <path
-                                            d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                                            fillRule='evenodd'
-                                        ></path>
-                                    </svg>
+                                    <div className='stars-number'>
+                                        <svg viewBox='0 0 32 32'>
+                                            <path
+                                                d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                                fillRule='evenodd'
+                                            ></path>
+                                        </svg>
+                                        <div>{review.stars}</div>
+                                    </div>
                                 </div>
                                 <div>{review.review}</div>
                             </div>

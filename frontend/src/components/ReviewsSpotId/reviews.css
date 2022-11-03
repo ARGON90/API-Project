@@ -9,9 +9,11 @@
 .individual-review-container {
     display: flex;
     flex-direction: column;
-    padding-top: 15px;
+    /* padding-top: 15px; */
     width: 40%;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
 }
 
 
@@ -20,6 +22,19 @@
     flex-direction: row;
     padding-bottom: 10px;
     column-gap: 5px;
+    padding-left: 8px;
+
+}
+
+
+
+.stars-number {
+    display: flex;
+    flex-direction: row;
+}
+
+.review-container {
+    padding-left: 8px;
 }
 
 
@@ -30,7 +45,9 @@
     width: 40%;
     background-color: #ECECEC;
     border-radius: 12px;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
 }
 
 .nav-edit {

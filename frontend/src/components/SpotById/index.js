@@ -35,31 +35,16 @@ const SpotById = () => {
         }
     }
 
-
     const [showCalendar, setShowCalendar] = useState(false)
-
-    // const { currentNum, setCurrentNum } = useContext(ButtonContext)
     let sessionId;
     if (sessionUserId && sessionUserId.user) {
         sessionId = sessionUserId.user.id
     }
 
-
-
     useEffect(() => {
-        // console.log('INSIDE SPOT-BY-ID USE EFFECT')
         dispatch(getOneSpot(id))
     }, [dispatch, userId])
 
-    // useEffect(() => {
-    //     console.log('SPOTBYID GETSTATE USE EFFECT ')
-    //     dispatch(getState())
-    // }, [dispatch, sessionId])
-    // }, [dispatch, sessionId, currentNum])
-
-    // function checkState() {
-    //     dispatch(getState());
-    // }
 
     function imageCheckSingle(singleSpot) {
         if (singleSpot.images) {
@@ -95,7 +80,6 @@ const SpotById = () => {
     }
 
     function sessionCheck() {
-
         if (sessionId && sessionId !== singleSpot.ownerId) {
             console.log('in session ID create')
             return (
@@ -112,10 +96,10 @@ const SpotById = () => {
 
 
 
-            <div className='page-container'>
+            <div className='page-container-spotId'>
 
                 {/* HEADER DIV */}
-                <div >
+                <div className='header-stars'>
                     <div>
                         <h1>{singleSpot.description}</h1>
                     </div>

@@ -4,12 +4,20 @@
     align-items: center;
 }
 
-.page-container{
+.page-container-spotId{
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 75%;
     align-items: flex-start;
     font-family: Lato, sans-serif;
+}
+
+.header-stars {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    row-gap: 5px;
 }
 
 .all-images-container{
@@ -38,12 +46,14 @@
     width: 98%;
     height: 98%;
     border-radius: 12px;
+    object-fit: cover;
 }
 
 .multi-image {
     width: 49%;
     height: 49%;
     border-radius: 12px;
+    object-fit: cover;
 }
 
 .edit-delete-container {
@@ -86,7 +96,6 @@
     column-gap: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
-
 }
 
 .hosted-header-true{
@@ -108,6 +117,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 .all-reviews-header {
