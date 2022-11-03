@@ -15,13 +15,14 @@ import hive from '../../data/hive.png'
 import * as sessionActions from '../../store/session';
 import { useHistory } from "react-router-dom";
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
+import LoginFormModalMain from '../LoginFormModal/DemoIndexMain';
 
 import hamburger from "../../data/hamburger.png"
 import './Navigation.css';
 import '../../index.css'
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(state => state?.session?.user);
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -69,8 +70,6 @@ function Navigation({ isLoaded }) {
       }
     }
   }
-  //
-  console.log('SESSIONID', sessionId)
 
   // IF LOGGED IN
   //create spot, view all spots, view all reviews
@@ -136,9 +135,6 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        {/* <LoginFormModal />
-        <DemoIndex />
-        <NavLink to="/signup" className='font-black'>Sign Up</NavLink> */}
 
         <div className="drop-menu">
           <button onClick={() => showHide()} className="button-dropdown">
@@ -192,13 +188,13 @@ function Navigation({ isLoaded }) {
 
   return (
     <>
-    <div className='
+      <div className='
     flex-box
     justify-content-center'>
 
 
-      <div className=' nav-container '>
-      {/* <div className='font-family
+        <div className=' nav-container '>
+          {/* <div className='font-family
     flex-row
     justify-content-between
     align-items-center
@@ -206,61 +202,64 @@ function Navigation({ isLoaded }) {
     '> */}
 
 
-        <div className='
+          <div className='
       width-25
       flex-box
       '>
-          <NavLink exact to="/spots" className={'flex-column align-items-center'}>
-            <div className='
+            <NavLink exact to="/spots" className={'flex-column align-items-center'}>
+              <div className='
           width-100
           flex-box
           justify-content-around'>
-              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className=''></img>
-              <img id='logo' src={hive} alt='Hive Logo' className='padding-r-4 padding-l-10'></img>
-              <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-4 bee-2'></img>
-            </div>
+                <img id='logo' src={beelogo} alt='Bee-Bee Logo' className=''></img>
+                <img id='logo' src={hive} alt='Hive Logo' className='padding-r-4 padding-l-10'></img>
+                <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-4 bee-2'></img>
+              </div>
 
-            <div className='
+              <div className='
           flex-column
           justify-content-center
           flex-end'>
-              <div className='logo-font font-black padding-16'>
-                <div className='padding-l-10'>
-                  Bee & Bee
+                <div className='logo-font font-black padding-16'>
+                  <div className='padding-l-10'>
+                    Bee & Bee
+                  </div>
                 </div>
               </div>
-            </div>
-          </NavLink>
-        </div>
-
-
-        <div id='search-bar' className='
-      width-50
-      justify-content-center
-      text-center'>
-          See what the buzz is about!
-        </div>
-
-
-        <div className='
-      width-25'>
-          <div className='flex-box row-reverse column-gap
-          align-items-center'>
-            {/* {checkState()} */}
-            {isLoaded && sessionLinks}
-            {sessionId && (
-              <NavLink to="/create" className='font-black bold'>Become a Host</NavLink>
-            )}
-            {!sessionId && (
-              <NavLink to="/signup" className='font-black bold'>Become a Host</NavLink>
-            )}
+            </NavLink>
           </div>
+
+          {!sessionUser &&
+            // <div className='middle-container-logged-out'>
+            <div className='middle-container-logged-out'>
+              < LoginFormModalMain /> </div>
+            // </div>
+          }
+
+          {sessionUser &&
+            <div className='middle-container-logged-in'>
+              <div>Your Listings </div>
+              <div>Your Bookings</div>
+              <div>Your Reviews</div>
+            </div>}
+
+          <div className='width-25'>
+            <div className='flex-box row-reverse column-gap align-items-center'>
+              {/* {checkState()} */}
+              {isLoaded && sessionLinks}
+              {sessionUser && (
+                <NavLink to="/create" className='font-black bold'>Welcome, {sessionUser.firstName} {sessionUser.lastName}</NavLink>
+              )}
+              {!sessionUser && (
+                <NavLink to="/signup" className='font-black bold'>Become a Host</NavLink>
+              )}
+            </div>
+          </div>
+
+
         </div>
-
-
       </div>
-    </div>
-    <div className='bottom-border'></div>
+      <div className='bottom-border'></div>
     </>
   );
 }

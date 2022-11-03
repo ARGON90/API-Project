@@ -1,3 +1,25 @@
+.middle-container-logged-in {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
+  font-size: 20px;
+  padding-right: 30px;
+  font-weight: bold;
+}
+
+.middle-container-logged-out {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 50%;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+
+
+
 #container {
     display: grid;
     grid-template-columns: 300px 1fr 300px
