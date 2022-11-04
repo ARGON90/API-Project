@@ -4,8 +4,6 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { getState } from '../../store/session';
 import { getOneSpot } from '../../store/spotsReducer';
-import { ButtonContext } from "../../context/ButtonContext";
-import { sessionUserId } from '../../store/session';
 import SpotById from '../SpotById';
 import { createReview } from '../../store/UserReviewsReducer';
 import '../../index.css'
@@ -25,11 +23,6 @@ const CreateReview = () => {
   const spotsList = useSelector((state) => (state.spots));
   const singleSpot = spotsList[spotId]
 
-  const { currentNum, setCurrentNum } = useContext(ButtonContext)
-  let sessionId;
-  if (sessionUserId && sessionUserId.user) {
-    sessionId = sessionUserId.user.id
-  }
 
   useEffect(() => {
     console.log('INSIDE SPOT-BY-ID USE EFFECT')
@@ -39,7 +32,7 @@ const CreateReview = () => {
   useEffect(() => {
     console.log('SPOTBYID GETSTATE USE EFFECT ')
     // dispatch(getState())
-  }, [dispatch, sessionId, currentNum])
+  }, [dispatch])
 
   // function checkState() {
   //   dispatch(getState());

@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { getState } from '../../store/session';
-import { ButtonContext } from "../../context/ButtonContext";
 import { useHistory } from "react-router-dom";
 
 function LoginForm() {
@@ -11,7 +10,6 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const { currentNum, setCurrentNum } = useContext(ButtonContext)
   const history = useHistory()
 
   const handleSubmit = async (e) => {
@@ -25,11 +23,9 @@ function LoginForm() {
         if (data && data.errors) setErrors(data.errors);
       }
     );
-    setCurrentNum((num) => num + 1)
   };
 
   const setCurrent = () => {
-    setCurrentNum((num) => num + 1)
     history.push('/spots/')
   }
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from 'react-redux';
 
 import * as sessionActions from '../../store/session';
-import { ButtonContext } from "../../context/ButtonContext";
 import { useHistory } from "react-router-dom";
 
 
@@ -10,15 +9,11 @@ import { useHistory } from "react-router-dom";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const {currentNum, setCurrentNum} = useContext(ButtonContext)
   const history = useHistory();
-
-  console.log('CURRENTNUM', currentNum)
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
-    setCurrentNum((num) => num + 1)
   };
 
   console.log('HELLO PROFILEBUTTON')
@@ -29,7 +24,6 @@ function ProfileButton({ user }) {
 
     const closeMenu = () => {
       setShowMenu(false);
-      setCurrentNum((num) => num + 1)
     };
 
     document.addEventListener('click', closeMenu);
@@ -40,8 +34,6 @@ function ProfileButton({ user }) {
   const logout = async (e) => {
     e.preventDefault();
     await dispatch(sessionActions.logout());
-    setCurrentNum((num) => num + 1)
-    console.log('HELLO LOGOUT')
     history.push(`/spots/`);
   };
 

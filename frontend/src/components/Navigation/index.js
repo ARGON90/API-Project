@@ -7,9 +7,6 @@ import { useState } from 'react';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import DemoIndex from '../LoginFormModal/DemoIndex'
-import { sessionUserId } from '../../store/session';
-import { getState } from '../../store/session';
-import { ButtonContext } from "../../context/ButtonContext";
 import logo from '../../data/logo.png'
 import beelogo from '../../data/beelogo.png'
 import hive from '../../data/hive.png'
@@ -29,34 +26,19 @@ function Navigation({ isLoaded }) {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const { currentNum, setCurrentNum } = useContext(ButtonContext)
   const [showSearchBar, setSearchBar] = useState(false)
   const [filterSpots, setFilterSpots] = useState([])
 
-  let sessionId;
-  if (sessionUserId && sessionUserId.user) {
-    sessionId = sessionUserId.user.id
-  }
-
 
   useEffect(() => {
-    console.log('NAVIGATION GETSTATE USE EFFECT ')
-    // dispatch(getState())
     dispatch(getAllSpots())
-  }, [dispatch, sessionId, currentNum, filterSpots])
-
-
-  // function checkState() {
-  //   dispatch(getState())
-  // }
+  }, [dispatch, filterSpots])
 
 
   const logout = async (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
     dispatch(getBookingsCurrentUser())
-    setCurrentNum((num) => num + 1)
-    console.log('HELLO LOGOUT')
     history.push(`/spots/`);
   };
 
@@ -83,7 +65,6 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     sessionLinks = (
       <>
-        {/* <ProfileButton user={sessionUser} /> */}
         <div className="drop-menu">
           <button onClick={() => showHide()} className="button-dropdown">
 
@@ -200,13 +181,6 @@ function Navigation({ isLoaded }) {
 
 
         <div className=' nav-container '>
-          {/* <div className='font-family
-    flex-row
-    justify-content-between
-    align-items-center
-    width-90
-    '> */}
-
 
           <div className='
       width-25
@@ -255,8 +229,6 @@ function Navigation({ isLoaded }) {
               }
             </div>
           </div>
-
-
         </div>
       </div>
       <div className='bottom-border'></div>

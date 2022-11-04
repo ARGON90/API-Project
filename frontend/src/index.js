@@ -9,7 +9,6 @@ import { ModalProvider } from "./context/Modal";
 import configureStore from "./store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
-import ButtonProvider from "./context/ButtonContext";
 
 const store = configureStore();
 
@@ -24,13 +23,11 @@ if (process.env.NODE_ENV !== "production") {
 function Root() {
   return (
     <Provider store={store}>
-      <ButtonProvider>
         <ModalProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
         </ModalProvider>
-      </ButtonProvider>
     </Provider>
   );
 }

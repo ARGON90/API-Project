@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
-import { ButtonContext } from "../../context/ButtonContext";
 import { useHistory } from "react-router-dom";
 
 import './Login.css'
@@ -16,7 +15,7 @@ function DemoLogin() {
   const [demoPassword, setDemoPassword] = useState("password");
   const [errors, setErrors] = useState([]);
   const history = useHistory()
-  const { currentNum, setCurrentNum } = useContext(ButtonContext)
+
 
 
   const handleSubmit = async (e) => {
@@ -28,11 +27,9 @@ function DemoLogin() {
         if (data && data.errors) setErrors(data.errors);
       }
     );
-    setCurrentNum((num) => num + 1)
   };
 
   const setCurrent = () => {
-    setCurrentNum((num) => num + 1)
     history.push('/spots/')
   }
 

@@ -41,12 +41,9 @@ const deleteReviewById = (id) => {
 
 //THUNK - GET CURRENT USER REVIEWS
 export const getReviewsCurrentUser = () => async (dispatch) => {
-
     const response = await fetch(`/api/reviews/current`);
-
     if (response.ok) {
         const data = await response.json()
-
         dispatch(userReviews(data));
         return data;
     }

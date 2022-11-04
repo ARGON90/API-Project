@@ -9,12 +9,10 @@ import '../../index.css'
 import './reviewsUser.css'
 
 const ReviewsCurrentUser = () => {
-    console.log('INSIDE REVIEWS-CURRENT-USER COMPONENT')
     const dispatch = useDispatch()
     const history = useHistory()
 
     useEffect(() => {
-        console.log('INSIDE REVIEWS CURRENT USER')
         dispatch(getReviewsCurrentUser())
     }, [dispatch])
 
@@ -27,7 +25,6 @@ const ReviewsCurrentUser = () => {
         //     let newList = Array.from(spotsList[0])
         //     spotsList = newList
     }
-    console.log('REVIEWSLIST', reviewsList)
 
 
     function imageCheck(review) {
@@ -57,11 +54,8 @@ const ReviewsCurrentUser = () => {
     const [buttonId, setButtonId] = useState(0)
 
     useEffect(() => {
-        console.log('ID INSIDE USEEFFECT', buttonId)
         if (buttonId) {
             async function deletion() {
-                console.log('ID IN DELETE FXN', buttonId)
-                console.log('INSIDE DELETE FXN REVIEWS')
                 await dispatch(deleteReview(buttonId))
             }
             deletion()

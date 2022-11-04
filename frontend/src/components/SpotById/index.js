@@ -6,7 +6,6 @@ import { getOneSpot } from '../../store/spotsReducer';
 import { deleteSpot } from '../../store/spotsReducer';
 import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
-import { ButtonContext } from "../../context/ButtonContext";
 import ReviewsSpotId from '../ReviewsSpotId';
 import BookingsSpotId from '../BookingsSpotId/bookingsSpotId';
 

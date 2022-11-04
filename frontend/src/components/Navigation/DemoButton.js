@@ -2,13 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-import { ButtonContext } from "../../context/ButtonContext";
 import * as sessionActions from '../../store/session';
 
 function DemoButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const {currentNum, setCurrentNum} = useContext(ButtonContext)
   const history = useHistory()
 
   const openMenu = () => {
