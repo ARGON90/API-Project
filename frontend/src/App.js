@@ -19,6 +19,8 @@ import CreateReview from "./components/ReviewCreate";
 import BookingsUser from "./components/BookingsUser/bookingsUser";
 import BookingsEdit from "./components/BookingsEdit/bookingsEdit";
 import ReviewsEdit from "./components/ReviewsEdit/reviewsEdit";
+import Footer from "./components/Footer/footer";
+
 
 import notFoundRalph from "./data/ralph.gif"
 
@@ -48,6 +50,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <Footer />
       {isLoaded && (
         <Switch>
           <Route path='/create' exact={true} >

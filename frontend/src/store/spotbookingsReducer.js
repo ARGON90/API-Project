@@ -20,21 +20,23 @@ const editBooking = (bookingId, bookingInfo) => {
 
 //THUNK - GET CURRENT SPOT BOOKINGS
 export const getBookingsCurrentSpot = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
-    if (response.ok) {
-        const data = await response.json()
-        dispatch(spotBookings(data));
-        return data;
+    if (spotId) {
+        const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
+        if (response.ok) {
+            const data = await response.json()
+            dispatch(spotBookings(data));
+            return data;
+        }
     }
 }
 
 export const editBookingThunkSpot = (bookingId, bookingInfo) => async (dispatch) => {
+
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingInfo)
     });
-    console.log('think response', response)
 
     if (response.ok) {
         const booking = await response.json();
@@ -58,8 +60,7 @@ const spotBookingsReducer = (state = initialState, action) => {
             let bookingInfo = action.bookingInfo
             let i = 0;
             for (let key in newState.Bookings) {
-                if ( newState.Bookings[key].id === Number(action.bookingId)) {
-                    console.log(i, 'i')
+                if (newState.Bookings[key].id === Number(action.bookingId)) {
                 }
                 i++
             }

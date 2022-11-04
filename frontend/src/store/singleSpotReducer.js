@@ -12,8 +12,6 @@ const ADD_IMG_TO_SPOT = '/oneSpot/addImgToSpot'
 // }
 
 const addImg = (spotId, image) => {
-    console.log('INSIDE ADD IMG image', image)
-    console.log('INSIDE ADD IMG spotId', spotId)
     return {
         type: ADD_IMG_TO_SPOT,
         image,
@@ -35,7 +33,6 @@ const addImg = (spotId, image) => {
 
 //THUNK - ADD IMG TO ONE SPOT
 export const addImgSpot = (spotId, payload) => async (dispatch) => {
-    console.log('INSIDE ADD-IMG-SPOT THUNK')
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -59,7 +56,6 @@ const singleSpotReducer = (state = initialState, action) => {
         //     return newState
         // }
         case ADD_IMG_TO_SPOT: {
-            console.log('INSIDE ADD IMG ACTION / REDUCER')
             action.image.imageableId = Number(action.image.imageableId)
             const newState = { ...state };
             newState[0].Images = [...state[0].Images, action.image]

@@ -66,7 +66,6 @@ const EditReview = () => {
         }
 
         let editedReview;
-        console.log('review, info', reviewId, reviewInfo)
         editedReview = await dispatch(editReviewThunk(Number(reviewId), reviewInfo));
         if (editedReview) {
             history.push(`/reviews/current`);

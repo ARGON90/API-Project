@@ -113,7 +113,7 @@ const initialState = {}
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case DELETE_REVIEW: {
-            console.log('INSIDE DELETE SPOT REDUCER');
+     
             const newState = { ...state };
             return newState;
         }
@@ -131,11 +131,11 @@ const reviewsReducer = (state = initialState, action) => {
         }
         case EDIT_REVIEW: {
             let newState = {...state}
-            console.log( {...state}, 'state in reviews')
+
             let i = 0;
             for (let key in newState.Reviews) {
                 if ( newState.Reviews[key].id === Number(action.reviewId)) {
-                    console.log(i, 'i')
+
                 }
                 i++
             }

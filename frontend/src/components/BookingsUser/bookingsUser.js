@@ -15,7 +15,10 @@ const BookingsUser = () => {
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
 
     useEffect(() => {
-        dispatch(getBookingsCurrentUser())
+        if (currentUserId) {
+            console.log('bookings user')
+            dispatch(getBookingsCurrentUser())
+        }
     }, [dispatch])
 
     if (!currentUserId) return <div className='nav-create'>Log in to create a booking!</div>

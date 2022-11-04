@@ -39,7 +39,10 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                 return 'Spot Bookings Issue'
             }
         }
-        dispatch(getBookingsCurrentUser())
+        if (currentUserId) {
+            // console.log('bookings SPOT ID')
+            dispatch(getBookingsCurrentUser())
+        }
         dispatch(getBookingsCurrentSpot(id))
         calendarDates()
         if (checkInDate && checkOutDate) {
@@ -102,7 +105,7 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
         setCheckOutDate(dateParserForInput(currentSelectedDate))
 
         let totalDays = ((new Date(checkOutDate).getTime() - new Date(checkInDate).getTime()) / 86400000)
-        console.log(totalDays, checkInDate, checkOutDate)
+        // console.log(totalDays, checkInDate, checkOutDate)
         if (!totalDays) return
         setTotalDays(totalDays)
         setTotalPrice(Number(price) * totalDays)

@@ -65,7 +65,6 @@ const ReviewsCurrentUser = () => {
     }, [buttonId])
 
 
-    console.log('REVIEWSLIST IN CURRENT REVIEWS', reviewsList)
     if (!reviewsList) return <div className='font-family'>Loading Current User's Reviews...</div>
     if (!reviewsList[0]) return <div className='flex-row justify-content-center'><div className='font-family bold'>
         You have no Reviews!

@@ -67,13 +67,13 @@ function EditSpot() {
             return alert(Object.values(errors))
         }
 
-        console.log('INSIDE CREATE FORM SUBMIT')
-        console.log('PAYLOAD', spotInfo)
+        // console.log('INSIDE CREATE FORM SUBMIT')
+        // console.log('PAYLOAD', spotInfo)
 
         let editedSpot;
         editedSpot = await dispatch(editSpot(spotId, spotInfo));
         if (editedSpot) {
-            console.log(editedSpot)
+            // console.log(editedSpot)
             history.push(`/spots/${editedSpot.id}`);
         }
     };

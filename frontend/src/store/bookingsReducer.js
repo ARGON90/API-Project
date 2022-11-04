@@ -60,13 +60,11 @@ export const createBooking = (booking) => async (dispatch) => {
 }
 
 export const editBookingThunk = (bookingId, bookingInfo) => async (dispatch) => {
-    console.log('thunk info', bookingId, bookingInfo)
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingInfo)
     });
-    console.log('think response', response)
 
     if (response.ok) {
         const booking = await response.json();
@@ -77,12 +75,10 @@ export const editBookingThunk = (bookingId, bookingInfo) => async (dispatch) => 
 
 //THUNK - DELETE A BOOKING
 export const deleteBooking = (id) => async (dispatch) => {
-    console.log('DELETE BOOKINGS THUNK')
     const response = await csrfFetch(`/api/bookings/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     });
-    console.log('DELETE BOOKINGS THUNK RESPONSE', response)
     if (response.ok) {
         const spot = await response.json();
         dispatch(deleteBookingById(id));
@@ -110,7 +106,7 @@ const bookingsReducer = (state = initialState, action) => {
             let i = 0;
             for (let key in newState.Bookings) {
                 if ( newState.Bookings[key].id === Number(action.bookingId)) {
-                    console.log(i, 'i')
+
                 }
                 i++
             }

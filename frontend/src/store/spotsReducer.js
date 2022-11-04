@@ -19,7 +19,6 @@ const loadSpots = (payload) => {
 }
 
 const loadOneSpot = (spotId, images, owner) => {
-    console.log('INSIDE LOAD ONE SPOT', spotId)
     return {
         type: GET_ONE_SPOT,
         spotId,
@@ -76,10 +75,10 @@ export const getOneSpot = (spotId) => async (dispatch) => {
     const response = await fetch(`/api/spots/${spotId}`);
     if (response.ok) {
         const data = await response.json()
-        console.log('GET ONE SPOT THUNK DATA', data)
+
         let images = data[0].Images
         let owner = data[0].Owner
-        console.log('OWNER', owner)
+
         dispatch(loadOneSpot(spotId, images, owner));
         return data;
     }
@@ -168,7 +167,7 @@ export const addImgSpot = (spotId, url) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({url})
     })
-    console.log('IMAGESS', response)
+
     if (response.ok) {
         const data = await response.json()
         dispatch(addImg(spotId, data));

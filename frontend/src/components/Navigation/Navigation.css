@@ -8,6 +8,19 @@
   font-weight: bold;
 }
 
+.been-bee-container {
+  height: 65px;
+  width: 220px;
+
+}
+
+.been-bee-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
 .middle-container-logged-out {
   display: flex;
   flex-direction: row;
@@ -20,7 +33,7 @@
 .searchBarDiv {
     position: relative;
     display: flex;
-    width: 250px;
+    /* width: 250px; */
 }
 
 .buttonClear {
@@ -34,10 +47,10 @@
 }
 
  /* search bar main div */
-.searchBarDiv input{
+/* .searchBarDiv input{
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 300px;
   border: #DCD6CC 1px solid;
   background: #FFFFFF;
   margin-top: 10px;
@@ -47,6 +60,44 @@
   resize: none;
   height: 32px;
   box-shadow: 0px 2px 2px grey;
+  margin-top: 0px;
+} */
+
+.search-input-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 300px;
+  border: #DCD6CC 1px solid;
+  background: #FFFFFF;
+  margin-top: 10px;
+  border-radius: 12px;
+  color: #333333;
+  font-family: "Lato", sans-serif;
+  resize: none;
+  height: 32px;
+  box-shadow: 0px 2px 2px grey;
+  margin-top: 0px;
+  justify-content: space-between;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.icon {
+  color: grey;
+  font-size:24px;
+  padding-top: 4px;
+}
+
+.search-city-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.srch-stars {
+  display: flex;
+  flex-direction: row;
 }
 
 input {
@@ -61,12 +112,30 @@ input {
 }
 
 .searchBookBarResult {
+  display: flex;
+  flex-direction: row;
   padding: 8px;
+  width: 285px;
   border-bottom: #DCD6CC 0.5px solid;
   border-left: #DCD6CC 0.5px solid;;
   border-right: #DCD6CC 0.5px solid;;
   background: #FFFFFF;
+  justify-content: space-between;
 }
+
+.img-div {
+  height: 95px;
+  width: 95px;
+  border-radius: 12px;
+}
+
+.srch-img{
+  border-radius: 12px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 
 
 .searchBarTitle {
@@ -101,7 +170,8 @@ input {
 }
 
 .searchClear {
-  position: relative;
+  position: absolute;
+  left: -25px;
   display: flex;
   align-items: center;
 }
@@ -120,7 +190,6 @@ input {
 .navBarSearch {
   position: relative;
   display: flex;
-
 }
 
 
@@ -164,6 +233,12 @@ input {
     padding: 8px 0px;
 
 }
+
+.buttonClear {
+  color: grey;
+  font-size: 18px;
+}
+
 
 .text-center {
   text-align: center;

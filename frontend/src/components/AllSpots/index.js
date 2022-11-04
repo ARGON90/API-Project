@@ -9,20 +9,16 @@ import '../../index.css'
 
 
 const SpotsList = () => {
-    console.log('INSIDE SPOTSLIST COMPONENT')
     const dispatch = useDispatch();
     const spotsList = useSelector((state) => Object.values(state.spots));
-
+    const user = useSelector((state) => state?.session?.user)
 
     useEffect(() => {
-        console.log('INSIDE SPOTSLIST USE EFFECT')
         dispatch(getAllSpots());
+        if (user) {
+            dispatch(getReviewsCurrentUser())
+        }
     }, [dispatch]);
-
-    useEffect(() => {
-        console.log('LOADING CURRENT USER REVIEWS ON HOMEPAGE')
-        dispatch(getReviewsCurrentUser())
-    }, [dispatch])
 
     function imageCheck(spot) {
         if (!spot.previewImage) {
@@ -34,7 +30,7 @@ const SpotsList = () => {
         }
     }
 
-    console.log('SPOTSLIST ALL SPOTS', spotsList)
+
     if (!spotsList) return <div>Loading All Spots...</div>
     return (
         <div className='page-container2' >
@@ -84,12 +80,8 @@ const SpotsList = () => {
                                             /night
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-
-
                         </div>
                     ))}
 

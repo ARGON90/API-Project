@@ -16,7 +16,6 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
-  console.log('HELLO PROFILEBUTTON')
 
 
   useEffect(() => {

@@ -543,7 +543,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 //potential heroku error: i added a spot, but it didn't show up in get reviews of current user
 
 //GET BOOKINGS FOR SPOT BASED ON SPOT ID
-router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+router.get('/:spotId/bookings', async (req, res) => {
     const { spotId } = req.params;
     const { user } = req;
 
@@ -558,27 +558,33 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     };
 
     // AUTHORIZATION FOR NON-OWNER
-    const userId = req.user.id
-    if (spotExist.ownerId !== userId) {
-        const Bookings = await Booking.findAll({
-            where: { spotId: spotId },
-            attributes: ['spotId', 'startDate', 'endDate']
-        })
-        return res.json({ Bookings })
-    };
+    if (req.user) {
+        const userId = req.user.id
+        if (spotExist.ownerId !== userId) {
+            const Bookings = await Booking.findAll({
+                where: { spotId: spotId },
+                attributes: ['spotId', 'startDate', 'endDate']
+            })
+            return res.json({ Bookings })
+        };
+    }
 
     // AUTHORIZATION FOR OWNER
-    if (spotExist.ownerId === userId) {
-        const Bookings = await Booking.findAll({
-            where: { spotId: spotId },
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'firstName', 'lastName']
-                }
-            ]
-        })
-        return res.json({ Bookings })
+    if (req.user) {
+        const userId = req.user.id
+
+        if (spotExist.ownerId === userId) {
+            const Bookings = await Booking.findAll({
+                where: { spotId: spotId },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'firstName', 'lastName']
+                    }
+                ]
+            })
+            return res.json({ Bookings })
+        }
     };
 })
 

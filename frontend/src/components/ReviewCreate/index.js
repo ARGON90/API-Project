@@ -10,7 +10,6 @@ import '../../index.css'
 
 
 const CreateReview = () => {
-  console.log('INSIDE CREATE REVIEW')
   const dispatch = useDispatch();
   const history = useHistory();
   const { spotId } = useParams()
@@ -25,12 +24,10 @@ const CreateReview = () => {
 
 
   useEffect(() => {
-    console.log('INSIDE SPOT-BY-ID USE EFFECT')
     dispatch(getOneSpot(spotId))
   }, [dispatch])
 
   useEffect(() => {
-    console.log('SPOTBYID GETSTATE USE EFFECT ')
     // dispatch(getState())
   }, [dispatch])
 
@@ -71,10 +68,6 @@ const CreateReview = () => {
       stars,
     };
 
-    console.log('INSIDE CREATE REVIEW FORM SUBMIT')
-    console.log('PAYLOAD', payload)
-    console.log('SPOT ID', spotId)
-
     stars = Number(stars)
 
     if (!review) errors.review = "Review text is required"
@@ -90,7 +83,6 @@ const CreateReview = () => {
     let createdReview;
     createdReview = await dispatch(createReview(spotId, payload));
     if (createdReview) {
-      console.log('CREATED REVIEW', createdReview)
       history.push(`/spots/${spotId}`);
     }
   };

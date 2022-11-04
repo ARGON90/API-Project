@@ -42,7 +42,10 @@ const BookingsSpotEdit = ({ rating, price, id, bookingId }) => {
                 return 'Spot Bookings Issue'
             }
         }
-        dispatch(getBookingsCurrentUser())
+        if (currentUserId) {
+            console.log('BOOKINGS EDIT CALENDAR')
+            dispatch(getBookingsCurrentUser())
+        }
         dispatch(getBookingsCurrentSpot(id))
         calendarDates()
         if (checkInDate && checkOutDate) {
@@ -224,11 +227,9 @@ const BookingsSpotEdit = ({ rating, price, id, bookingId }) => {
         let editedBooking;
         let editedBookingSpot
         if (Object.values(bookingErrors).length === 0) {
-
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
             await dispatch(editBookingThunk(bookingId, bookingInfo))
-            // editedBookingSpot = await dispatch(editBookingThunkSpot(bookingId, bookingInfo))
             alert ('Bookig Successfully Updated!')
             clearSelections()
             history.push('/bookings/')

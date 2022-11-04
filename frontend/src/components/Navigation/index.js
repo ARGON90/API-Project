@@ -10,6 +10,7 @@ import DemoIndex from '../LoginFormModal/DemoIndex'
 import logo from '../../data/logo.png'
 import beelogo from '../../data/beelogo.png'
 import hive from '../../data/hive.png'
+import beenbee from '../../data/beenbee.png'
 import * as sessionActions from '../../store/session';
 import { useHistory } from "react-router-dom";
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
@@ -38,7 +39,9 @@ function Navigation({ isLoaded }) {
   const logout = async (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    dispatch(getBookingsCurrentUser())
+    if (sessionUser) {
+      dispatch(getBookingsCurrentUser())
+    }
     history.push(`/spots/`);
   };
 
@@ -191,9 +194,12 @@ function Navigation({ isLoaded }) {
           width-100
           flex-box
           justify-content-around'>
-                <img id='logo' src={beelogo} alt='Bee-Bee Logo' className=''></img>
+            <div className='been-bee-container'>
+              <img className='been-bee-img' src={beenbee}></img>
+            </div>
+                {/* <img id='logo' src={beelogo} alt='Bee-Bee Logo' className=''></img>
                 <img id='logo' src={hive} alt='Hive Logo' className='padding-r-4 padding-l-10'></img>
-                <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-4 bee-2'></img>
+                <img id='logo' src={beelogo} alt='Bee-Bee Logo' className='padding-r-4 bee-2'></img> */}
               </div>
 
               <div className='
@@ -202,7 +208,7 @@ function Navigation({ isLoaded }) {
           flex-end'>
                 <div className='logo-font font-black padding-16'>
                   <div className='padding-l-10'>
-                    Bee & Bee
+
                   </div>
                 </div>
               </div>
@@ -214,6 +220,7 @@ function Navigation({ isLoaded }) {
                 <SearchBar setSearchBar={setSearchBar} filterSpots={filterSpots} setFilterSpots={setFilterSpots} />
               </div>
             </div>
+
 
           <div className='width-25'>
             <div className='flex-box row-reverse column-gap align-items-center'>

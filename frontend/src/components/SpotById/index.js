@@ -80,7 +80,6 @@ const SpotById = () => {
 
     function sessionCheck() {
         if (sessionId && sessionId !== singleSpot.ownerId) {
-            console.log('in session ID create')
             return (
                 <NavLink to={`/review/create/${id}`} className='font-black bold'>
                     Create a review for this spot

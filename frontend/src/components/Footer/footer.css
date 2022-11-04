@@ -1,0 +1,107 @@
+.footer-page {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 65px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    align-items: center;
+    z-index: 100;
+    border-top: 1px solid grey;
+
+}
+
+.nav-container-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-logged-in-footer {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-between;
+}
+
+.nav-left-panel {
+    display: flex;
+    flex-direction: row;
+    column-gap: 50px;
+}
+
+
+.git-linked-container {
+    display: flex;
+    align-items: center;
+    font-family: roboto, sans-serif;
+    text-decoration: none;
+    border-radius: 12px;
+    color: black;
+    cursor: pointer;
+    padding-right: 8px;
+
+}
+
+.git-linked-container:hover {
+    background-color: grey ;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+.footer-spacer {
+    padding: 20px;
+}
+
+.tracker-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+
+.home-button-container {
+    display: flex;
+    font-size: 24px;
+    flex-direction: row;
+    font-family: roboto, sans-serif;
+    text-decoration: none;
+    letter-spacing: 1px;
+    align-items: center;
+    justify-content: center;
+}
+
+.token {
+    font-weight: 200;
+}
+
+.stats {
+    font-weight: 500;
+}
+
+.logout-button-div {
+    display: flex;
+    font-family: roboto, sans-serif;
+    font-weight: 900;
+    text-decoration: none;
+    border-radius: 12px;
+    color: #9c84ff;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.logout-button-div:hover {
+    color: #AD98FF;
+    transition-duration: 0.4s;
+}
+
+.logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    letter-spacing: 1px;
+}
