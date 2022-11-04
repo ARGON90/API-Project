@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -16,6 +17,8 @@ import * as sessionActions from '../../store/session';
 import { useHistory } from "react-router-dom";
 import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import LoginFormModalMain from '../LoginFormModal/DemoIndexMain';
+import SearchBar from './SearchBar';
+import { getAllSpots } from '../../store/spotsReducer';
 
 import hamburger from "../../data/hamburger.png"
 import './Navigation.css';
@@ -27,6 +30,8 @@ function Navigation({ isLoaded }) {
   const dispatch = useDispatch()
 
   const { currentNum, setCurrentNum } = useContext(ButtonContext)
+  const [showSearchBar, setSearchBar] = useState(false)
+  const [filterSpots, setFilterSpots] = useState([])
 
   let sessionId;
   if (sessionUserId && sessionUserId.user) {
@@ -37,7 +42,8 @@ function Navigation({ isLoaded }) {
   useEffect(() => {
     console.log('NAVIGATION GETSTATE USE EFFECT ')
     // dispatch(getState())
-  }, [dispatch, sessionId, currentNum])
+    dispatch(getAllSpots())
+  }, [dispatch, sessionId, currentNum, filterSpots])
 
 
   // function checkState() {
@@ -229,19 +235,11 @@ function Navigation({ isLoaded }) {
             </NavLink>
           </div>
 
-          {!sessionUser &&
-            // <div className='middle-container-logged-out'>
-            <div className='middle-container-logged-out'>
-              < LoginFormModalMain /> </div>
-            // </div>
-          }
-
-          {sessionUser &&
             <div className='middle-container-logged-in'>
-              <div>Your Listings </div>
-              <div>Your Bookings</div>
-              <div>Your Reviews</div>
-            </div>}
+              <div >
+                <SearchBar setSearchBar={setSearchBar} filterSpots={filterSpots} setFilterSpots={setFilterSpots} />
+              </div>
+            </div>
 
           <div className='width-25'>
             <div className='flex-box row-reverse column-gap align-items-center'>
@@ -250,9 +248,11 @@ function Navigation({ isLoaded }) {
               {sessionUser && (
                 <NavLink to="/create" className='font-black bold'>Welcome, {sessionUser.firstName} {sessionUser.lastName}</NavLink>
               )}
-              {!sessionUser && (
-                <NavLink to="/signup" className='font-black bold'>Become a Host</NavLink>
-              )}
+              {!sessionUser &&
+                <>
+                  <LoginFormModalMain />
+                </>
+              }
             </div>
           </div>
 

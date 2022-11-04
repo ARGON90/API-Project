@@ -1,73 +1,76 @@
-// import { useState } from "react"
-// import { useSelector } from 'react-redux';
+import { useState } from "react"
+import { NavLink, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import './Navigation.css'
 
-// import './CreateTradeModal/CreateTradeModal.css'
-// import { tokenImages } from "./Tokens";
+const SearchBar = ({ setSearchBar, filterSpots, setFilterSpots }) => {
 
-// const SearchBar = ({ setTokenSelect, search, setSearch }) => {
+    const history = useHistory()
+    const spots = useSelector(state => state?.spots)
+    
+    const [searchable, setSearchable] = useState('')
 
+    const handleSpotFilter = (keyword) => {
+        const findSpot = keyword.target.value
+        setSearchable(findSpot)
+        const findTitle = Object.values(spots).filter(spot => {
+            return ((spot.city.toLowerCase().includes(findSpot.toLowerCase())) || spot.state.toLowerCase().includes(findSpot.toLowerCase()) || spot.name.toLowerCase().includes(findSpot.toLowerCase()))
+        })
+        if (findSpot === '') {
+            setFilterSpots([])
+        }
+        else {
+            setFilterSpots(findTitle)
+        }
+    }
 
-//     const tokens = useSelector(state => state?.tokens)
-//     const [filterTokens, setFilterTokens] = useState([])
-//     const [showResults, setShowResults] = useState(true)
+    const handleSubmit = () => {
+        history.push(`/books/${searchable}`)
+        setFilterSpots([])
+        setSearchable('')
+        setSearchBar(false)
+    }
 
-//     const tokenSearch = (keyword) => {
-//         setShowResults(true)
-//         const findToken = keyword.target.value
-//         setSearch(findToken)
-//         const findTokenName = Object.values(tokens).filter(token => {
-//             return ((token.name.toLowerCase().includes(findToken.toLowerCase())))
-//         })
-//         if (findToken === '') {
-//             setFilterTokens([])
-//         }
-//         else {
-//             setFilterTokens(findTokenName)
-//         }
-//     }
+    const clearInput = () => {
+        setFilterSpots([])
+        setSearchable('')
+    }
 
-//     function selectResult(token) {
-//         setShowResults(false)
-//         setTokenSelect(token.id)
-//         setSearch(token.name)
-//     }
+    return (
+        <div className='searchBarDiv'>
+            <form className='searchBarInput'
+                onSubmit={handleSubmit}>
+                <input
+                    type='text'
+                    value={searchable}
+                    onChange={handleSpotFilter}
+                    placeholder='Search Spots by City, State, or Title'
+                />
+            </form>
+            {filterSpots.length > 0 &&
+                <span className='searchClear'>
+                    <button className="buttonClear"
+                        onClick={searchable.length ? clearInput : () => setSearchBar(false)}
+                    > X </button>
+                </span>
+            }
 
-//     function newSearch() {
-//         setSearch('')
-//     }
+            <div className='bookResultsDiv'>
+                {filterSpots && (
+                    filterSpots.slice(0, 5).map((spot, idx) => (
+                        <NavLink onClick={() => clearInput()} to={`/spots/${spot.id}`} className="bookSearchList">
+                            <div className='searchBookBarResult'
+                                key={idx}
+                                onClick={() => setSearchBar(false)}>
+                                <div className="searchBarTitle">{spot.name}<br></br></div>
+                                <div className='searchBarAuthor'> {spot.city}, {spot.state}</div>
+                            </div>
+                        </NavLink>
+                    ))
+                )}
+            </div>
+        </div>
+    )
+}
 
-//     return (
-//         <>
-//                     <label className="create-trade-form-label">Choose a Token</label>
-//                     <input
-//                         id='searchInputField'
-//                         type='text'
-//                         value={search}
-//                         onChange={tokenSearch}
-//                         placeholder='Token Name'
-//                         onClick={newSearch}
-//                         className='create-trade-form-input'
-//                         autoComplete="off"
-//                     />
-//                     <div className='tokenResultsDiv'>
-//                         {showResults && filterTokens && (
-//                             filterTokens.slice(0, 5).map((token, idx) => (
-//                                 <div className='search-entries-container'
-//                                     key={idx}
-//                                     value={token.id}
-//                                     onClick={() => selectResult(token)}>
-//                                     <div className="search-entries">
-//                                         <img className="token-image" src={`${tokenImages[token.name]}`} alt='token image'></img>
-//                                         <div>{token.name}</div>
-//                                     </div>
-//                                 </div>
-//                             ))
-//                         )}
-//                     </div>
-
-
-//         </>
-//     )
-// }
-
-// export default SearchBar
+export default SearchBar

@@ -9,7 +9,7 @@ function LoginFormModalMain() {
 
   return (
     <>
-      <div className='here-div' onClick={() => setShowModal(true)}>Want to Log in as a Demo User? Click Here!</div>
+      <div className='here-div' onClick={() => setShowModal(true)}>Demo Login Here!</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <DemoLogin />
