@@ -1,7 +1,7 @@
 'use strict';
 
 const comments = [
-  {review: 'Thank you for staying in your wonderful home, hope to return soon.',
+  {review: 'Thank you for letting us stay in your wonderful home, hope to return soon.',
   stars: 4},
   {review: 'Great property. Check in was simple, interior design was great, very clean and a good view. Would like to come back!',
   stars: 4},
@@ -175,6 +175,265 @@ module.exports = {
       stars: comments[randInt].stars,
       userId: 9,
       spotId: 3,
+    },
+    // REVIEWS FOR SPOT 4
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 1,
+      spotId: 4,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 5,
+      spotId: 4,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 6,
+      spotId: 4,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 4,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 8,
+      spotId: 4,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 9,
+      spotId: 4,
+    },
+    // REVIEWS FOR SPOT 5
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 1,
+      spotId: 5,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 10,
+      spotId: 5,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 6,
+      spotId: 5,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 5,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 8,
+      spotId: 5,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 9,
+      spotId: 5,
+    },
+    // REVIEWS FOR SPOT 6
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 5,
+      spotId: 6,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 6,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 8,
+      spotId: 6,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 9,
+      spotId: 6,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 10,
+      spotId: 6,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 2,
+      spotId: 6,
+    },
+    // REVIEWS FOR SPOT 7
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 2,
+      spotId: 7,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 3,
+      spotId: 7,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 4,
+      spotId: 7,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 5,
+      spotId: 7,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 6,
+      spotId: 7,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 8,
+      spotId: 7,
+    },
+    // REVIEWS FOR SPOT 8
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 4,
+      spotId: 8,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 5,
+      spotId: 8,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 6,
+      spotId: 8,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 8,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 9,
+      spotId: 8,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 10,
+      spotId: 8,
+    },
+    // REVIEWS FOR SPOT 9
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 2,
+      spotId: 9,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 10,
+      spotId: 9,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 6,
+      spotId: 9,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 9,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 8,
+      spotId: 9,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 3,
+      spotId: 9,
+    },
+    // REVIEWS FOR SPOT 10
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 4,
+      spotId: 10,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 2,
+      spotId: 10,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 3,
+      spotId: 10,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 7,
+      spotId: 10,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 8,
+      spotId: 10,
+    },
+    {
+      review: `${comments[randomNum()].review}`,
+      stars: comments[randInt].stars,
+      userId: 9,
+      spotId: 10,
     },
 
 
