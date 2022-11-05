@@ -91,10 +91,10 @@ const ReviewsCurrentUser = () => {
                             <div key={review.id} className='review-card'>
 
                                 {/* nav button and delete button div */}
-                                <div className='flex-column align-content-center justify-content-evenly'>
+                                <div className='flex-column align-content-center justify-content-evenly rev-left-panel'>
 
-                                        <div className='padding-trb-10 flex-column'>
-                                            <div className='bold margin-bottom-5'> {review.Spot.name} </div>
+                                        <div className='padding-trb-10 flex-column rev-text'>
+                                            <div className='bold margin-bottom-5 rev-title'> {review.Spot.name} </div>
                                             <div className='bold margin-bottom-5'> {review.Spot.city}, {review.Spot.state}</div>
                                             <NavLink to={`/spots/${review.id}`}>
                                                 {review.review}

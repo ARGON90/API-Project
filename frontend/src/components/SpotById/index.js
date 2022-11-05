@@ -4,7 +4,6 @@ import { useEffect, useContext, useState } from 'react';
 
 import { getOneSpot } from '../../store/spotsReducer';
 import { deleteSpot } from '../../store/spotsReducer';
-import { getState } from '../../store/session';
 import { sessionUserId } from '../../store/session';
 import ReviewsSpotId from '../ReviewsSpotId';
 import BookingsSpotId from '../BookingsSpotId/bookingsSpotId';
@@ -90,7 +89,7 @@ const SpotById = () => {
 
     if (!singleSpot) return <div className='font-family'>Loading...</div>
     return (
-        <div className='page-div'>
+        <div className='page-div-spots'>
 
 
 

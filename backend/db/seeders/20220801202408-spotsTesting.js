@@ -29,7 +29,7 @@ module.exports = {
         country: 'United States',
         lat: 33.1234567,
         lng: -44.1234567,
-        name: 'Peace Lakefront',
+        name: 'Peaceful Lakefront',
         description: 'Quiet lakehouse with easy access to the waterfron',
         price: 499
       },

@@ -1,7 +1,17 @@
 .page-container {
     display: flex;
     flex-direction: column;
-    width: 90%
+    width: 90%;
+    padding-bottom: 150px;
+    font-family: Lato, sans-serif;
+}
+
+.rev-text {
+    row-gap: 10px;
+}
+
+.rev-title {
+    font-size: 20px;
 }
 
 .reviews-title {
@@ -26,6 +36,11 @@
     border: 1px solid grey;
     border-radius: 12px;
 }
+
+.rev-left-panel {
+    width: 55%;
+}
+
 
 .rev-buttons-container {
     display: flex;
