@@ -66,14 +66,31 @@
     column-gap: 20px;
 }
 
+.booking-owner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
 .edit-nav {
     text-decoration: none;
     color: white;
+
 }
+
+.btn-container-spot{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .edit-delete-btn {
     width: 135px;
-    height: 48px;
+    height: 30px;
     color: white;
     background-color: rgb(51, 51, 51);
     border-radius: 12px;
@@ -98,7 +115,7 @@
     align-items: flex-start;
     column-gap: 20px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 .hosted-header-true{
@@ -107,6 +124,10 @@
 
 .bookings-container-true{
     width: 40%;
+}
+
+.bookings-container-owner-true{
+    width: 100%;
 }
 
 .hosted-bookings {
@@ -155,7 +176,7 @@
     align-items: flex-start;
     column-gap: 20px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 .headers-reviews {

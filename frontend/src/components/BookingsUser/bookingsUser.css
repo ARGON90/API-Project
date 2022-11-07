@@ -10,6 +10,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 150px;
 }
 
 .page {
@@ -70,15 +71,15 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    height: 30%;
     width: 30%;
 }
 
 .preview-image {
     align-self: flex-end;
-    height: 100%;
     width: 100%;
     border-radius: 12px;
+    max-height: 175px;
+    object-fit: cover;
 }
 
 .edit-delete-btn {

@@ -133,28 +133,40 @@ const SpotById = () => {
                     <div className='calendar-false-container'>
                         {/* HOSTED BY ... */}
                         <div className='hosted-container'>
-                            <h2 className='hosted-header'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+                            <div className='booking-owner-container'>
+                                {singleSpot.ownerId == userId &&
+                                    <h2 className='hosted-header-true'>This spot is hosted by you, {singleSpot.firstName} {singleSpot.lastName}! </h2>
+                                }
+                                {singleSpot.ownerId != userId &&
+                                    <h2 className='hosted-header-true'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+                                }
+                                <div className='edit-delete-container'>
+                                    <div className='edit-delete-btn'>
+                                        <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
+                                            <div className='btn-container-spot'>
+                                                Edit This Spot
+                                            </div>
+                                        </NavLink>
+                                    </div>
+                                    <div className='edit-delete-btn'>
+                                        <div onClick={onClickDelete} className='btn-container-spot'>
+                                            Delete This Spot
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             {singleSpot.ownerId !== userId &&
                                 <div className='bookings-container-true'>
-                                    <BookingsSpotId showCalendar={showCalendar} setShowCalendar={setShowCalendar} rating={singleSpot.avgRating} price={singleSpot.price} id={id} />
+                                    <BookingsSpotId showCalendar={showCalendar} setShowCalendar={setShowCalendar} rating={singleSpot.avgRating} price={singleSpot.price} id={id} ownerId={singleSpot.ownerId} />
                                 </div>
                             }
 
                             {singleSpot.ownerId === userId &&
-                                <div className='edit-delete-container'>
-                                    <>
-                                        <div className='edit-delete-btn'>
-                                            <NavLink to={`/spots/${id}/edit`} className='edit-nav'>
-                                                Edit This Spot
-                                            </NavLink>
-                                        </div>
-                                        <div className='edit-delete-btn'>
-                                            <div onClick={onClickDelete} className=''>
-                                                Delete This Spot
-                                            </div>
-                                        </div>
-                                    </>
+                                <div className='booking-owner-container'>
+                                    <div className='bookings-container-owner-true'>
+                                        <BookingsSpotId showCalendar={showCalendar} setShowCalendar={setShowCalendar} rating={singleSpot.avgRating} price={singleSpot.price} id={id} ownerId={singleSpot.ownerId} />
+                                    </div>
                                 </div>
                             }
 
@@ -187,7 +199,12 @@ const SpotById = () => {
                         {/* HOSTED BY ... */}
                         <div className='headers-reviews'>
                             <div className='hosted-container-true'>
-                                <h2 className='hosted-header-true'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+                                {singleSpot.ownerId == userId &&
+                                    <h2 className='hosted-header-true'>This spot is hosted by you, {singleSpot.firstName} {singleSpot.lastName}! </h2>
+                                }
+                                {singleSpot.ownerId != userId &&
+                                    <h2 className='hosted-header-true'>This spot is hosted by {singleSpot.firstName} {singleSpot.lastName} </h2>
+                                }
                             </div>
 
                             <div className='all-reviews-header-container-true'>

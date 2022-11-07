@@ -1,41 +1,29 @@
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { getAllSpots } from '../../store/spotsReducer';
 
-
-import { getCurrentUserSpot } from '../../store/spotsReducer';
 import './CurrentUserSpot.css'
 import '../../index.css'
 
 const CurrentUserSpot = () => {
-    // console.log('INSIDE CURRENT-USER-SPOT COMPONENT')
     const dispatch = useDispatch()
-    // let spotsState = useSelector((state) => Object.values(state.spots))
-    let spotsState = useSelector((state) => (state.spots))
-    // console.log('SPOTSSTATE', spotsState)
-
-    let spotsList;
-    if (spotsState) {
-        spotsList = Object.values(spotsState)
-        if (spotsList[0]) {
-            let newList = Array.from(spotsList[0])
-            spotsList = newList
-        }
-    }
+    const spotsState = useSelector((state) => (state?.spots))
+    const currentUserId = useSelector((state) => state?.session?.user?.id)
+    let spotsArr = Object.values(spotsState)
+    let userSpotsArr = spotsArr.filter((spot) => spot.ownerId == currentUserId)
+    let spotsList = userSpotsArr
 
     useEffect(() => {
-        // console.log('INSIDE CURRENT USER SPOT USE EFFECT')
-        dispatch(getCurrentUserSpot())
+        dispatch(getAllSpots())
     }, [dispatch])
 
     function imageCheck(spot) {
         if (!spot.previewImage) {
             return <p>No Preview Image Exists for Spot</p>
         } else {
-            return <img src={spot.previewImage} alt='Main Image' className='
-                width-100
-                height-100
-                border-radius-12'/>
+            return <img src={spot.previewImage} alt='Main Image'
+            className='user-spot-card-image'/>
         }
     }
 
@@ -44,7 +32,7 @@ const CurrentUserSpot = () => {
         <div className='
         flex-box
         justify-content-center
-        '>
+        current-user-spot'>
             {/* PAGE DIV */}
             <div className='
             flex-column
@@ -57,9 +45,8 @@ const CurrentUserSpot = () => {
                 '>
 
                     {/* HERE ARE YOUR SPOTS */}
-                    <div
-                        className='width-100'>
-                        <h1 className='font-family'>Here are your Spots!</h1>
+                    <div>
+                        <h1 className='font-family padding-bottom-10'>Here are your Spots!</h1>
                     </div>
 
                     {/* IMAGE CONTAINER */}
@@ -72,18 +59,15 @@ const CurrentUserSpot = () => {
                         {spotsList.map((spot) => (
                             <NavLink key={spot.id} to={`/spots/${spot.id}`}
                             className='
-                            width-45
-                            padding-bottom-10'>
+                            user-spot-card'>
 
                                 {/* INDIVIDUAL IMAGE CARD */}
                                 <div className='
                                 font-family
                                 height-100
-                                width-100'>
+                                '>
                                     {/* IMAGE */}
-                                    <div className='
-                                    width-100
-                                    height-81'>
+                                    <div className='current-user-img-div'>
                                         {imageCheck(spot)}
                                     </div>
                                     <div className='

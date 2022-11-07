@@ -12,12 +12,17 @@ import './bookings.css'
 import '../../calendar.css'
 
 
-const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) => {
+const BookingsSpotId = ({ rating, price, showCalendar, setShowCalendar }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
     const spotBookings = useSelector((state) => (state?.spotBookings?.Bookings));
+
+    const { id } = useParams()
+    const spotsList = useSelector((state) => (state?.spots));
+    const singleSpot = spotsList[id]
+    const ownerId = singleSpot.ownerId
 
     const [currentSelectedDate, setCurrentSelectedDate] = useState(new Date())
     const [checkInDate, setCheckInDate] = useState('')
@@ -58,6 +63,7 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
     const userBookingsArray = Object.values(userBookings)
     const userBookingsSpot = userBookingsArray.filter(booking => booking?.spotId === Number(id))
     spotBookingsArray = Object.values(spotBookings)
+
 
     function calClicker() {
         setCalClick(!calClick)
@@ -229,7 +235,7 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
             await dispatch(getBookingsCurrentUser())
             await dispatch(getBookingsCurrentSpot(id))
             clearSelections()
-            alert ('Bookig Successfully Created!')
+            alert('Bookig Successfully Created!')
             history.push('/bookings/')
         }
     }
@@ -245,7 +251,8 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
     if (!userBookingsArray) return <div>Loading Bookings</div>
     return (
         <>
-            <div>
+            <div className='bookings-in-page'>
+
 
                 {errors.length > 0 &&
                     <div className='errors-container'>
@@ -260,8 +267,9 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                     </div>
                 }
 
-                {currentUserId &&
-                    <form onSubmit={handleSubmit} className='booking-container'>
+                {/* IS NOT OWNER */}
+                {currentUserId && currentUserId != ownerId &&
+                    <form onSubmit={handleSubmit} className='booking-container-spotId'>
                         <div className='price-stars'>
                             <div className='price-div'>
                                 <div className='price-number'>${price}</div>
@@ -277,6 +285,8 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                                 {rating}
                             </div>
                         </div>
+
+
 
                         <div className='check-dates-container'>
                             <div className='form-container'>
@@ -302,6 +312,7 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                             </div>
                         </div>
 
+
                         {showCalendar === true &&
                             <div className='subtotal'>
                                 <div className='prices'>
@@ -315,12 +326,43 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                             </div>
                         }
                         {showCalendar === false &&
-                            <button className='see-cal-btn' onClick={() => setShowCalendar(!showCalendar)}>See Available Dates</button>
+                            <button className='see-cal-btn-spot' onClick={() => setShowCalendar(!showCalendar)}>See Available Dates</button>
                         }
                     </form>
                 }
 
+                {/* IS OWNER */}
+                {currentUserId && currentUserId == ownerId &&
 
+                    <div className='div-owner-true'>
+                        <div className='price-stars-owner'>
+                            <div className='price-div'>
+                                <div className='price-number'>${price}</div>
+                                <div>/night</div>
+                            </div>
+                            <div>
+                                <svg viewBox='0 0 32 32'>
+                                    <path
+                                        d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                        fillRule='evenodd'
+                                    ></path>
+                                </svg>
+                                {rating}
+                            </div>
+                        </div>
+
+                        <div className='bold'>
+                            These are your spot's bookings:
+                        </div>
+
+                        {showCalendar === false &&
+                            <button className='see-cal-btn-spot' onClick={() => setShowCalendar(!showCalendar)}>See Available Dates</button>
+                        }
+                    </div>
+                }
+                {/* IS OWNER END */}
+
+                {/* IS NOT OWNER */}
                 {showCalendar &&
                     <>
                         <div className='react-calendar' onClick={() => calClicker()}>
@@ -329,17 +371,22 @@ const BookingsSpotId = ({ rating, price, id, showCalendar, setShowCalendar }) =>
                                     onChange={updateSelectedDate}
                                     value={currentSelectedDate}
                                 />
-                                <p>Selected Date: <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
-                                <div className='check-in-out-buttons'>
-                                    <button className='calendar-btns' onClick={selectCheckInDate}>Set as Check-in</button>
-                                    <button className='calendar-btns' onClick={selectCheckOutDate}>Set as Check-out</button>
-                                <button className='calendar-btns' onClick={clearSelections}>Clear Selections</button>
-                                </div>
+                                {currentUserId && currentUserId != ownerId &&
+                                    <>
+                                        <p className='selected-date'>Selected Date: <b>{moment(currentSelectedDate).format('MMMM Do YYYY')}</b></p>
+                                        <div className='check-in-out-buttons'>
+                                            <button className='calendar-btns' onClick={selectCheckInDate}>Set as Check-in</button>
+                                            <button className='calendar-btns' onClick={selectCheckOutDate}>Set as Check-out</button>
+                                            <button className='calendar-btns' onClick={clearSelections}>Clear Selections</button>
+                                        </div>
+                                    </>
+                                }
                             </div>
                         </div>
                     </>
                 }
                 {calendarDates()}
+
             </div>
         </>
     );

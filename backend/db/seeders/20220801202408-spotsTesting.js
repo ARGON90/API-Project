@@ -10,7 +10,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Spots', [
       {
-        ownerId: 1,
+        ownerId: 10,
         address: "1776 Freedom Parkway",
         city: 'Henry',
         state: 'Virginia',
@@ -22,7 +22,7 @@ module.exports = {
         price: 275
       },
       {
-        ownerId: 2,
+        ownerId: 1,
         address: "191 Lake Drive",
         city: 'Barnwell',
         state: 'Tennessee',
@@ -30,7 +30,7 @@ module.exports = {
         lat: 33.1234567,
         lng: -44.1234567,
         name: 'Peaceful Lakefront',
-        description: 'Quiet lakehouse with easy access to the waterfron',
+        description: 'Quiet lakehouse with easy access to the waterfront',
         price: 499
       },
       {
@@ -82,7 +82,7 @@ module.exports = {
         price: 459
       },
       {
-        ownerId: 7,
+        ownerId: 1,
         address: "492 Jungle Path",
         city: 'Kampot',
         state: 'Cambodia',
@@ -106,7 +106,7 @@ module.exports = {
         price: 299
       },
       {
-        ownerId: 9,
+        ownerId: 1,
         address: "78 Terrace Trail",
         city: 'Capri',
         state: 'Italy',

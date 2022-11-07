@@ -45,4 +45,3 @@ let comments = [
     stars: 4}
 ]
 
-console.log(comments[randomNum])

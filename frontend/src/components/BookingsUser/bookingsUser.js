@@ -13,10 +13,10 @@ const BookingsUser = () => {
     const dispatch = useDispatch()
     const currentUserId = useSelector((state) => state?.session?.user?.id)
     const userBookings = useSelector((state) => (state?.bookings?.Bookings));
+    const allSpots = useSelector((state) => (state?.spots));
 
     useEffect(() => {
         if (currentUserId) {
-            console.log('bookings user')
             dispatch(getBookingsCurrentUser())
         }
     }, [dispatch])

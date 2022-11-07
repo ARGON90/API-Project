@@ -43,7 +43,6 @@ const BookingsSpotEdit = ({ rating, price, id, bookingId }) => {
             }
         }
         if (currentUserId) {
-            console.log('BOOKINGS EDIT CALENDAR')
             dispatch(getBookingsCurrentUser())
         }
         dispatch(getBookingsCurrentSpot(id))

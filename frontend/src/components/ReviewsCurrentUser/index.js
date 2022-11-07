@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { getAllSpots } from '../../store/spotsReducer';
 
 import { deleteReview, getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 import '../../index.css'
@@ -11,9 +12,12 @@ import './reviewsUser.css'
 const ReviewsCurrentUser = () => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const allSpots = useSelector((state) => (state?.spots));
+
 
     useEffect(() => {
         dispatch(getReviewsCurrentUser())
+        dispatch(getAllSpots)
     }, [dispatch])
 
     let reviewsState = useSelector((state) => (state.reviews));
@@ -21,22 +25,15 @@ const ReviewsCurrentUser = () => {
     let reviewsList;
     if (reviewsState.Reviews) {
         reviewsList = Object.values(reviewsState.Reviews)
-        // if (spotsList[0]) {
-        //     let newList = Array.from(spotsList[0])
-        //     spotsList = newList
     }
 
 
-    function imageCheck(review) {
-        if (!review.Images.length) {
-            return <div className='font-family'>This Review Has No Images</div>
-        } else {
-            return <img key={review.Images[0].id}
-                src={review.Images[0].url} alt='Review Image' className='
-                 width-100
-                 border-radius-12
-                 ' />
-        }
+    function imageCheck(review, idx) {
+        console.log(allSpots[review.Spot.id].previewImage, 'id')
+        return <img key={idx}
+            src={allSpots[review.Spot.id].previewImage} alt='Review Image'
+            className='width-100 border-radius-12' />
+
     }
 
     async function onClickDelete(id) {
@@ -74,78 +71,78 @@ const ReviewsCurrentUser = () => {
         <div className='flex-box justify-content-center'>
             {/* // PAGE DIV */}
             <div className='page-container'>
-                    {/* NAME DIV */}
-                    <div>
-                        <h1 className='reviews-title'>
-                            Here are your reviews, {reviewsList[0].User.firstName}
-                        </h1>
-                    </div>
+                {/* NAME DIV */}
+                <div>
+                    <h1 className='reviews-title'>
+                        Here are your reviews, {reviewsList[0].User.firstName}
+                    </h1>
+                </div>
 
 
-                    {/* ALL REVIEW DIV */}
-                    <div className='reviews-cards-container'>
+                {/* ALL REVIEW DIV */}
+                <div className='reviews-cards-container'>
 
-                        {reviewsList.map((review) => (
+                    {reviewsList.map((review, idx) => (
 
-                            // INDIVIDUAL REVIEW CARD
-                            <div key={review.id} className='review-card'>
+                        // INDIVIDUAL REVIEW CARD
+                        <div key={review.id} className='review-card'>
 
-                                {/* nav button and delete button div */}
-                                <div className='flex-column align-content-center justify-content-evenly rev-left-panel'>
+                            {/* nav button and delete button div */}
+                            <div className='flex-column align-content-center justify-content-evenly rev-left-panel'>
 
-                                        <div className='padding-trb-10 flex-column rev-text'>
-                                            <div className='bold margin-bottom-5 rev-title'> {review.Spot.name} </div>
-                                            <div className='bold margin-bottom-5'> {review.Spot.city}, {review.Spot.state}</div>
-                                            <NavLink to={`/spots/${review.id}`}>
-                                                {review.review}
-                                            </NavLink>
-                                        </div>
-
-                                        <div className='padding-all-10'>
-                                            <NavLink to={`/spots/${review.id}`}>
-                                                <svg viewBox='0 0 32 32'>
-                                                    <path
-                                                        d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
-                                                        fillRule='evenodd'
-                                                    ></path>
-                                                </svg>
-                                            </NavLink>
-                                            {review.stars}
-                                        </div>
-
-
-
-                                    <div className='rev-buttons-container'>
-
-                                            <NavLink to={`/reviews/${review.id}/edit`} className='reviews-btns-edit nav-styling'>
-                                                <div>
-                                                Edit Review
-                                                </div>
-                                            </NavLink>
-
-                                            <button id={`${review.id}`} className='reviews-btns-edit' data-type={review.id}
-                                                onClick={(e) => setButtonId(e.target.id)
-                                                }>
-                                                Delete Review
-                                            </button>
-
-                                    </div>
-
-                                </div>
-
-                                <div className='width-25 padding-left'>
-                                    <NavLink to={`/spots/${review.Spot.id}`}>
-                                        {imageCheck(review)}
+                                <div className='padding-trb-10 flex-column rev-text'>
+                                    <div className='bold margin-bottom-5 rev-title'> {review.Spot.name} </div>
+                                    <div className='bold margin-bottom-5'> {review.Spot.city}, {review.Spot.state}</div>
+                                    <NavLink className='font-black' to={`/spots/${review.id}`}>
+                                        {review.review}
                                     </NavLink>
                                 </div>
 
-                            </div>
-                        ))}
+                                <div className='padding-all-10'>
+                                    <NavLink to={`/spots/${review.id}`}>
+                                        <svg viewBox='0 0 32 32'>
+                                            <path
+                                                d='M15.094 1.579l-4.124 8.885-9.86 1.27a1 1 0 0 0-.542 1.736l7.293 6.565-1.965 9.852a1 1 0 0 0 1.483 1.061L16 25.951l8.625 4.997a1 1 0 0 0 1.482-1.06l-1.965-9.853 7.293-6.565a1 1 0 0 0-.541-1.735l-9.86-1.271-4.127-8.885a1 1 0 0 0-1.814 0z'
+                                                fillRule='evenodd'
+                                            ></path>
+                                        </svg>
+                                    </NavLink>
+                                    {review.stars}
+                                </div>
 
-                    </div>
+
+
+                                <div className='rev-buttons-container'>
+
+                                    <NavLink to={`/reviews/${review.id}/edit`} className='reviews-btns-edit nav-styling'>
+                                        <div>
+                                            Edit Review
+                                        </div>
+                                    </NavLink>
+
+                                    <button id={`${review.id}`} className='reviews-btns-edit' data-type={review.id}
+                                        onClick={(e) => setButtonId(e.target.id)
+                                        }>
+                                        Delete Review
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <div className='width-25 padding-left'>
+                                <NavLink to={`/spots/${review.Spot.id}`}>
+                                    {imageCheck(review, idx)}
+                                </NavLink>
+                            </div>
+
+                        </div>
+                    ))}
 
                 </div>
+
             </div>
+        </div>
 
     );
 };

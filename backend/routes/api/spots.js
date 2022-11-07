@@ -269,7 +269,6 @@ router.post('/', requireAuth, async (req, res) => {
     if (!description) errors.description = "Description is required"
     if (!price) errors.price = "Price per day is required"
 
-    console.log('INSIDE SPOTS! 274', errors)
     if (Object.keys(errors).length != 0) {
         res.status(400)
         return res.json({
@@ -302,8 +301,6 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const { url, previewImage } = req.body
     const user = await User.findByPk(userId)
 
-    console.log('INSIDE IMG ADD BACKEND ')
-    console.log(url, previewImage, spotId)
 
     // SPOT NOT FOUND
     const spotExist = await Spot.findByPk(spotId);
@@ -361,7 +358,6 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
     if (Object.keys(errors).length != 0) {
         res.status(400)
-        console.log('BACKEND EDIT SPOT ERRORS', errors)
         res.json({
             message: "Validation Error",
             statusCode: 400,
@@ -472,7 +468,6 @@ router.get('/:spotId/reviews', async (req, res) => {
 
 //CREATE A REVIEW FOR SPOT ON SPOT ID
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
-    console.log('INSIDE REVIEW CREATE ROUTE 477')
 
 
     const { spotId } = req.params

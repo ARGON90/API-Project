@@ -158,9 +158,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     // AUTHORIZATION
     const userId = req.user.id
     if (reviewExist.userId !== userId) {
-        console.log('INSIDE SPOT DELETE BACKEND')
-        console.log('req.user.Id', req.user.id)
-        console.log('userId', userId)
+
         res.status(403)
         return res.json({
             message: "Forbidden: Review must belong to current user",

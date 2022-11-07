@@ -67,7 +67,7 @@ module.exports = {
      {
        review: `${comments[randomNum()].review}`,
        stars: comments[randInt].stars,
-       userId: 2,
+       userId: 1,
        spotId: 1,
      },
      {
@@ -105,7 +105,7 @@ module.exports = {
     {
       review: `${comments[randomNum()].review}`,
       stars: comments[randInt].stars,
-      userId: 1,
+      userId: 8,
       spotId: 2,
     },
     {

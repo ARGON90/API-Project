@@ -17,6 +17,7 @@ import { getBookingsCurrentUser } from '../../store/bookingsReducer';
 import LoginFormModalMain from '../LoginFormModal/DemoIndexMain';
 import SearchBar from './SearchBar';
 import { getAllSpots } from '../../store/spotsReducer';
+import { getReviewsCurrentUser } from '../../store/UserReviewsReducer';
 
 import hamburger from "../../data/hamburger.png"
 import './Navigation.css';
@@ -40,6 +41,7 @@ function Navigation({ isLoaded }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     if (sessionUser) {
+      dispatch(getReviewsCurrentUser())
       dispatch(getBookingsCurrentUser())
     }
     history.push(`/spots/`);

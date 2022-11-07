@@ -8,14 +8,19 @@
     align-self: center;
 }
 
-
-
-.booking-container {
+.booking-container-spotId {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    width: 100%;
     row-gap: 10px;
+    padding-top: 10px;
+}
+
+.bookings-in-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -36,6 +41,7 @@
 .price-div {
     display: flex;
     flex-direction: row;
+    padding-right: 10px;
 }
 
 .price-number {
@@ -112,6 +118,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
+    margin: 5px;
 }
 
 .calendar-container {
@@ -170,7 +177,7 @@
     padding-left: 45px;
 }
 
-.see-cal-btn {
+.see-cal-btn-spot {
     border: none;
     height: 30px;
     color: white;
@@ -178,6 +185,15 @@
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.see-cal-btn-spot:hover {
+    background-color: black;
+}
+
+.selected-date {
+    padding-top: 10px;
+    padding-bottom: 8px;
 }
 
 .calendar-btns {
@@ -210,4 +226,21 @@
 
 .reserve-button:hover {
     background-color: rgb(222, 29, 74);
+}
+
+.div-owner-true {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    row-gap: 10px;
+}
+
+.price-stars-owner{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 10px;
 }
