@@ -265,7 +265,7 @@ const CreateSpotForm = () => {
                                 flex-row
                                 width-90'>
                                     <button type="submit" className='
-                                    looks-good-btn'>
+                                    looks-good-btn pad-bot'>
                                         Looks Good
                                     </button>
                                 </div>

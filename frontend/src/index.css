@@ -75,6 +75,10 @@
     align-items: flex-start;
 }
 
+.pad-bot {
+    margin-bottom: 150px;
+}
+
 .padding-remove {
     padding: 0px;
 }
