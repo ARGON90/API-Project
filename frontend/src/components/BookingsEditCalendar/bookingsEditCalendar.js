@@ -92,6 +92,9 @@ const BookingsSpotEdit = ({ rating, price, id, bookingId }) => {
         })
     }
 
+    // testing github push
+    
+
     function selectCheckInDate() {
         if ((new Date(currentSelectedDate)).getTime() >= (new Date(checkOutDate)).getTime()) return alert('Check-in date must be before check-out date!')
         setCheckInDate(dateParserForInput(currentSelectedDate))
